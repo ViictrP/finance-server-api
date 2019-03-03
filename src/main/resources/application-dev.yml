@@ -1,8 +1,17 @@
+server:
+  port: ${PORT:8080}
+  servlet:
+    context-path: financeapi
+
+management:
+  security:
+    enabled: false
+
 spring:
   application:
     name: finance-server-api
   datasource:
-    url: jdbc:h2:file:./h2db/db/gestordb
+    url: jdbc:h2:file:./h2db/db/financeserverdb
     username: sa
     password:
     driver-class-name: org.h2.Driver
@@ -18,4 +27,4 @@ spring:
       enabled: true
 
   profiles:
-    active: local
+    active: dev
