@@ -1,22 +1,30 @@
 package com.viictrp.api.finance.server.api.oauth.model;
 
-import com.viictrp.api.finance.server.api.domain.Model;
 import com.viictrp.api.finance.server.api.domain.User;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.persistence.*;
-import java.util.ArrayDeque;
+import javax.persistence.Entity;
+import javax.persistence.Transient;
+import java.util.ArrayList;
 import java.util.Collection;
 
-@Entity
-public class OAuthUser extends Model<Long> implements UserDetails {
+@Document
+public class OAuthUser implements UserDetails {
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id")
-    private User user;
+    @Getter
+    @Setter
+    private Long userId;
+
+    @Getter
+    @Setter
+    private String fullname;
+
+    @Setter
+    private String username;
 
     @Setter
     private String password;
@@ -25,7 +33,6 @@ public class OAuthUser extends Model<Long> implements UserDetails {
     @Setter
     private Boolean master = Boolean.FALSE;
 
-    @Transient
     private Collection<GrantedAuthority> authorities;
 
     @Setter
@@ -34,14 +41,20 @@ public class OAuthUser extends Model<Long> implements UserDetails {
     @Setter
     private Boolean accountNonLocked;
 
-    public OAuthUser(User user) {
-        this.user = user;
+    public OAuthUser() {
+        this.authorities = new ArrayList<>();
+    }
+
+    public void setUser(User user) {
+        this.userId = user.getId();
+        this.fullname = user.getName() + " " + user.getLastname();
+        this.username = user.getEmail();
     }
 
     @Override
     public Collection<GrantedAuthority> getAuthorities() {
         if (this.authorities == null) {
-            this.authorities = new ArrayDeque<>();
+            this.authorities = new ArrayList<>();
         }
         return this.authorities;
     }
@@ -53,12 +66,12 @@ public class OAuthUser extends Model<Long> implements UserDetails {
 
     @Override
     public String getUsername() {
-        return user.getEmail();
+        return this.username;
     }
 
     @Override
     public boolean isAccountNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
@@ -71,7 +84,7 @@ public class OAuthUser extends Model<Long> implements UserDetails {
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return false;
+        return true;
     }
 
     @Override

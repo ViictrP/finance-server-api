@@ -25,6 +25,12 @@ spring:
     driver-class-name: org.h2.Driver
     platform: h2
 
+  data:
+    mongodb:
+      host: 127.0.0.1
+      port: 27017
+      database: finance_api_db
+
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
     properties:

@@ -28,3 +28,9 @@ HELP.md
 ## project
 /target/
 /.mvn/
+/logs/
+/h2db/
+*.db
+*.log
+*.gz
+*.tmp
