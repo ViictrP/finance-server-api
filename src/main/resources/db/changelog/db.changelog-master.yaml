@@ -70,46 +70,11 @@ databaseChangeLog:
                   constraints:
                     nullable: false
               - column:
-                  name: value
-                  type: double
-                  constraints:
-                    nullable: false
-              - column:
-                  name: expire_date
-                  type: date
-                  constraints:
-                    nullable: false
-              - column:
-                  name: last_expire_date
-                  type: date
-                  constraints:
-                    nullable: false
-              - column:
-                  name: is_installment
-                  type: boolean
-                  constraints:
-                    nullable: false
-              - column:
-                  name: paid
-                  type: boolean
-              - column:
-                  name: total_paid
-                  type: double
-                  constraints:
-                    nullable: false
-              - column:
                   name: description
                   type: varchar(255)
               - column:
-                  name: creation_date
-                  type: timestamp
-                  constraints:
-                    nullable: false
-              - column:
-                  name: update_date
-                  type: timestamp
-                  constraints:
-                    nullable: false
+                  name: paid
+                  type: boolean
               - column:
                   name: user_id
                   type: bigint
@@ -130,6 +95,24 @@ databaseChangeLog:
                     referencedTableNames: category
                     onDelete: RESTRICT
                     onUpdate: RESTRICT
+              - column:
+                  name: create_date
+                  type: timestamp
+                  constraints:
+                    nullable: false
+              - column:
+                  name: last_update_date
+                  type: timestamp
+              - column:
+                  name: created_by
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: last_modified_by
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
 
         - createTable:
             tableName: category
@@ -147,13 +130,8 @@ databaseChangeLog:
                   constraints:
                     nullable: false
               - column:
-                  name: creation_date
-                  type: timestamp
-                  constraints:
-                    nullable: false
-              - column:
-                  name: update_date
-                  type: timestamp
+                  name: description
+                  type: varchar(255)
               - column:
                   name: user_id
                   type: bigint
@@ -164,4 +142,21 @@ databaseChangeLog:
                     referencedTableNames: user
                     onDelete: RESTRICT
                     onUpdate: RESTRICT
-
+              - column:
+                  name: create_date
+                  type: timestamp
+                  constraints:
+                    nullable: false
+              - column:
+                  name: last_update_date
+                  type: timestamp
+              - column:
+                  name: created_by
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: last_modified_by
+                  type: varchar(255)
+                  constraints:
+                    nullable: false

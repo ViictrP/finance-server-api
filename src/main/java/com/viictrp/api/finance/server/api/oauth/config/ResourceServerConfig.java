@@ -12,11 +12,13 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
-        http.headers().frameOptions().disable().and()
+        http
                 .authorizeRequests()
-                .antMatchers("/financeapi/**").authenticated()
                 .antMatchers("/admin/**").authenticated()
-                .anyRequest().denyAll()
-                .and().exceptionHandling().accessDeniedHandler(new OAuth2AccessDeniedHandler());
+                .and().authorizeRequests().antMatchers("/console/**").permitAll()
+                .and().exceptionHandling().accessDeniedHandler(new OAuth2AccessDeniedHandler())
+                .and().authorizeRequests().anyRequest().denyAll();
+        http.headers().frameOptions().disable();
+        http.csrf().disable();
     }
 }

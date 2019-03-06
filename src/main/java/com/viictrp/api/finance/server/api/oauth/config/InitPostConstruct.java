@@ -36,6 +36,10 @@ public class InitPostConstruct {
 
     private void createUser() {
 
+        System.out.println("######################################################");
+        System.out.println("######################################################");
+        System.out.println("################ [CRIANDO USUÁRIOS] ##################");
+
         userRepository.deleteAll();
         userDetailsService.deleteAll();
 
@@ -51,6 +55,12 @@ public class InitPostConstruct {
 
         User jpaEntity = userRepository.save(user);
 
+        System.out.println("######################################################");
+        System.out.println("######################################################");
+        System.out.println("############### [USUÁRIO JPA CRIADO] #################");
+
+        System.out.println(jpaEntity.toString());
+
         GrantedAuthority simpleGrantedAuthority = new SimpleGrantedAuthority("ROLE_ADMIN");
 
         OAuthUser oAuthUser = new OAuthUser();
@@ -62,6 +72,11 @@ public class InitPostConstruct {
         oAuthUser.setUser(jpaEntity);
 
         OAuthUser mongoEntity = userDetailsService.save(oAuthUser);
+
+        System.out.println("######################################################");
+        System.out.println("######################################################");
+        System.out.println("############## [USUÁRIO OAUTH CRIADO] ################");
+
         System.out.println(mongoEntity.toString());
     }
 }

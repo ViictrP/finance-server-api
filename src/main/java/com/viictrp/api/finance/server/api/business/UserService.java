@@ -8,6 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
 @Service
 public class UserService implements IUserService {
 
@@ -26,5 +30,13 @@ public class UserService implements IUserService {
         OAuthUser oAuthUser = service.loadByUserId(id);
         user.setOAuthUser(oAuthUser);
         return user;
+    }
+
+    @Override
+    public List<User> buscarUsuarios() {
+        return repository.findAll()
+                .stream()
+                .peek(user -> user.setOAuthUser(service.loadByUserId(user.getId())))
+                .collect(Collectors.toList());
     }
 }

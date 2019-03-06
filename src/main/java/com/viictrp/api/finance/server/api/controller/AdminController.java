@@ -19,15 +19,11 @@ import java.util.List;
 public class AdminController {
 
     @Autowired
-    @Qualifier("userDetailsService")
-    private UserDetailsServiceImpl service;
-
-    @Autowired
     private IUserService userService;
 
     @GetMapping(value = "/users")
-    public ResponseEntity<List<OAuthUser>> findUsers() {
-        List<OAuthUser> users = service.loadUsers();
+    public ResponseEntity<List<User>> findUsers() {
+        List<User> users = userService.buscarUsuarios();
         return ResponseEntity.ok(users);
     }
 
