@@ -8,6 +8,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service("userDetailsService")
 public class UserDetailsServiceImpl implements UserDetailsService {
 
@@ -27,5 +29,14 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
         return repository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado"));
+    }
+
+    public OAuthUser loadByUserId(Long id) {
+        return repository.findByUserId(id)
+                .orElseThrow(() -> new IllegalArgumentException("Usuário de autenticação não encontrado"));
+    }
+
+    public List<OAuthUser> loadUsers() {
+        return repository.findAll();
     }
 }

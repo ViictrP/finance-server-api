@@ -15,6 +15,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
         http.headers().frameOptions().disable().and()
                 .authorizeRequests()
                 .antMatchers("/financeapi/**").authenticated()
+                .antMatchers("/admin/**").authenticated()
                 .anyRequest().denyAll()
                 .and().exceptionHandling().accessDeniedHandler(new OAuth2AccessDeniedHandler());
     }

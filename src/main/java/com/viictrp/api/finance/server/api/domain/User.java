@@ -1,9 +1,11 @@
 package com.viictrp.api.finance.server.api.domain;
 
+import com.viictrp.api.finance.server.api.oauth.model.OAuthUser;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.Entity;
+import javax.persistence.Transient;
 
 @Entity
 public class User extends Model<Long> {
@@ -25,4 +27,9 @@ public class User extends Model<Long> {
     @Getter
     @Setter
     private String email;
+
+    @Getter
+    @Setter
+    @Transient
+    private OAuthUser oAuthUser;
 }
