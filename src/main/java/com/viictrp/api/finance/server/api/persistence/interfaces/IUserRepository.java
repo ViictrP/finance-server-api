@@ -1,4 +1,4 @@
-package com.viictrp.api.finance.server.api.persistence.user;
+package com.viictrp.api.finance.server.api.persistence.interfaces;
 
 import com.viictrp.api.finance.server.api.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;

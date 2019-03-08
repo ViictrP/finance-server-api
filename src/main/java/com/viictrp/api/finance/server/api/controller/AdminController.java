@@ -1,11 +1,8 @@
 package com.viictrp.api.finance.server.api.controller;
 
-import com.viictrp.api.finance.server.api.business.IUserService;
+import com.viictrp.api.finance.server.api.business.interfaces.IUserService;
 import com.viictrp.api.finance.server.api.domain.User;
-import com.viictrp.api.finance.server.api.oauth.model.OAuthUser;
-import com.viictrp.api.finance.server.api.oauth.service.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;

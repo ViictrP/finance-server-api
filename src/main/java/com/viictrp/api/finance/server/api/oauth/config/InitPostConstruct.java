@@ -3,7 +3,7 @@ package com.viictrp.api.finance.server.api.oauth.config;
 import com.viictrp.api.finance.server.api.domain.User;
 import com.viictrp.api.finance.server.api.oauth.model.OAuthUser;
 import com.viictrp.api.finance.server.api.oauth.service.UserDetailsServiceImpl;
-import com.viictrp.api.finance.server.api.persistence.user.IUserRepository;
+import com.viictrp.api.finance.server.api.persistence.interfaces.IUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.GrantedAuthority;
@@ -13,8 +13,6 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
 @Component
 public class InitPostConstruct {

@@ -1,4 +1,4 @@
-package com.viictrp.api.finance.server.api.business;
+package com.viictrp.api.finance.server.api.business.interfaces;
 
 import com.viictrp.api.finance.server.api.domain.User;
 
