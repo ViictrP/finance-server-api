@@ -15,8 +15,12 @@ import java.util.List;
 @PreAuthorize("hasRole('ROLE_ADMIN')")
 public class AdminController {
 
+    private final IUserService userService;
+
     @Autowired
-    private IUserService userService;
+    public AdminController(IUserService userService) {
+        this.userService = userService;
+    }
 
     @GetMapping(value = "/users")
     public ResponseEntity<List<User>> findUsers() {

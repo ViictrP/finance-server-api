@@ -17,15 +17,20 @@ import java.time.LocalDate;
 @Component
 public class InitPostConstruct {
 
-    @Autowired
-    @Qualifier("userDetailsService")
-    private UserDetailsServiceImpl userDetailsService;
+    private final UserDetailsServiceImpl userDetailsService;
+
+    private final IUserRepository userRepository;
+
+    private final PasswordEncoder encoder;
 
     @Autowired
-    private IUserRepository userRepository;
-
-    @Autowired
-    private PasswordEncoder encoder;
+    public InitPostConstruct(@Qualifier("userDetailsService") UserDetailsServiceImpl userDetailsService,
+                             PasswordEncoder encoder,
+                             IUserRepository userRepository) {
+        this.userDetailsService = userDetailsService;
+        this.encoder = encoder;
+        this.userRepository = userRepository;
+    }
 
     @PostConstruct
     public void init() {

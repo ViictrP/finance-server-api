@@ -24,11 +24,9 @@ import javax.sql.DataSource;
 @EnableAuthorizationServer
 public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
-    @Autowired
-    private DataSource dataSource;
+    private final DataSource dataSource;
 
     @Value("${finance.oauth2.client_id}")
     private String clientId;
@@ -36,13 +34,20 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     @Value("${finance.oauth2.client_secret}")
     private String clientSecret;
 
-    @Autowired
-    @Qualifier("userDetailsService")
-    private UserDetailsService userDetailsService;
+    private final UserDetailsService userDetailsService;
+
+    private final AuthenticationManager authenticationManager;
 
     @Autowired
-    @Qualifier("authenticationManagerBean")
-    private AuthenticationManager authenticationManager;
+    public AuthorizationServerConfig(DataSource dataSource,
+                                     PasswordEncoder passwordEncoder,
+                                     @Qualifier("userDetailsService") UserDetailsService userDetailsService,
+                                     @Qualifier("authenticationManagerBean") AuthenticationManager authenticationManager) {
+        this.dataSource = dataSource;
+        this.passwordEncoder = passwordEncoder;
+        this.userDetailsService = userDetailsService;
+        this.authenticationManager = authenticationManager;
+    }
 
     @Override
     public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
