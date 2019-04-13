@@ -1,6 +1,5 @@
 package com.viictrp.api.finance.server.api.oauth.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -16,7 +15,6 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Aut
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore;
-import org.springframework.security.oauth2.provider.token.store.JdbcTokenStore;
 
 import javax.sql.DataSource;
 
@@ -25,8 +23,6 @@ import javax.sql.DataSource;
 public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
 
     private final PasswordEncoder passwordEncoder;
-
-    private final DataSource dataSource;
 
     @Value("${finance.oauth2.client_id}")
     private String clientId;
@@ -38,12 +34,9 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 
     private final AuthenticationManager authenticationManager;
 
-    @Autowired
-    public AuthorizationServerConfig(DataSource dataSource,
-                                     PasswordEncoder passwordEncoder,
+    public AuthorizationServerConfig(PasswordEncoder passwordEncoder,
                                      @Qualifier("userDetailsService") UserDetailsService userDetailsService,
                                      @Qualifier("authenticationManagerBean") AuthenticationManager authenticationManager) {
-        this.dataSource = dataSource;
         this.passwordEncoder = passwordEncoder;
         this.userDetailsService = userDetailsService;
         this.authenticationManager = authenticationManager;

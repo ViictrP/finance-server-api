@@ -5,8 +5,7 @@ import com.viictrp.api.finance.server.api.domain.User;
 import com.viictrp.api.finance.server.api.exception.ResourceNotFoundException;
 import com.viictrp.api.finance.server.api.oauth.model.OAuthUser;
 import com.viictrp.api.finance.server.api.oauth.service.UserDetailsServiceImpl;
-import com.viictrp.api.finance.server.api.persistence.interfaces.IUserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.viictrp.api.finance.server.api.persistence.IUserRepository;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 

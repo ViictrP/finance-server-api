@@ -1,17 +1,15 @@
-package com.viictrp.api.finance.server.api.domain;
+package com.viictrp.api.finance.server.api.dto;
 
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
-import javax.persistence.*;
-import java.util.List;
+public class InvoiceDTO {
 
-@Entity
-public class Category extends Model<Long> {
-
-    private static final long serialVersionUID = 1L;
+    @Getter
+    @Setter
+    private Long id;
 
     @Getter
     @Setter
@@ -23,15 +21,17 @@ public class Category extends Model<Long> {
 
     @Getter
     @Setter
-    @OneToMany(mappedBy="category", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Invoice> invoices;
+    private Boolean paid = Boolean.FALSE;
 
     @Getter
     @Setter
-    @ManyToOne
-    @PrimaryKeyJoinColumn
-    private User user;
+    private CategoryDTO category;
 
+    @Getter
+    @Setter
+    private UserDTO user;
+
+    @Override
     public String toString() {
         return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);
     }
