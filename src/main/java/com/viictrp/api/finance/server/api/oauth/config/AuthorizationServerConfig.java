@@ -1,6 +1,5 @@
 package com.viictrp.api.finance.server.api.oauth.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -16,7 +15,6 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Aut
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore;
-import org.springframework.security.oauth2.provider.token.store.JdbcTokenStore;
 
 import javax.sql.DataSource;
 
@@ -24,11 +22,9 @@ import javax.sql.DataSource;
 @EnableAuthorizationServer
 public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
-    @Autowired
-    private DataSource dataSource;
+    private final DataSource dataSource;
 
     @Value("${finance.oauth2.client_id}")
     private String clientId;
@@ -36,13 +32,19 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     @Value("${finance.oauth2.client_secret}")
     private String clientSecret;
 
-    @Autowired
-    @Qualifier("userDetailsService")
-    private UserDetailsService userDetailsService;
+    private final UserDetailsService userDetailsService;
 
-    @Autowired
-    @Qualifier("authenticationManagerBean")
-    private AuthenticationManager authenticationManager;
+    private final AuthenticationManager authenticationManager;
+
+    public AuthorizationServerConfig(PasswordEncoder passwordEncoder,
+                                     DataSource dataSource,
+                                     @Qualifier("userDetailsService") UserDetailsService userDetailsService,
+                                     @Qualifier("authenticationManagerBean") AuthenticationManager authenticationManager) {
+        this.passwordEncoder = passwordEncoder;
+        this.dataSource = dataSource;
+        this.userDetailsService = userDetailsService;
+        this.authenticationManager = authenticationManager;
+    }
 
     @Override
     public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {

@@ -15,8 +15,11 @@ import java.util.List;
 @CrossOrigin("*")
 public class InvoiceController {
 
-    @Autowired
-    private IInvoiceService service;
+    private final IInvoiceService service;
+
+    public InvoiceController(IInvoiceService service) {
+        this.service = service;
+    }
 
     @GetMapping
     public ResponseEntity<List<Invoice>> buscarInvoices() {

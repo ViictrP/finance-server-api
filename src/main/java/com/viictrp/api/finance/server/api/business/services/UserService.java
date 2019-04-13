@@ -16,12 +16,14 @@ import java.util.stream.Collectors;
 @Service
 public class UserService implements IUserService {
 
-    @Autowired
-    private IUserRepository repository;
+    private final IUserRepository repository;
 
-    @Autowired
-    @Qualifier("userDetailsService")
-    private UserDetailsServiceImpl service;
+    private final UserDetailsServiceImpl service;
+
+    public UserService(IUserRepository repository, @Qualifier("userDetailsService") UserDetailsServiceImpl service) {
+        this.repository = repository;
+        this.service = service;
+    }
 
     @Override
     public User buscarUsuarioPorId(Long id) {

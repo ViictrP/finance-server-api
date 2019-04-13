@@ -14,8 +14,11 @@ import java.util.List;
 @Service("userDetailsService")
 public class UserDetailsServiceImpl implements UserDetailsService {
 
-    @Autowired
-    private IUserDetailsRepository repository;
+    private final IUserDetailsRepository repository;
+
+    public UserDetailsServiceImpl(IUserDetailsRepository repository) {
+        this.repository = repository;
+    }
 
     public OAuthUser save(OAuthUser user) {
         return repository.save(user);

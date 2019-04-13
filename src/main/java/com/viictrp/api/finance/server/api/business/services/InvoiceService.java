@@ -12,8 +12,11 @@ import java.util.List;
 @Service
 public class InvoiceService implements IInvoiceService {
 
-    @Autowired
-    private IInvoiceRepository repository;
+    private final IInvoiceRepository repository;
+
+    public InvoiceService(IInvoiceRepository repository) {
+        this.repository = repository;
+    }
 
     @Override
     public Invoice buscarPorId(Long id, Long userId) {

@@ -1,56 +1,56 @@
 server:
-  port: 8080
-  servlet:
-    context-path: /financeapi
+    port: 8080
+    servlet:
+        context-path: /financeapi
 
 logging:
-  level:
-    com.viictrp.api.finance.server.api: DEBUG
-    org.springboot.web: DEBUG
-  file:
-    logs/spring-boot-logging.log
+    level:
+        com.viictrp.api.finance.server.api: DEBUG
+        org.springboot.web: DEBUG
+    file:
+        logs/spring-boot-logging.log
 
 spring:
-  application:
-    name: finance-server-api
+    application:
+        name: finance-server-api
 
-  output:
-    ansi:
-      enabled: DETECT
+    output:
+        ansi:
+            enabled: DETECT
 
-  datasource:
-    url: jdbc:h2:file:./h2db/db/financeserverdb
-    username: sa
-    password:
-    driver-class-name: org.h2.Driver
-    platform: h2
+    datasource:
+        url: jdbc:h2:file:./h2db/db/financeserverdb
+        username: sa
+        password:
+        driver-class-name: org.h2.Driver
+        platform: h2
 
-  data:
-    mongodb:
-      host: 127.0.0.1
-      port: 27017
-      database: finance_api_db
+    data:
+        mongodb:
+            host: 127.0.0.1
+            port: 27017
+            database: finance_api_db
 
-  jpa:
-    database-platform: org.hibernate.dialect.H2Dialect
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.H2Dialect
+    jpa:
+        database-platform: org.hibernate.dialect.H2Dialect
+        properties:
+            hibernate:
+                dialect: org.hibernate.dialect.H2Dialect
 
-  h2:
-    console:
-      enabled: true
+    h2:
+        console:
+            enabled: true
 
-  profiles:
-    active: local
+    profiles:
+        active: local
 
-  jackson:
-    serialization:
-      write-dates-as-timestamps: false
-    time-zone: America/Sao_Paulo
-    locale: pt_BR
+    jackson:
+        serialization:
+            write-dates-as-timestamps: false
+        time-zone: America/Sao_Paulo
+        locale: pt_BR
 
 finance:
-  oauth2:
-    client_id: 0
-    client_secret: ad70a866-c3eb-432a-9073-8c6638ed76d5
+    oauth2:
+        client_id: 0
+        client_secret: ad70a866-c3eb-432a-9073-8c6638ed76d5
