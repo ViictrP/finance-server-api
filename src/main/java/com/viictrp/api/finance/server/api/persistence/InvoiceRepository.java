@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface IInvoiceRepository extends JpaRepository<Invoice, Long> {
+public interface InvoiceRepository extends JpaRepository<Invoice, Long> {
 
     Optional<Invoice> findByIdAndUserId(Long id, Long userId);
     List<Invoice> findByUserId(Long userId);

@@ -3,7 +3,8 @@ package com.viictrp.api.finance.server.api.oauth.config;
 import com.viictrp.api.finance.server.api.domain.User;
 import com.viictrp.api.finance.server.api.oauth.model.OAuthUser;
 import com.viictrp.api.finance.server.api.oauth.service.UserDetailsServiceImpl;
-import com.viictrp.api.finance.server.api.persistence.IUserRepository;
+import com.viictrp.api.finance.server.api.persistence.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -18,14 +19,14 @@ public class InitPostConstruct {
 
     private final UserDetailsServiceImpl userDetailsService;
 
-    private final IUserRepository userRepository;
+    private final UserRepository userRepository;
 
     private final PasswordEncoder encoder;
 
     @Autowired
     public InitPostConstruct(@Qualifier("userDetailsService") UserDetailsServiceImpl userDetailsService,
                              PasswordEncoder encoder,
-                             IUserRepository userRepository) {
+                             UserRepository userRepository) {
         this.userDetailsService = userDetailsService;
         this.encoder = encoder;
         this.userRepository = userRepository;

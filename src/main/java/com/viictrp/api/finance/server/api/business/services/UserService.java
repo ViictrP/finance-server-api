@@ -5,7 +5,7 @@ import com.viictrp.api.finance.server.api.domain.User;
 import com.viictrp.api.finance.server.api.exception.ResourceNotFoundException;
 import com.viictrp.api.finance.server.api.oauth.model.OAuthUser;
 import com.viictrp.api.finance.server.api.oauth.service.UserDetailsServiceImpl;
-import com.viictrp.api.finance.server.api.persistence.IUserRepository;
+import com.viictrp.api.finance.server.api.persistence.UserRepository;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
@@ -15,12 +15,14 @@ import java.util.stream.Collectors;
 @Service
 public class UserService implements IUserService {
 
-    @Autowired
-    private IUserRepository repository;
+    private final UserRepository repository;
 
-    @Autowired
-    @Qualifier("userDetailsService")
-    private UserDetailsServiceImpl service;
+    private final UserDetailsServiceImpl service;
+
+    public UserService(UserRepository repository, @Qualifier("userDetailsService") UserDetailsServiceImpl service) {
+        this.repository = repository;
+        this.service = service;
+    }
 
     @Override
     public User buscarUsuarioPorId(Long id) {

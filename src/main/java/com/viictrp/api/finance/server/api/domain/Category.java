@@ -35,4 +35,11 @@ public class Category extends Model<Long> {
     public String toString() {
         return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);
     }
+
+    public void addInvoice(Invoice invoice) {
+        if (invoice != null) {
+            this.invoices.add(invoice);
+            invoice.setCategory(this);
+        }
+    }
 }

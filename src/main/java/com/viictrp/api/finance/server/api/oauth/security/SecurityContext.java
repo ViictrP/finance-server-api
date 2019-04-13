@@ -1,10 +1,10 @@
-package com.viictrp.api.finance.server.api.oauth.util;
+package com.viictrp.api.finance.server.api.oauth.security;
 
 import com.viictrp.api.finance.server.api.exception.ResourceNotFoundException;
 import com.viictrp.api.finance.server.api.oauth.model.OAuthUser;
 import org.springframework.security.core.context.SecurityContextHolder;
 
-public final class SecurityUtils {
+public final class SecurityContext {
 
     private static final String USER_NOT_FOUND = "Erro ao buscar usuário logado";
 
