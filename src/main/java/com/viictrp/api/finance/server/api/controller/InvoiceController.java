@@ -40,4 +40,10 @@ public class InvoiceController {
         OAuthUser user = SecurityContext.getUser();
         return ResponseEntity.ok(service.buscarPorId(id, user.getUserId()));
     }
+
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<InvoiceDTO> atualizarInvoice(@PathVariable("id") Long id, @Valid @RequestBody InvoiceDTO dto) {
+        OAuthUser user = SecurityContext.getUser();
+        return ResponseEntity.ok(service.atualizarInvoice(dto, user));
+    }
 }

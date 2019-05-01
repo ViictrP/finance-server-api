@@ -9,5 +9,6 @@ public interface IInvoiceService {
 
     InvoiceDTO buscarPorId(Long id, Long userId);
     InvoiceDTO save(InvoiceDTO dto, OAuthUser user);
+    InvoiceDTO atualizarInvoice(InvoiceDTO dto, OAuthUser user);
     List<InvoiceDTO> buscarFaturas(Long userId);
 }

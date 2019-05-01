@@ -29,8 +29,8 @@ public class CategoryService implements ICategoryService {
     }
 
     @Override
-    public Category buscarPorId(Long id) {
-        return repository.findById(id)
+    public Category buscarPorId(Long id, OAuthUser user) {
+        return repository.findByIdAndUserId(id, user.getUserId())
                 .orElseThrow(() -> new ResourceNotFoundException("Categoria não encontrada"));
     }
 
@@ -39,8 +39,7 @@ public class CategoryService implements ICategoryService {
         Category category = converter.toEntity(dto);
         category.setUser(userService.buscarUsuarioPorId(user.getUserId()));
         Audity.audityEntity(category, user);
-        return Optional.of(repository.save(category))
-                .map(converter::toDto)
-                .get();
+        repository.save(category);
+        return converter.toDto(category);
     }
 }

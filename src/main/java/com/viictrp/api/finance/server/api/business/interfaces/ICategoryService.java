@@ -6,6 +6,6 @@ import com.viictrp.api.finance.server.api.oauth.model.OAuthUser;
 
 public interface ICategoryService {
 
-    Category buscarPorId(Long id);
+    Category buscarPorId(Long id, OAuthUser user);
     CategoryDTO save(CategoryDTO dto, OAuthUser user);
 }

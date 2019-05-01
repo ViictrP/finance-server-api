@@ -8,6 +8,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
+import javax.validation.constraints.NotNull;
 
 @Entity
 public class Invoice extends Model<Long> {
@@ -37,6 +38,15 @@ public class Invoice extends Model<Long> {
     @ManyToOne
     @PrimaryKeyJoinColumn
     private User user;
+
+    public void mergeDados(@NotNull Invoice newInvoice) {
+        this.title = newInvoice.getTitle();
+        this.paid = newInvoice.getPaid();
+        this.description = newInvoice.getDescription();
+        if (!this.getCategory().getId().equals(newInvoice.getCategory().getId())) {
+            this.category = newInvoice.getCategory();
+        }
+    }
 
     @Override
     public String toString() {
