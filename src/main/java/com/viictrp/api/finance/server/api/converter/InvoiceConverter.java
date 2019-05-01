@@ -40,6 +40,7 @@ public class InvoiceConverter implements Converter<Invoice, InvoiceDTO> {
             dto.setPaid(invoice.getPaid());
             dto.setCategory(categoryConverter.toDto(invoice.getCategory()));
             dto.setUser(userConverter.toDto(invoice.getUser()));
+            dto.setExcluido(invoice.getExcluido());
         }
         return dto;
     }

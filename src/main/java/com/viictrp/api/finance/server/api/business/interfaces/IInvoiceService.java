@@ -11,4 +11,5 @@ public interface IInvoiceService {
     InvoiceDTO save(InvoiceDTO dto, OAuthUser user);
     InvoiceDTO atualizarInvoice(InvoiceDTO dto, OAuthUser user);
     List<InvoiceDTO> buscarFaturas(Long userId);
+    void apagarInvoice(Long id, OAuthUser user);
 }

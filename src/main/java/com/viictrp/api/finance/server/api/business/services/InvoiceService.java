@@ -34,7 +34,7 @@ public class InvoiceService implements IInvoiceService {
 
     @Override
     public InvoiceDTO buscarPorId(Long id, Long userId) {
-        return repository.findByIdAndUserId(id, userId)
+        return repository.findByIdAndUserIdAndExcluidoIsFalse(id, userId)
                 .map(converter::toDto)
                 .orElseThrow(() -> new ResourceNotFoundException("Nenhuma fatura encontrada"));
     }
@@ -52,7 +52,7 @@ public class InvoiceService implements IInvoiceService {
 
     @Override
     public InvoiceDTO atualizarInvoice(InvoiceDTO dto, OAuthUser user) {
-        Invoice invoiceBanco = repository.findByIdAndUserId(dto.getId(), user.getUserId())
+        Invoice invoiceBanco = repository.findByIdAndUserIdAndExcluidoIsFalse(dto.getId(), user.getUserId())
                 .orElseThrow(() -> new ResourceNotFoundException("Invoice not found for the ID."));
         Invoice invoice = converter.toEntity(dto);
         invoice.setCategory(categoryService.buscarPorId(dto.getCategory().getId(), user));
@@ -63,9 +63,17 @@ public class InvoiceService implements IInvoiceService {
 
     @Override
     public List<InvoiceDTO> buscarFaturas(Long userId) {
-        return repository.findByUserId(userId)
+        return repository.findByUserIdAndExcluidoIsFalse(userId)
                 .stream()
                 .map(converter::toDto)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public void apagarInvoice(Long id, OAuthUser user) {
+        Invoice invoiceBanco = repository.findByIdAndUserIdAndExcluidoIsFalse(id, user.getUserId())
+                .orElseThrow(() -> new ResourceNotFoundException("Invoice not found for the ID."));
+        invoiceBanco.setExcluido(true);
+        repository.save(invoiceBanco);
     }
 }

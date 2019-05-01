@@ -33,6 +33,7 @@ public class CategoryConverter implements Converter<Category, CategoryDTO> {
             dto.setTitle(category.getTitle());
             dto.setDescription(category.getDescription());
             dto.setUser(userConverter.toDto(category.getUser()));
+            dto.setExcluido(category.getExcluido());
         }
         return dto;
     }

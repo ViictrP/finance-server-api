@@ -25,6 +25,10 @@ public class InvoiceDTO {
 
     @Getter
     @Setter
+    private Boolean excluido = Boolean.FALSE;
+
+    @Getter
+    @Setter
     private CategoryDTO category;
 
     @Getter

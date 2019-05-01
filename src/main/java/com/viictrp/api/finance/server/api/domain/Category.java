@@ -32,6 +32,10 @@ public class Category extends Model<Long> {
     @PrimaryKeyJoinColumn
     private User user;
 
+    @Getter
+    @Setter
+    private Boolean excluido = Boolean.FALSE;
+
     public String toString() {
         return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);
     }

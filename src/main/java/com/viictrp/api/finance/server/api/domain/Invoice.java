@@ -35,6 +35,10 @@ public class Invoice extends Model<Long> {
 
     @Getter
     @Setter
+    private Boolean excluido = Boolean.FALSE;
+
+    @Getter
+    @Setter
     @ManyToOne
     @PrimaryKeyJoinColumn
     private User user;

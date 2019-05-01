@@ -46,4 +46,10 @@ public class InvoiceController {
         OAuthUser user = SecurityContext.getUser();
         return ResponseEntity.ok(service.atualizarInvoice(dto, user));
     }
+
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<Void> apagarInvoice(@PathVariable("id") Long id) {
+        service.apagarInvoice(id, SecurityContext.getUser());
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }
