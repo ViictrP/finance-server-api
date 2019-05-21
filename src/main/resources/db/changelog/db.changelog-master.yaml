@@ -215,3 +215,47 @@ databaseChangeLog:
                                     type: varchar(255)
                                     constraints:
                                         nullable: false
+
+                -   createTable:
+                        tableName: orcamento
+                        columns:
+                            -   column:
+                                    name: id
+                                    type: bigint
+                                    autoIncrement: true
+                                    constraints:
+                                        primaryKey: true
+                                        nullable: false
+                            -   column:
+                                    name: valor
+                                    type: double
+                                    constraints:
+                                        nullable: false
+                            -   column:
+                                    name: usuario_id
+                                    type: bigint
+                                    constraints:
+                                        nullable: false
+                                        foreignKeyName: fk_usuario_id_categoria
+                                        referencedColumnNames: id
+                                        referencedTableNames: usuario
+                                        onDelete: RESTRICT
+                                        onUpdate: RESTRICT
+                            -   column:
+                                    name: create_date
+                                    type: timestamp
+                                    constraints:
+                                        nullable: false
+                            -   column:
+                                    name: last_update_date
+                                    type: timestamp
+                            -   column:
+                                    name: created_by
+                                    type: varchar(255)
+                                    constraints:
+                                        nullable: false
+                            -   column:
+                                    name: last_modified_by
+                                    type: varchar(255)
+                                    constraints:
+                                        nullable: false

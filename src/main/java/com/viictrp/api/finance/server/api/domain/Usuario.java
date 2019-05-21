@@ -45,6 +45,11 @@ public class Usuario extends Model<Long> {
     @OneToMany(mappedBy="usuario", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Categoria> categories;
 
+    @Getter
+    @Setter
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Orcamento> orcamentos;
+
     @Override
     public String toString() {
         return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);
