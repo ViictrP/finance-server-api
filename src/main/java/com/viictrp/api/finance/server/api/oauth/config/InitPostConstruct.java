@@ -1,9 +1,10 @@
 package com.viictrp.api.finance.server.api.oauth.config;
 
-import com.viictrp.api.finance.server.api.domain.User;
+import com.viictrp.api.finance.server.api.domain.Usuario;
 import com.viictrp.api.finance.server.api.oauth.model.OAuthUser;
 import com.viictrp.api.finance.server.api.oauth.service.UserDetailsServiceImpl;
 import com.viictrp.api.finance.server.api.persistence.UserRepository;
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.GrantedAuthority;
@@ -12,7 +13,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
-import java.time.LocalDate;
 
 @Component
 public class InitPostConstruct {
@@ -46,17 +46,17 @@ public class InitPostConstruct {
         userRepository.deleteAll();
         userDetailsService.deleteAll();
 
-        User user = new User();
-        user.setName("Victor");
-        user.setLastname("Prado");
-        user.setEmail("vpradodev@gmail.com");
-        user.setAge(26);
-        user.setCreatedBy("system");
-        user.setLastModifiedBy("system");
-        user.setCreateDate(LocalDate.now());
-        user.setLastUpdateDate(LocalDate.now());
+        Usuario usuario = new Usuario();
+        usuario.setName("Victor");
+        usuario.setLastname("Prado");
+        usuario.setEmail("vpradodev@gmail.com");
+        usuario.setAge(26);
+        usuario.setCreatedBy("system");
+        usuario.setLastModifiedBy("system");
+        usuario.setCreateDate(DateTime.now());
+        usuario.setLastUpdateDate(DateTime.now());
 
-        User jpaEntity = userRepository.save(user);
+        Usuario jpaEntity = userRepository.save(usuario);
 
         System.out.println("######################################################");
         System.out.println("######################################################");

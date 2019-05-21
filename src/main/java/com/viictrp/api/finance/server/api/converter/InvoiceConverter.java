@@ -1,12 +1,11 @@
 package com.viictrp.api.finance.server.api.converter;
 
-import com.viictrp.api.finance.server.api.domain.Invoice;
+import com.viictrp.api.finance.server.api.domain.Fatura;
 import com.viictrp.api.finance.server.api.dto.InvoiceDTO;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class InvoiceConverter implements Converter<Invoice, InvoiceDTO> {
+public class InvoiceConverter implements Converter<Fatura, InvoiceDTO> {
 
     private final CategoryConverter categoryConverter;
 
@@ -18,29 +17,29 @@ public class InvoiceConverter implements Converter<Invoice, InvoiceDTO> {
     }
 
     @Override
-    public Invoice toEntity(InvoiceDTO invoiceDTO) {
-        Invoice entity = null;
+    public Fatura toEntity(InvoiceDTO invoiceDTO) {
+        Fatura entity = null;
         if (invoiceDTO != null) {
-            entity = new Invoice();
-            entity.setTitle(invoiceDTO.getTitle());
-            entity.setDescription(invoiceDTO.getDescription());
-            entity.setCategory(categoryConverter.toEntity(invoiceDTO.getCategory()));
+            entity = new Fatura();
+            entity.setTitulo(invoiceDTO.getTitle());
+            entity.setDescricao(invoiceDTO.getDescription());
+            entity.setCategoria(categoryConverter.toEntity(invoiceDTO.getCategory()));
         }
         return entity;
     }
 
     @Override
-    public InvoiceDTO toDto(Invoice invoice) {
+    public InvoiceDTO toDto(Fatura fatura) {
         InvoiceDTO dto = null;
-        if (invoice != null) {
+        if (fatura != null) {
             dto = new InvoiceDTO();
-            dto.setId(invoice.getId());
-            dto.setTitle(invoice.getTitle());
-            dto.setDescription(invoice.getDescription());
-            dto.setPaid(invoice.getPaid());
-            dto.setCategory(categoryConverter.toDto(invoice.getCategory()));
-            dto.setUser(userConverter.toDto(invoice.getUser()));
-            dto.setExcluido(invoice.getExcluido());
+            dto.setId(fatura.getId());
+            dto.setTitle(fatura.getTitulo());
+            dto.setDescription(fatura.getDescricao());
+            dto.setPaid(fatura.getPago());
+            dto.setCategory(categoryConverter.toDto(fatura.getCategoria()));
+            dto.setUser(userConverter.toDto(fatura.getUsuario()));
+            dto.setExcluido(fatura.getExcluido());
         }
         return dto;
     }

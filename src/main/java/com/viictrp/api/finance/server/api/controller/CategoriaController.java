@@ -1,6 +1,6 @@
 package com.viictrp.api.finance.server.api.controller;
 
-import com.viictrp.api.finance.server.api.business.interfaces.ICategoryService;
+import com.viictrp.api.finance.server.api.business.interfaces.ICategoriaService;
 import com.viictrp.api.finance.server.api.dto.CategoryDTO;
 import com.viictrp.api.finance.server.api.oauth.security.SecurityContext;
 import org.springframework.http.HttpStatus;
@@ -10,13 +10,13 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/categories")
+@RequestMapping("/categorias")
 @CrossOrigin("*")
-public class CategoryController {
+public class CategoriaController {
 
-    private final ICategoryService categoryService;
+    private final ICategoriaService categoryService;
 
-    public CategoryController(ICategoryService categoryService) {
+    public CategoriaController(ICategoriaService categoryService) {
         this.categoryService = categoryService;
     }
 

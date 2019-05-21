@@ -5,33 +5,37 @@ import lombok.Setter;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @Entity
-public class Invoice extends Model<Long> {
+public class Fatura extends Model<Long> {
 
     private static final long serialVersionUID = 1L;
 
     @Getter
     @Setter
-    private String title;
+    private String titulo;
 
     @Getter
     @Setter
-    private String description;
+    private String descricao;
 
     @Getter
     @Setter
-    private Boolean paid = Boolean.FALSE;
+    private Boolean pago = Boolean.FALSE;
 
     @Getter
     @Setter
     @ManyToOne
     @PrimaryKeyJoinColumn
-    private Category category;
+    private Categoria categoria;
+
+    @Getter
+    @Setter
+    @OneToMany(mappedBy="fatura", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Lancamento> lancamentos;
 
     @Getter
     @Setter
@@ -41,14 +45,14 @@ public class Invoice extends Model<Long> {
     @Setter
     @ManyToOne
     @PrimaryKeyJoinColumn
-    private User user;
+    private Usuario usuario;
 
-    public void mergeDados(@NotNull Invoice newInvoice) {
-        this.title = newInvoice.getTitle();
-        this.paid = newInvoice.getPaid();
-        this.description = newInvoice.getDescription();
-        if (!this.getCategory().getId().equals(newInvoice.getCategory().getId())) {
-            this.category = newInvoice.getCategory();
+    public void mergeDados(@NotNull Fatura newFatura) {
+        this.titulo = newFatura.getTitulo();
+        this.pago = newFatura.getPago();
+        this.descricao = newFatura.getDescricao();
+        if (!this.getCategoria().getId().equals(newFatura.getCategoria().getId())) {
+            this.categoria = newFatura.getCategoria();
         }
     }
 

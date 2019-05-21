@@ -1,7 +1,7 @@
 package com.viictrp.api.finance.server.api.controller;
 
 import com.viictrp.api.finance.server.api.business.interfaces.IUserService;
-import com.viictrp.api.finance.server.api.domain.User;
+import com.viictrp.api.finance.server.api.domain.Usuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -23,14 +23,14 @@ public class AdminController {
     }
 
     @GetMapping(value = "/users")
-    public ResponseEntity<List<User>> findUsers() {
-        List<User> users = userService.buscarUsuarios();
-        return ResponseEntity.ok(users);
+    public ResponseEntity<List<Usuario>> findUsers() {
+        List<Usuario> usuarios = userService.buscarUsuarios();
+        return ResponseEntity.ok(usuarios);
     }
 
     @GetMapping(value = "/users/{id}")
-    public ResponseEntity<User> findUser(@PathVariable("id") Long id) {
-        User user = userService.buscarUsuarioPorId(id);
-        return ResponseEntity.ok(user);
+    public ResponseEntity<Usuario> findUser(@PathVariable("id") Long id) {
+        Usuario usuario = userService.buscarUsuarioPorId(id);
+        return ResponseEntity.ok(usuario);
     }
 }

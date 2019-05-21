@@ -1,7 +1,7 @@
 package com.viictrp.api.finance.server.api.business.services;
 
 import com.viictrp.api.finance.server.api.business.interfaces.IUserService;
-import com.viictrp.api.finance.server.api.domain.User;
+import com.viictrp.api.finance.server.api.domain.Usuario;
 import com.viictrp.api.finance.server.api.exception.ResourceNotFoundException;
 import com.viictrp.api.finance.server.api.oauth.model.OAuthUser;
 import com.viictrp.api.finance.server.api.oauth.service.UserDetailsServiceImpl;
@@ -25,17 +25,17 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public User buscarUsuarioPorId(Long id) {
-        User user = repository.findById(id)
+    public Usuario buscarUsuarioPorId(Long id) {
+        Usuario usuario = repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Usuário não encontrado"));
 
         OAuthUser oAuthUser = service.loadByUserId(id);
-        user.setOAuthUser(oAuthUser);
-        return user;
+        usuario.setOAuthUser(oAuthUser);
+        return usuario;
     }
 
     @Override
-    public List<User> buscarUsuarios() {
+    public List<Usuario> buscarUsuarios() {
         return repository.findAll()
                 .stream()
                 .peek(user -> user.setOAuthUser(service.loadByUserId(user.getId())))

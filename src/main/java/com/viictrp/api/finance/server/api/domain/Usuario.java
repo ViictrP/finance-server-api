@@ -1,5 +1,6 @@
 package com.viictrp.api.finance.server.api.domain;
 
+import com.viictrp.api.finance.server.api.oauth.model.OAuthUser;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -9,41 +10,43 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-public class Category extends Model<Long> {
+public class Usuario extends Model<Long> {
 
     private static final long serialVersionUID = 1L;
 
     @Getter
     @Setter
-    private String title;
+    private String name;
 
     @Getter
     @Setter
-    private String description;
+    private String lastname;
 
     @Getter
     @Setter
-    @OneToMany(mappedBy="category", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Invoice> invoices;
+    private Integer age;
 
     @Getter
     @Setter
-    @ManyToOne
-    @PrimaryKeyJoinColumn
-    private User user;
+    private String email;
 
     @Getter
     @Setter
-    private Boolean excluido = Boolean.FALSE;
+    @Transient
+    private OAuthUser oAuthUser;
 
+    @Getter
+    @Setter
+    @OneToMany(mappedBy="usuario", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Fatura> faturas;
+
+    @Getter
+    @Setter
+    @OneToMany(mappedBy="usuario", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Categoria> categories;
+
+    @Override
     public String toString() {
         return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);
-    }
-
-    public void addInvoice(Invoice invoice) {
-        if (invoice != null) {
-            this.invoices.add(invoice);
-            invoice.setCategory(this);
-        }
     }
 }

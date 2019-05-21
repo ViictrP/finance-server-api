@@ -1,11 +1,11 @@
 package com.viictrp.api.finance.server.api.business.interfaces;
 
-import com.viictrp.api.finance.server.api.domain.User;
+import com.viictrp.api.finance.server.api.domain.Usuario;
 
 import java.util.List;
 
 public interface IUserService {
 
-    User buscarUsuarioPorId(Long id);
-    List<User> buscarUsuarios();
+    Usuario buscarUsuarioPorId(Long id);
+    List<Usuario> buscarUsuarios();
 }

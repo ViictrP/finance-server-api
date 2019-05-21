@@ -2,14 +2,16 @@ package com.viictrp.api.finance.server.api.domain;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.Type;
+import org.joda.time.DateTime;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.time.LocalDate;
 
 @MappedSuperclass
 public class Model<T extends Serializable> implements Serializable {
@@ -23,14 +25,18 @@ public class Model<T extends Serializable> implements Serializable {
     private T id;
 
     @CreatedDate
+    @DateTimeFormat(iso= DateTimeFormat.ISO.DATE_TIME)
+    @Type(type="org.jadira.usertype.dateandtime.joda.PersistentDateTime")
     @Getter
     @Setter
-    private LocalDate createDate;
+    private DateTime createDate;
 
     @LastModifiedDate
+    @DateTimeFormat(iso= DateTimeFormat.ISO.DATE_TIME)
+    @Type(type="org.jadira.usertype.dateandtime.joda.PersistentDateTime")
     @Getter
     @Setter
-    private LocalDate lastUpdateDate;
+    private DateTime lastUpdateDate;
 
     @CreatedBy
     @Getter
@@ -48,12 +54,12 @@ public class Model<T extends Serializable> implements Serializable {
 
     @PrePersist
     public void prePersist() {
-        this.createDate = LocalDate.now();
-        this.lastUpdateDate = LocalDate.now();
+        this.createDate = DateTime.now();
+        this.lastUpdateDate = DateTime.now();
     }
 
     @PreUpdate
     public void preUpdate() {
-        this.lastUpdateDate = LocalDate.now();
+        this.lastUpdateDate = DateTime.now();
     }
 }

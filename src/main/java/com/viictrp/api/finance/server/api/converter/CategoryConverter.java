@@ -1,11 +1,11 @@
 package com.viictrp.api.finance.server.api.converter;
 
-import com.viictrp.api.finance.server.api.domain.Category;
+import com.viictrp.api.finance.server.api.domain.Categoria;
 import com.viictrp.api.finance.server.api.dto.CategoryDTO;
 import org.springframework.stereotype.Component;
 
 @Component
-public class CategoryConverter implements Converter<Category, CategoryDTO> {
+public class CategoryConverter implements Converter<Categoria, CategoryDTO> {
 
     private final UserConverter userConverter;
 
@@ -14,26 +14,26 @@ public class CategoryConverter implements Converter<Category, CategoryDTO> {
     }
 
     @Override
-    public Category toEntity(CategoryDTO categoryDTO) {
-        Category entity = new Category();
+    public Categoria toEntity(CategoryDTO categoryDTO) {
+        Categoria entity = new Categoria();
         if (categoryDTO != null) {
-            entity = new Category();
-            entity.setTitle(categoryDTO.getTitle());
-            entity.setDescription(categoryDTO.getDescription());
+            entity = new Categoria();
+            entity.setTitulo(categoryDTO.getTitle());
+            entity.setDescricao(categoryDTO.getDescription());
         }
         return entity;
     }
 
     @Override
-    public CategoryDTO toDto(Category category) {
+    public CategoryDTO toDto(Categoria categoria) {
         CategoryDTO dto = null;
-        if (category != null) {
+        if (categoria != null) {
             dto = new CategoryDTO();
-            dto.setId(category.getId());
-            dto.setTitle(category.getTitle());
-            dto.setDescription(category.getDescription());
-            dto.setUser(userConverter.toDto(category.getUser()));
-            dto.setExcluido(category.getExcluido());
+            dto.setId(categoria.getId());
+            dto.setTitle(categoria.getTitulo());
+            dto.setDescription(categoria.getDescricao());
+            dto.setUser(userConverter.toDto(categoria.getUsuario()));
+            dto.setExcluido(categoria.getExcluido());
         }
         return dto;
     }
