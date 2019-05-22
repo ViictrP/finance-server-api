@@ -1,11 +1,13 @@
 package com.viictrp.api.finance.server.api.business.interfaces;
 
-import com.viictrp.api.finance.server.api.domain.Categoria;
-import com.viictrp.api.finance.server.api.dto.CategoryDTO;
+import com.viictrp.api.finance.server.api.dto.CategoriaDTO;
 import com.viictrp.api.finance.server.api.oauth.model.OAuthUser;
+
+import java.util.List;
 
 public interface ICategoriaService {
 
-    Categoria buscarPorId(Long id, OAuthUser user);
-    CategoryDTO save(CategoryDTO dto, OAuthUser user);
+    CategoriaDTO buscarPorId(Long id, OAuthUser user);
+    CategoriaDTO save(CategoriaDTO dto, OAuthUser user);
+    List<CategoriaDTO> buscarCategorias(OAuthUser user);
 }

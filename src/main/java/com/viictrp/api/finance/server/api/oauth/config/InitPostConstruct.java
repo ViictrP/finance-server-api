@@ -3,7 +3,7 @@ package com.viictrp.api.finance.server.api.oauth.config;
 import com.viictrp.api.finance.server.api.domain.Usuario;
 import com.viictrp.api.finance.server.api.oauth.model.OAuthUser;
 import com.viictrp.api.finance.server.api.oauth.service.UserDetailsServiceImpl;
-import com.viictrp.api.finance.server.api.persistence.UserRepository;
+import com.viictrp.api.finance.server.api.persistence.UsuarioRepository;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -19,17 +19,17 @@ public class InitPostConstruct {
 
     private final UserDetailsServiceImpl userDetailsService;
 
-    private final UserRepository userRepository;
+    private final UsuarioRepository usuarioRepository;
 
     private final PasswordEncoder encoder;
 
     @Autowired
     public InitPostConstruct(@Qualifier("userDetailsService") UserDetailsServiceImpl userDetailsService,
                              PasswordEncoder encoder,
-                             UserRepository userRepository) {
+                             UsuarioRepository usuarioRepository) {
         this.userDetailsService = userDetailsService;
         this.encoder = encoder;
-        this.userRepository = userRepository;
+        this.usuarioRepository = usuarioRepository;
     }
 
     @PostConstruct
@@ -43,7 +43,7 @@ public class InitPostConstruct {
         System.out.println("######################################################");
         System.out.println("################ [CRIANDO USUÁRIOS] ##################");
 
-        userRepository.deleteAll();
+        usuarioRepository.deleteAll();
         userDetailsService.deleteAll();
 
         Usuario usuario = new Usuario();
@@ -56,7 +56,7 @@ public class InitPostConstruct {
         usuario.setCreateDate(DateTime.now());
         usuario.setLastUpdateDate(DateTime.now());
 
-        Usuario jpaEntity = userRepository.save(usuario);
+        Usuario jpaEntity = usuarioRepository.save(usuario);
 
         System.out.println("######################################################");
         System.out.println("######################################################");

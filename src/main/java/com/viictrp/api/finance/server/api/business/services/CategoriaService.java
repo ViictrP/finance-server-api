@@ -4,11 +4,14 @@ import com.viictrp.api.finance.server.api.business.interfaces.ICategoriaService;
 import com.viictrp.api.finance.server.api.common.Audity;
 import com.viictrp.api.finance.server.api.converter.CategoryConverter;
 import com.viictrp.api.finance.server.api.domain.Categoria;
-import com.viictrp.api.finance.server.api.dto.CategoryDTO;
+import com.viictrp.api.finance.server.api.dto.CategoriaDTO;
 import com.viictrp.api.finance.server.api.exception.ResourceNotFoundException;
 import com.viictrp.api.finance.server.api.oauth.model.OAuthUser;
 import com.viictrp.api.finance.server.api.persistence.CategoriaRepository;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class CategoriaService implements ICategoriaService {
@@ -26,17 +29,26 @@ public class CategoriaService implements ICategoriaService {
     }
 
     @Override
-    public Categoria buscarPorId(Long id, OAuthUser user) {
+    public CategoriaDTO buscarPorId(Long id, OAuthUser user) {
         return repository.findByIdAndUsuarioId(id, user.getUsuarioId())
+                .map(converter::toDto)
                 .orElseThrow(() -> new ResourceNotFoundException("Categoria não encontrada"));
     }
 
     @Override
-    public CategoryDTO save(CategoryDTO dto, OAuthUser user) {
+    public CategoriaDTO save(CategoriaDTO dto, OAuthUser user) {
         Categoria categoria = converter.toEntity(dto);
         categoria.setUsuario(userService.buscarUsuarioPorId(user.getUsuarioId()));
         Audity.audityEntity(categoria, user);
         repository.save(categoria);
         return converter.toDto(categoria);
+    }
+
+    @Override
+    public List<CategoriaDTO> buscarCategorias(OAuthUser user) {
+        return repository.findByUsuarioId(user.getUsuarioId())
+                .stream()
+                .map(converter::toDto)
+                .collect(Collectors.toList());
     }
 }

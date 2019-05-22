@@ -7,7 +7,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 
 import java.util.List;
 
-public class UserDTO {
+public class LancamentoDTO {
 
     @Getter
     @Setter
@@ -15,29 +15,24 @@ public class UserDTO {
 
     @Getter
     @Setter
-    private String name;
+    private String descricao;
 
     @Getter
     @Setter
-    private String lastname;
+    private Double valor;
 
     @Getter
     @Setter
-    private Integer age;
+    private FaturaDTO fatura;
 
     @Getter
     @Setter
-    private String email;
+    private CategoriaDTO categoria;
 
     @Getter
     @Setter
-    private List<InvoiceDTO> invoices;
+    private List<ParcelaDTO> parcelas;
 
-    @Getter
-    @Setter
-    private List<CategoryDTO> categories;
-
-    @Override
     public String toString() {
         return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);
     }

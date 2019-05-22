@@ -1,30 +1,39 @@
 package com.viictrp.api.finance.server.api.domain;
 
-import com.viictrp.api.finance.server.api.domain.enums.MesType;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
 import javax.persistence.*;
+import java.time.LocalDate;
+import java.util.List;
 
 @Entity
-public class Orcamento extends Model<Long> {
+public class Cartao extends Model<Long> {
 
     @Getter
     @Setter
-    private Double valor;
+    private String descricao;
 
     @Getter
     @Setter
-    @Enumerated(EnumType.STRING)
-    private MesType mes;
+    private LocalDate dataFechamento;
 
     @Getter
     @Setter
-    @OneToOne(mappedBy = "orcamento")
+    private Double limite;
+
+    @Getter
+    @Setter
+    @OneToMany(mappedBy="cartao", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Fatura> faturas;
+
+    @Getter
+    @Setter
+    @ManyToOne
     @PrimaryKeyJoinColumn
-    private Carteira carteira;
+    private Usuario usuario;
 
     @Override
     public String toString() {

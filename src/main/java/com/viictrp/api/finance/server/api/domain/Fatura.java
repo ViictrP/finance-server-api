@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
+import org.joda.time.LocalDate;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -30,7 +31,7 @@ public class Fatura extends Model<Long> {
     @Setter
     @ManyToOne
     @PrimaryKeyJoinColumn
-    private Categoria categoria;
+    private Cartao cartao;
 
     @Getter
     @Setter
@@ -39,21 +40,12 @@ public class Fatura extends Model<Long> {
 
     @Getter
     @Setter
-    private Boolean excluido = Boolean.FALSE;
-
-    @Getter
-    @Setter
-    @ManyToOne
-    @PrimaryKeyJoinColumn
-    private Usuario usuario;
+    private LocalDate dataVencimento;
 
     public void mergeDados(@NotNull Fatura newFatura) {
         this.titulo = newFatura.getTitulo();
         this.pago = newFatura.getPago();
         this.descricao = newFatura.getDescricao();
-        if (!this.getCategoria().getId().equals(newFatura.getCategoria().getId())) {
-            this.categoria = newFatura.getCategoria();
-        }
     }
 
     @Override

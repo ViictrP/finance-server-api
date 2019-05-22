@@ -1,11 +1,15 @@
 package com.viictrp.api.finance.server.api.dto;
 
+import com.viictrp.api.finance.server.api.domain.Cartao;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
+import org.joda.time.LocalDate;
 
-public class CategoryDTO {
+import java.util.List;
+
+public class FaturaDTO {
 
     @Getter
     @Setter
@@ -13,20 +17,29 @@ public class CategoryDTO {
 
     @Getter
     @Setter
-    private String title;
+    private String titulo;
 
     @Getter
     @Setter
-    private String description;
+    private String descricao;
 
     @Getter
     @Setter
-    private UserDTO user;
+    private Boolean pago = Boolean.FALSE;
 
     @Getter
     @Setter
-    private Boolean excluido = Boolean.FALSE;
+    private CartaoDTO cartao;
 
+    @Getter
+    @Setter
+    private List<LancamentoDTO> lancamentos;
+
+    @Getter
+    @Setter
+    private LocalDate dataVencimento;
+
+    @Override
     public String toString() {
         return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);
     }

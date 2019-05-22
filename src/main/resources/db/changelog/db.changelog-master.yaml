@@ -55,6 +55,56 @@ databaseChangeLog:
                                         nullable: false
 
                 -   createTable:
+                        tableName: cartao
+                        columns:
+                            -   column:
+                                    name: id
+                                    type: bigint
+                                    autoIncrement: true
+                                    constraints:
+                                        primaryKey: true
+                                        nullable: false
+                            -   column:
+                                    name: descricao
+                                    type: varchar(255)
+                            -   column:
+                                    name: limite
+                                    type: double
+                            -   column:
+                                    name: usuario_id
+                                    type: bigint
+                                    constraints:
+                                        nullable: false
+                                        foreignKeyName: fk_usuario_id_cartao
+                                        referencedColumnNames: id
+                                        referencedTableNames: usuario
+                                        onDelete: RESTRICT
+                                        onUpdate: RESTRICT
+                            -   column:
+                                    name: data_fechamento
+                                    type: timestamp
+                                    constraints:
+                                        nullable: false
+                            -   column:
+                                    name: create_date
+                                    type: timestamp
+                                    constraints:
+                                        nullable: false
+                            -   column:
+                                    name: last_update_date
+                                    type: timestamp
+                            -   column:
+                                    name: created_by
+                                    type: varchar(255)
+                                    constraints:
+                                        nullable: false
+                            -   column:
+                                    name: last_modified_by
+                                    type: varchar(255)
+                                    constraints:
+                                        nullable: false
+
+                -   createTable:
                         tableName: fatura
                         columns:
                             -   column:
@@ -76,26 +126,65 @@ databaseChangeLog:
                                     name: pago
                                     type: boolean
                             -   column:
-                                    name: excluido
-                                    type: boolean
+                                    name: cartao_id
+                                    type: bigint
+                                    constraints:
+                                        nullable: false
+                                        foreignKeyName: fk_cartao_id_fatura
+                                        referencedColumnNames: id
+                                        referencedTableNames: cartao
+                                        onDelete: RESTRICT
+                                        onUpdate: RESTRICT
+                            -   column:
+                                    name: data_vencimento
+                                    type: timestamp
+                                    constraints:
+                                        nullable: false
+                            -   column:
+                                    name: create_date
+                                    type: timestamp
+                                    constraints:
+                                        nullable: false
+                            -   column:
+                                    name: last_update_date
+                                    type: timestamp
+                            -   column:
+                                    name: created_by
+                                    type: varchar(255)
+                                    constraints:
+                                        nullable: false
+                            -   column:
+                                    name: last_modified_by
+                                    type: varchar(255)
+                                    constraints:
+                                        nullable: false
+
+                -   createTable:
+                        tableName: categoria
+                        columns:
+                            -   column:
+                                    name: id
+                                    type: bigint
+                                    autoIncrement: true
+                                    constraints:
+                                        primaryKey: true
+                                        nullable: false
+                            -   column:
+                                    name: titulo
+                                    type: varchar(255)
+                                    constraints:
+                                        nullable: false
+                            -   column:
+                                    name: descricao
+                                    type: varchar(255)
                             -   column:
                                     name: usuario_id
                                     type: bigint
                                     constraints:
                                         nullable: false
-                                        foreignKeyName: fk_usuario_id_invoice
+                                        foreignKeyName: fk_usuario_id_categoria
                                         referencedColumnNames: id
                                         referencedTableNames: usuario
-                                        onDelete: RESTRICT
-                                        onUpdate: RESTRICT
-                            -   column:
-                                    name: categoria_id
-                                    type: bigint
-                                    constraints:
-                                        nullable: false
-                                        foreignKeyName: fk_categoria_id_invoice
-                                        referencedColumnNames: id
-                                        referencedTableNames: categoria
                                         onDelete: RESTRICT
                                         onUpdate: RESTRICT
                             -   column:
@@ -138,6 +227,26 @@ databaseChangeLog:
                                     constraints:
                                         nullable: false
                             -   column:
+                                    name: fatura_id
+                                    type: bigint
+                                    constraints:
+                                        nullable: false
+                                        foreignKeyName: fk_fatura_id_lancamento
+                                        referencedColumnNames: id
+                                        referencedTableNames: fatura
+                                        onDelete: RESTRICT
+                                        onUpdate: RESTRICT
+                            -   column:
+                                    name: categoria_id
+                                    type: bigint
+                                    constraints:
+                                        nullable: false
+                                        foreignKeyName: fk_categoria_id_lancamento
+                                        referencedColumnNames: id
+                                        referencedTableNames: categoria
+                                        onDelete: RESTRICT
+                                        onUpdate: RESTRICT
+                            -   column:
                                     name: create_date
                                     type: timestamp
                                     constraints:
@@ -155,19 +264,9 @@ databaseChangeLog:
                                     type: varchar(255)
                                     constraints:
                                         nullable: false
-                            -   column:
-                                    name: fatura_id
-                                    type: bigint
-                                    constraints:
-                                        nullable: false
-                                        foreignKeyName: fk_fatura_id_lancamento
-                                        referencedColumnNames: id
-                                        referencedTableNames: fatura
-                                        onDelete: RESTRICT
-                                        onUpdate: RESTRICT
 
                 -   createTable:
-                        tableName: categoria
+                        tableName: carteira
                         columns:
                             -   column:
                                     name: id
@@ -177,24 +276,28 @@ databaseChangeLog:
                                         primaryKey: true
                                         nullable: false
                             -   column:
-                                    name: titulo
+                                    name: mes
                                     type: varchar(255)
                                     constraints:
                                         nullable: false
-                            -   column:
-                                    name: descricao
-                                    type: varchar(255)
-                            -   column:
-                                    name: excluido
-                                    type: boolean
                             -   column:
                                     name: usuario_id
                                     type: bigint
                                     constraints:
                                         nullable: false
-                                        foreignKeyName: fk_usuario_id_categoria
+                                        foreignKeyName: fk_usuario_id_carteira
                                         referencedColumnNames: id
                                         referencedTableNames: usuario
+                                        onDelete: RESTRICT
+                                        onUpdate: RESTRICT
+                            -   column:
+                                    name: orcamento_id
+                                    type: bigint
+                                    constraints:
+                                        nullable: false
+                                        foreignKeyName: fk_orcamento_id_carteira
+                                        referencedColumnNames: id
+                                        referencedTableNames: orcamento
                                         onDelete: RESTRICT
                                         onUpdate: RESTRICT
                             -   column:
@@ -232,13 +335,18 @@ databaseChangeLog:
                                     constraints:
                                         nullable: false
                             -   column:
-                                    name: usuario_id
+                                    name: mes
+                                    type: varchar(255)
+                                    constraints:
+                                        nullable: false
+                            -   column:
+                                    name: carteira_id
                                     type: bigint
                                     constraints:
                                         nullable: false
-                                        foreignKeyName: fk_usuario_id_categoria
+                                        foreignKeyName: fk_carteira_id_orcamento
                                         referencedColumnNames: id
-                                        referencedTableNames: usuario
+                                        referencedTableNames: carteira
                                         onDelete: RESTRICT
                                         onUpdate: RESTRICT
                             -   column:

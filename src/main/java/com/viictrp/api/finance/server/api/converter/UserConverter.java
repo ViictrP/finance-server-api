@@ -1,30 +1,30 @@
 package com.viictrp.api.finance.server.api.converter;
 
 import com.viictrp.api.finance.server.api.domain.Usuario;
-import com.viictrp.api.finance.server.api.dto.UserDTO;
+import com.viictrp.api.finance.server.api.dto.UsuarioDTO;
 import org.springframework.stereotype.Component;
 
 @Component
-public class UserConverter implements Converter<Usuario, UserDTO> {
+public class UserConverter implements Converter<Usuario, UsuarioDTO> {
 
     @Override
-    public Usuario toEntity(UserDTO userDTO) {
+    public Usuario toEntity(UsuarioDTO usuarioDTO) {
         Usuario usuario = null;
-        if (userDTO != null) {
+        if (usuarioDTO != null) {
             usuario = new Usuario();
-            usuario.setAge(userDTO.getAge());
-            usuario.setEmail(userDTO.getEmail());
-            usuario.setLastname(userDTO.getLastname());
-            usuario.setName(userDTO.getName());
+            usuario.setAge(usuarioDTO.getAge());
+            usuario.setEmail(usuarioDTO.getEmail());
+            usuario.setLastname(usuarioDTO.getLastname());
+            usuario.setName(usuarioDTO.getName());
         }
         return usuario;
     }
 
     @Override
-    public UserDTO toDto(Usuario usuario) {
-        UserDTO dto = new UserDTO();
+    public UsuarioDTO toDto(Usuario usuario) {
+        UsuarioDTO dto = new UsuarioDTO();
         if (usuario != null) {
-            dto = new UserDTO();
+            dto = new UsuarioDTO();
             dto.setId(usuario.getId());
             dto.setAge(usuario.getAge());
             dto.setEmail(usuario.getEmail());

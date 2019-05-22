@@ -9,11 +9,12 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import javax.persistence.*;
 
 @Entity
-public class Orcamento extends Model<Long> {
+public class Carteira extends Model<Long> {
 
     @Getter
     @Setter
-    private Double valor;
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Orcamento orcamento;
 
     @Getter
     @Setter
@@ -22,9 +23,9 @@ public class Orcamento extends Model<Long> {
 
     @Getter
     @Setter
-    @OneToOne(mappedBy = "orcamento")
+    @ManyToOne
     @PrimaryKeyJoinColumn
-    private Carteira carteira;
+    private Usuario usuario;
 
     @Override
     public String toString() {

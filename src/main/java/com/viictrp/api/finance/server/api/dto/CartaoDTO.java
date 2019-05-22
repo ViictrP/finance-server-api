@@ -5,7 +5,10 @@ import lombok.Setter;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
-public class InvoiceDTO {
+import java.time.LocalDate;
+import java.util.List;
+
+public class CartaoDTO {
 
     @Getter
     @Setter
@@ -13,29 +16,24 @@ public class InvoiceDTO {
 
     @Getter
     @Setter
-    private String title;
+    private String descricao;
 
     @Getter
     @Setter
-    private String description;
+    private LocalDate dataFechamento;
 
     @Getter
     @Setter
-    private Boolean paid = Boolean.FALSE;
+    private Double limite;
 
     @Getter
     @Setter
-    private Boolean excluido = Boolean.FALSE;
+    private List<FaturaDTO> faturas;
 
     @Getter
     @Setter
-    private CategoryDTO category;
+    private UsuarioDTO usuario;
 
-    @Getter
-    @Setter
-    private UserDTO user;
-
-    @Override
     public String toString() {
         return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);
     }

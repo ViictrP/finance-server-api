@@ -1,11 +1,11 @@
 package com.viictrp.api.finance.server.api.converter;
 
 import com.viictrp.api.finance.server.api.domain.Categoria;
-import com.viictrp.api.finance.server.api.dto.CategoryDTO;
+import com.viictrp.api.finance.server.api.dto.CategoriaDTO;
 import org.springframework.stereotype.Component;
 
 @Component
-public class CategoryConverter implements Converter<Categoria, CategoryDTO> {
+public class CategoryConverter implements Converter<Categoria, CategoriaDTO> {
 
     private final UserConverter userConverter;
 
@@ -14,26 +14,25 @@ public class CategoryConverter implements Converter<Categoria, CategoryDTO> {
     }
 
     @Override
-    public Categoria toEntity(CategoryDTO categoryDTO) {
+    public Categoria toEntity(CategoriaDTO categoriaDTO) {
         Categoria entity = new Categoria();
-        if (categoryDTO != null) {
+        if (categoriaDTO != null) {
             entity = new Categoria();
-            entity.setTitulo(categoryDTO.getTitle());
-            entity.setDescricao(categoryDTO.getDescription());
+            entity.setTitulo(categoriaDTO.getTitle());
+            entity.setDescricao(categoriaDTO.getDescription());
         }
         return entity;
     }
 
     @Override
-    public CategoryDTO toDto(Categoria categoria) {
-        CategoryDTO dto = null;
+    public CategoriaDTO toDto(Categoria categoria) {
+        CategoriaDTO dto = null;
         if (categoria != null) {
-            dto = new CategoryDTO();
+            dto = new CategoriaDTO();
             dto.setId(categoria.getId());
             dto.setTitle(categoria.getTitulo());
             dto.setDescription(categoria.getDescricao());
             dto.setUser(userConverter.toDto(categoria.getUsuario()));
-            dto.setExcluido(categoria.getExcluido());
         }
         return dto;
     }

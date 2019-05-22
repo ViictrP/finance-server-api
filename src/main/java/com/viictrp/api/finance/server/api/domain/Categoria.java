@@ -24,7 +24,7 @@ public class Categoria extends Model<Long> {
     @Getter
     @Setter
     @OneToMany(mappedBy="categoria", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Fatura> faturas;
+    private List<Lancamento> lancamentos;
 
     @Getter
     @Setter
@@ -32,18 +32,14 @@ public class Categoria extends Model<Long> {
     @PrimaryKeyJoinColumn
     private Usuario usuario;
 
-    @Getter
-    @Setter
-    private Boolean excluido = Boolean.FALSE;
-
     public String toString() {
         return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);
     }
 
-    public void addInvoice(Fatura fatura) {
-        if (fatura != null) {
-            this.faturas.add(fatura);
-            fatura.setCategoria(this);
+    public void addInvoice(Lancamento lancamento) {
+        if (lancamento != null) {
+            this.lancamentos.add(lancamento);
+            lancamento.setCategoria(this);
         }
     }
 }

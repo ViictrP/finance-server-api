@@ -38,17 +38,17 @@ public class Usuario extends Model<Long> {
     @Getter
     @Setter
     @OneToMany(mappedBy="usuario", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Fatura> faturas;
-
-    @Getter
-    @Setter
-    @OneToMany(mappedBy="usuario", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Categoria> categories;
 
     @Getter
     @Setter
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Orcamento> orcamentos;
+    private List<Carteira> carteiras;
+
+    @Getter
+    @Setter
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Cartao> cartoes;
 
     @Override
     public String toString() {

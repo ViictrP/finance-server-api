@@ -5,7 +5,7 @@ import com.viictrp.api.finance.server.api.domain.Usuario;
 import com.viictrp.api.finance.server.api.exception.ResourceNotFoundException;
 import com.viictrp.api.finance.server.api.oauth.model.OAuthUser;
 import com.viictrp.api.finance.server.api.oauth.service.UserDetailsServiceImpl;
-import com.viictrp.api.finance.server.api.persistence.UserRepository;
+import com.viictrp.api.finance.server.api.persistence.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
@@ -15,11 +15,11 @@ import java.util.stream.Collectors;
 @Service
 public class UserService implements IUserService {
 
-    private final UserRepository repository;
+    private final UsuarioRepository repository;
 
     private final UserDetailsServiceImpl service;
 
-    public UserService(UserRepository repository, @Qualifier("userDetailsService") UserDetailsServiceImpl service) {
+    public UserService(UsuarioRepository repository, @Qualifier("userDetailsService") UserDetailsServiceImpl service) {
         this.repository = repository;
         this.service = service;
     }
