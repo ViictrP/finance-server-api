@@ -9,8 +9,10 @@ public final class Audity {
 
     }
 
-    public static void audityEntity(Model model, OAuthUser user) {
-        model.setCreatedBy(user.getFullname());
-        model.setLastModifiedBy(user.getFullname());
+    public static void audityEntity(OAuthUser user, Model... models) {
+        for (Model model : models) {
+            model.setCreatedBy(user.getFullname());
+            model.setLastModifiedBy(user.getFullname());
+        }
     }
 }

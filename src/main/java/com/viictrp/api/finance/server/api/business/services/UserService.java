@@ -16,7 +16,6 @@ import java.util.stream.Collectors;
 public class UserService implements IUserService {
 
     private final UsuarioRepository repository;
-
     private final UserDetailsServiceImpl service;
 
     public UserService(UsuarioRepository repository, @Qualifier("userDetailsService") UserDetailsServiceImpl service) {

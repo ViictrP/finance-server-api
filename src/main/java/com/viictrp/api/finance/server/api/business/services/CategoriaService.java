@@ -17,9 +17,7 @@ import java.util.stream.Collectors;
 public class CategoriaService implements ICategoriaService {
 
     private final CategoryConverter converter;
-
     private final CategoriaRepository repository;
-
     private final UserService userService;
 
     public CategoriaService(CategoryConverter converter, CategoriaRepository repository, UserService userService) {
@@ -39,7 +37,7 @@ public class CategoriaService implements ICategoriaService {
     public CategoriaDTO save(CategoriaDTO dto, OAuthUser user) {
         Categoria categoria = converter.toEntity(dto);
         categoria.setUsuario(userService.buscarUsuarioPorId(user.getUsuarioId()));
-        Audity.audityEntity(categoria, user);
+        Audity.audityEntity(user, categoria);
         repository.save(categoria);
         return converter.toDto(categoria);
     }

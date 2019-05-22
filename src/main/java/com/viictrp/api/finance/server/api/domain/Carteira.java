@@ -13,7 +13,7 @@ public class Carteira extends Model<Long> {
 
     @Getter
     @Setter
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "carteira", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Orcamento orcamento;
 
     @Getter

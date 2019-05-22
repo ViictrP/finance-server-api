@@ -11,7 +11,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/categorias")
+@RequestMapping("/v1/categorias")
 @CrossOrigin("*")
 public class CategoriaController {
 

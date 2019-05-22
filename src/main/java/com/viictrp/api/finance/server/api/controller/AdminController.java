@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/admin")
+@RequestMapping("/v1/admin")
 @CrossOrigin("*")
 @PreAuthorize("hasRole('ROLE_ADMIN')")
 public class AdminController {

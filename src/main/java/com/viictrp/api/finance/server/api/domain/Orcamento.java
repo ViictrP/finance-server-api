@@ -22,12 +22,19 @@ public class Orcamento extends Model<Long> {
 
     @Getter
     @Setter
-    @OneToOne(mappedBy = "orcamento")
-    @PrimaryKeyJoinColumn
+    @OneToOne
+    @MapsId
     private Carteira carteira;
 
     @Override
     public String toString() {
         return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);
+    }
+
+    public Carteira criarCateira(Orcamento orcamento, Usuario user) {
+        Carteira carteira = new Carteira();
+        carteira.setUsuario(user);
+        carteira.setMes(orcamento.getMes());
+        return carteira;
     }
 }

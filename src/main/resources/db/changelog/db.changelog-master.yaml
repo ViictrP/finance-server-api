@@ -291,16 +291,6 @@ databaseChangeLog:
                                         onDelete: RESTRICT
                                         onUpdate: RESTRICT
                             -   column:
-                                    name: orcamento_id
-                                    type: bigint
-                                    constraints:
-                                        nullable: false
-                                        foreignKeyName: fk_orcamento_id_carteira
-                                        referencedColumnNames: id
-                                        referencedTableNames: orcamento
-                                        onDelete: RESTRICT
-                                        onUpdate: RESTRICT
-                            -   column:
                                     name: create_date
                                     type: timestamp
                                     constraints:
