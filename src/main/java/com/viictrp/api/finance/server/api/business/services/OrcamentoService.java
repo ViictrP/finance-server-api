@@ -36,14 +36,13 @@ public class OrcamentoService implements IOrcamentoService {
 
     @Override
     @Transactional
-    public OrcamentoDTO salvarOrcamento(OrcamentoDTO orcamentoDTO, OAuthUser user) {
+    public OrcamentoDTO salvar(OrcamentoDTO orcamentoDTO, OAuthUser user) {
         Orcamento orcamento = converter.toEntity(orcamentoDTO);
         Usuario usuario = usuarioRepository.findById(user.getUsuarioId())
                 .orElseThrow(() -> new ResourceNotFoundException("Usuário não encontrado"));
-        Carteira carteira = orcamento.criarCateira(orcamento, usuario);
+        Carteira carteira = Carteira.criar(orcamento, usuario);
         Audity.audityEntity(user, orcamento, carteira);
         carteiraRepository.save(carteira);
-        orcamento.setCarteira(carteira);
         repository.save(orcamento);
         return converter.toDto(orcamento);
     }

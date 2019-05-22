@@ -14,14 +14,14 @@ import javax.validation.Valid;
 @CrossOrigin("*")
 public class CarteiraController {
 
-    private final IOrcamentoService service;
+    private final IOrcamentoService orcamentoService;
 
-    public CarteiraController(IOrcamentoService service) {
-        this.service = service;
+    public CarteiraController(IOrcamentoService orcamentoService) {
+        this.orcamentoService = orcamentoService;
     }
 
     @PostMapping("/orcamentos")
     public ResponseEntity<OrcamentoDTO> salvarCarteira(@Valid @RequestBody OrcamentoDTO orcamentoDTO) {
-        return new ResponseEntity<>(service.salvarOrcamento(orcamentoDTO, SecurityContext.getUser()), HttpStatus.CREATED);
+        return new ResponseEntity<>(orcamentoService.salvar(orcamentoDTO, SecurityContext.getUser()), HttpStatus.CREATED);
     }
 }

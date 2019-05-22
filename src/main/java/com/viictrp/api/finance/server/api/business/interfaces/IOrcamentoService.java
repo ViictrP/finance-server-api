@@ -5,5 +5,5 @@ import com.viictrp.api.finance.server.api.oauth.model.OAuthUser;
 
 public interface IOrcamentoService {
 
-    OrcamentoDTO salvarOrcamento(OrcamentoDTO orcamentoDTO, OAuthUser user);
+    OrcamentoDTO salvar(OrcamentoDTO orcamentoDTO, OAuthUser user);
 }

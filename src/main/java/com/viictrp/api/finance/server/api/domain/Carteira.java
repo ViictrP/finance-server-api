@@ -27,6 +27,21 @@ public class Carteira extends Model<Long> {
     @PrimaryKeyJoinColumn
     private Usuario usuario;
 
+    public Carteira() {
+
+    }
+
+    public Carteira(MesType mes) {
+        this.mes = mes;
+    }
+
+    public static Carteira criar(Orcamento orcamento, Usuario usuario) {
+        Carteira carteira = new Carteira(orcamento.getMes());
+        carteira.setUsuario(usuario);
+        orcamento.setCarteira(carteira);
+        return carteira;
+    }
+
     @Override
     public String toString() {
         return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);
