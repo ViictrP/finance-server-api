@@ -6,6 +6,7 @@ import com.viictrp.api.finance.server.api.converter.OrcamentoConverter;
 import com.viictrp.api.finance.server.api.domain.Carteira;
 import com.viictrp.api.finance.server.api.domain.Orcamento;
 import com.viictrp.api.finance.server.api.domain.Usuario;
+import com.viictrp.api.finance.server.api.domain.enums.MesType;
 import com.viictrp.api.finance.server.api.dto.OrcamentoDTO;
 import com.viictrp.api.finance.server.api.exception.ResourceNotFoundException;
 import com.viictrp.api.finance.server.api.oauth.model.OAuthUser;
@@ -40,7 +41,8 @@ public class OrcamentoService implements IOrcamentoService {
         Orcamento orcamento = converter.toEntity(orcamentoDTO);
         Usuario usuario = usuarioRepository.findById(user.getUsuarioId())
                 .orElseThrow(() -> new ResourceNotFoundException("Usuário não encontrado"));
-        Carteira carteira = Carteira.criar(orcamento, usuario);
+        Carteira carteira = carteiraRepository.findByMesAndUsuarioId(MesType.MAIO.name(), user.getUsuarioId())
+                .orElse(Carteira.criar(orcamento, usuario));
         Audity.audityEntity(user, orcamento, carteira);
         carteiraRepository.save(carteira);
         repository.save(orcamento);
