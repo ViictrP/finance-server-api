@@ -1,36 +1,30 @@
-package com.viictrp.api.finance.server.api.domain;
+package com.viictrp.api.finance.server.api.dto;
 
+import com.viictrp.api.finance.server.api.domain.Usuario;
 import com.viictrp.api.finance.server.api.domain.enums.MesType;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
-import javax.persistence.*;
-
-@Entity
-public class Orcamento extends Model<Long> {
+public class CarteiraDTO {
 
     @Getter
     @Setter
-    private Double valor;
+    private Long id;
 
     @Getter
     @Setter
-    @Enumerated(EnumType.STRING)
+    private OrcamentoDTO orcamento;
+
+    @Getter
+    @Setter
     private MesType mes;
 
     @Getter
     @Setter
-    @OneToOne
-    @MapsId
-    private Carteira carteira;
+    private Usuario usuario;
 
-    public void mergeDados(Orcamento orcamento) {
-        this.valor = orcamento.getValor();
-    }
-
-    @Override
     public String toString() {
         return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);
     }

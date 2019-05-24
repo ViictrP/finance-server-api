@@ -2,6 +2,7 @@ package com.viictrp.api.finance.server.api.business.services;
 
 import com.viictrp.api.finance.server.api.business.interfaces.IOrcamentoService;
 import com.viictrp.api.finance.server.api.common.Audity;
+import com.viictrp.api.finance.server.api.common.DateUtils;
 import com.viictrp.api.finance.server.api.converter.OrcamentoConverter;
 import com.viictrp.api.finance.server.api.domain.Carteira;
 import com.viictrp.api.finance.server.api.domain.Orcamento;
@@ -38,14 +39,32 @@ public class OrcamentoService implements IOrcamentoService {
     @Override
     @Transactional
     public OrcamentoDTO salvar(OrcamentoDTO orcamentoDTO, OAuthUser user) {
-        Orcamento orcamento = converter.toEntity(orcamentoDTO);
+         Orcamento orcamento = repository.findByMes(MesType.customValueOf(orcamentoDTO.getMes()))
+                .orElse(converter.toEntity(orcamentoDTO));
         Usuario usuario = usuarioRepository.findById(user.getUsuarioId())
                 .orElseThrow(() -> new ResourceNotFoundException("Usuário não encontrado"));
-        Carteira carteira = carteiraRepository.findByMesAndUsuarioId(MesType.MAIO.name(), user.getUsuarioId())
-                .orElse(Carteira.criar(orcamento, usuario));
-        Audity.audityEntity(user, orcamento, carteira);
-        carteiraRepository.save(carteira);
+        if (!orcamento.isNew()) {
+            Audity.audityEntity(user, orcamento);
+            orcamento.mergeDados(converter.toEntity(orcamentoDTO));
+        } else {
+            Carteira carteira = carteiraRepository.findByMesAndUsuario(MesType.customValueOf(orcamentoDTO.getMes()), usuario)
+                    .orElse(Carteira.criar(orcamento, usuario));
+            orcamento.setCarteira(carteira);
+            Audity.audityEntity(user, orcamento, carteira);
+            carteiraRepository.save(carteira);
+        }
         repository.save(orcamento);
         return converter.toDto(orcamento);
+    }
+
+    @Override
+    public OrcamentoDTO buscarOrcamento(Long carteiraID, Long orcamentoID, OAuthUser user) {
+        Usuario usuario = usuarioRepository.findById(user.getUsuarioId())
+                .orElseThrow(() -> new ResourceNotFoundException("Usuário não encontrado para ID fornecido"));
+        Carteira carteira = carteiraRepository.findByIdAndUsuario(carteiraID, usuario)
+                .orElseThrow(() -> new ResourceNotFoundException("Carteira não encontrada para o ID fornecido"));
+        return repository.findByCarteiraAndId(carteira, orcamentoID)
+                .map(converter::toDto)
+                .orElseThrow(() -> new ResourceNotFoundException("Orçamento não encontrado para o ID fornecido"));
     }
 }
