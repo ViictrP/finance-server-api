@@ -41,8 +41,7 @@ public class OrcamentoService implements IOrcamentoService {
     public OrcamentoDTO salvar(OrcamentoDTO orcamentoDTO, OAuthUser user) {
          Orcamento orcamento = repository.findByMes(MesType.customValueOf(orcamentoDTO.getMes()))
                 .orElse(converter.toEntity(orcamentoDTO));
-        Usuario usuario = usuarioRepository.findById(user.getUsuarioId())
-                .orElseThrow(() -> new ResourceNotFoundException("Usuário não encontrado"));
+        Usuario usuario = buscarUsuario(user.getUsuarioId());
         if (!orcamento.isNew()) {
             Audity.audityEntity(user, orcamento);
             orcamento.mergeDados(converter.toEntity(orcamentoDTO));
@@ -59,12 +58,20 @@ public class OrcamentoService implements IOrcamentoService {
 
     @Override
     public OrcamentoDTO buscarOrcamento(Long carteiraID, Long orcamentoID, OAuthUser user) {
-        Usuario usuario = usuarioRepository.findById(user.getUsuarioId())
-                .orElseThrow(() -> new ResourceNotFoundException("Usuário não encontrado para ID fornecido"));
-        Carteira carteira = carteiraRepository.findByIdAndUsuario(carteiraID, usuario)
-                .orElseThrow(() -> new ResourceNotFoundException("Carteira não encontrada para o ID fornecido"));
+        Usuario usuario = buscarUsuario(user.getUsuarioId());
+        Carteira carteira = buscarCarteira(carteiraID, usuario);
         return repository.findByCarteiraAndId(carteira, orcamentoID)
                 .map(converter::toDto)
                 .orElseThrow(() -> new ResourceNotFoundException("Orçamento não encontrado para o ID fornecido"));
+    }
+
+    private Usuario buscarUsuario(Long id) {
+        return usuarioRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Nenhum usuário encontrado para o ID fornecido"));
+    }
+
+    private Carteira buscarCarteira(Long carteiraID, Usuario usuario) {
+       return carteiraRepository.findByIdAndUsuario(carteiraID, usuario)
+                .orElseThrow(() -> new ResourceNotFoundException("Carteira não encontrada para o ID fornecido"));
     }
 }
