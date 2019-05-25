@@ -1,31 +1,35 @@
 package com.viictrp.api.finance.server.api.business.services;
 
 import com.viictrp.api.finance.server.api.business.interfaces.ICarteiraService;
-import com.viictrp.api.finance.server.api.converter.CarteiraConverter;
+import com.viictrp.api.finance.server.api.business.interfaces.IUsuarioService;
+import com.viictrp.api.finance.server.api.common.Audity;
+import com.viictrp.api.finance.server.api.converter.carteira.CarteiraConverter;
 import com.viictrp.api.finance.server.api.domain.Carteira;
+import com.viictrp.api.finance.server.api.domain.Orcamento;
 import com.viictrp.api.finance.server.api.domain.Usuario;
+import com.viictrp.api.finance.server.api.domain.enums.MesType;
 import com.viictrp.api.finance.server.api.dto.CarteiraDTO;
 import com.viictrp.api.finance.server.api.exception.ResourceNotFoundException;
 import com.viictrp.api.finance.server.api.oauth.model.OAuthUser;
-import com.viictrp.api.finance.server.api.persistence.CarteiraRepository;
-import com.viictrp.api.finance.server.api.persistence.UsuarioRepository;
+import com.viictrp.api.finance.server.api.persistence.carteira.CarteiraRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class CarteiraService implements ICarteiraService {
 
+    private static final String CARTEIRA_NOT_FOUND = "Carteira não encontrada pra o ID fornecido";
+
     private final CarteiraRepository repository;
-    private final UsuarioRepository usuarioRepository;
+    private final IUsuarioService usuarioService;
     private final CarteiraConverter converter;
 
     public CarteiraService(CarteiraRepository repository,
-                           UsuarioRepository usuarioRepository,
+                           IUsuarioService usuarioService,
                            CarteiraConverter converter) {
         this.repository = repository;
-        this.usuarioRepository = usuarioRepository;
+        this.usuarioService = usuarioService;
         this.converter = converter;
     }
 
@@ -38,20 +42,31 @@ public class CarteiraService implements ICarteiraService {
 
     @Override
     public CarteiraDTO buscarCarteira(Long id, OAuthUser user) {
-        Usuario usuario = buscarUsuario(user.getUsuarioId());
+        Usuario usuario = usuarioService.buscarUsuario(user.getUsuarioId());
         return repository.findByIdAndUsuario(id, usuario)
                 .map(converter::toDto)
-                .orElseThrow(() -> new ResourceNotFoundException("Carteira não encontrada pra o ID fornecido"));
+                .orElseThrow(() -> new ResourceNotFoundException(CARTEIRA_NOT_FOUND));
+    }
+
+    @Override
+    public Carteira buscarCarteira(Long id, Usuario usuario) {
+        return repository.findByIdAndUsuario(id, usuario)
+                .orElseThrow(() -> new ResourceNotFoundException(CARTEIRA_NOT_FOUND));
     }
 
     @Override
     public List<Carteira> buscarPorUsuario(OAuthUser user) {
-        Usuario usuario = buscarUsuario(user.getUsuarioId());
+        Usuario usuario = usuarioService.buscarUsuario(user.getUsuarioId());
         return repository.findByUsuario(usuario);
     }
 
-    private Usuario buscarUsuario(Long id) {
-        return usuarioRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Nenhum usuário encontrado para o ID fornecido"));
+    @Override
+    public void salvarOrcamentoNaCarteira(MesType mes, OAuthUser user, Orcamento orcamento) {
+        Usuario usuario = usuarioService.buscarUsuario(user.getUsuarioId());
+        Carteira carteira = repository.findByMesAndUsuario(mes, usuario)
+                .orElse(Carteira.criar(orcamento, usuario));
+        orcamento.setCarteira(carteira);
+        Audity.audityEntity(user, orcamento, carteira);
+        repository.save(carteira);
     }
 }

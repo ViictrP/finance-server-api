@@ -1,4 +1,4 @@
-package com.viictrp.api.finance.server.api.persistence;
+package com.viictrp.api.finance.server.api.persistence.orcamento;
 
 import com.viictrp.api.finance.server.api.domain.Carteira;
 import com.viictrp.api.finance.server.api.domain.Orcamento;

@@ -1,4 +1,4 @@
-package com.viictrp.api.finance.server.api.persistence;
+package com.viictrp.api.finance.server.api.persistence.categoria;
 
 import com.viictrp.api.finance.server.api.domain.Categoria;
 import org.springframework.data.jpa.repository.JpaRepository;

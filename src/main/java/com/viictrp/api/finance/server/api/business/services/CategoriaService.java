@@ -2,12 +2,12 @@ package com.viictrp.api.finance.server.api.business.services;
 
 import com.viictrp.api.finance.server.api.business.interfaces.ICategoriaService;
 import com.viictrp.api.finance.server.api.common.Audity;
-import com.viictrp.api.finance.server.api.converter.CategoryConverter;
+import com.viictrp.api.finance.server.api.converter.categoria.CategoriaConverter;
 import com.viictrp.api.finance.server.api.domain.Categoria;
 import com.viictrp.api.finance.server.api.dto.CategoriaDTO;
 import com.viictrp.api.finance.server.api.exception.ResourceNotFoundException;
 import com.viictrp.api.finance.server.api.oauth.model.OAuthUser;
-import com.viictrp.api.finance.server.api.persistence.CategoriaRepository;
+import com.viictrp.api.finance.server.api.persistence.categoria.CategoriaRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,11 +16,11 @@ import java.util.stream.Collectors;
 @Service
 public class CategoriaService implements ICategoriaService {
 
-    private final CategoryConverter converter;
+    private final CategoriaConverter converter;
     private final CategoriaRepository repository;
     private final UserService userService;
 
-    public CategoriaService(CategoryConverter converter, CategoriaRepository repository, UserService userService) {
+    public CategoriaService(CategoriaConverter converter, CategoriaRepository repository, UserService userService) {
         this.converter = converter;
         this.repository = repository;
         this.userService = userService;

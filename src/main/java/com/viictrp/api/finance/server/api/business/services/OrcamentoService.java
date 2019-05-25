@@ -1,9 +1,10 @@
 package com.viictrp.api.finance.server.api.business.services;
 
+import com.viictrp.api.finance.server.api.business.interfaces.ICarteiraService;
 import com.viictrp.api.finance.server.api.business.interfaces.IOrcamentoService;
+import com.viictrp.api.finance.server.api.business.interfaces.IUsuarioService;
 import com.viictrp.api.finance.server.api.common.Audity;
-import com.viictrp.api.finance.server.api.common.DateUtils;
-import com.viictrp.api.finance.server.api.converter.OrcamentoConverter;
+import com.viictrp.api.finance.server.api.converter.orcamento.OrcamentoConverter;
 import com.viictrp.api.finance.server.api.domain.Carteira;
 import com.viictrp.api.finance.server.api.domain.Orcamento;
 import com.viictrp.api.finance.server.api.domain.Usuario;
@@ -11,9 +12,7 @@ import com.viictrp.api.finance.server.api.domain.enums.MesType;
 import com.viictrp.api.finance.server.api.dto.OrcamentoDTO;
 import com.viictrp.api.finance.server.api.exception.ResourceNotFoundException;
 import com.viictrp.api.finance.server.api.oauth.model.OAuthUser;
-import com.viictrp.api.finance.server.api.persistence.CarteiraRepository;
-import com.viictrp.api.finance.server.api.persistence.OrcamentoRepository;
-import com.viictrp.api.finance.server.api.persistence.UsuarioRepository;
+import com.viictrp.api.finance.server.api.persistence.orcamento.OrcamentoRepository;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -23,17 +22,17 @@ public class OrcamentoService implements IOrcamentoService {
 
     private final OrcamentoConverter converter;
     private final OrcamentoRepository repository;
-    private final UsuarioRepository usuarioRepository;
-    private final CarteiraRepository carteiraRepository;
+    private final IUsuarioService usuarioService;
+    private final ICarteiraService carteiraService;
 
     public OrcamentoService(OrcamentoConverter converter,
                             OrcamentoRepository repository,
-                            UsuarioRepository usuarioRepository,
-                            CarteiraRepository carteiraRepository) {
+                            IUsuarioService usuarioService,
+                            ICarteiraService carteiraService) {
         this.converter = converter;
         this.repository = repository;
-        this.usuarioRepository = usuarioRepository;
-        this.carteiraRepository = carteiraRepository;
+        this.usuarioService = usuarioService;
+        this.carteiraService = carteiraService;
     }
 
     @Override
@@ -41,16 +40,11 @@ public class OrcamentoService implements IOrcamentoService {
     public OrcamentoDTO salvar(OrcamentoDTO orcamentoDTO, OAuthUser user) {
          Orcamento orcamento = repository.findByMes(MesType.customValueOf(orcamentoDTO.getMes()))
                 .orElse(converter.toEntity(orcamentoDTO));
-        Usuario usuario = buscarUsuario(user.getUsuarioId());
         if (!orcamento.isNew()) {
             Audity.audityEntity(user, orcamento);
             orcamento.mergeDados(converter.toEntity(orcamentoDTO));
         } else {
-            Carteira carteira = carteiraRepository.findByMesAndUsuario(MesType.customValueOf(orcamentoDTO.getMes()), usuario)
-                    .orElse(Carteira.criar(orcamento, usuario));
-            orcamento.setCarteira(carteira);
-            Audity.audityEntity(user, orcamento, carteira);
-            carteiraRepository.save(carteira);
+            carteiraService.salvarOrcamentoNaCarteira(MesType.customValueOf(orcamentoDTO.getMes()), user, orcamento);
         }
         repository.save(orcamento);
         return converter.toDto(orcamento);
@@ -58,20 +52,11 @@ public class OrcamentoService implements IOrcamentoService {
 
     @Override
     public OrcamentoDTO buscarOrcamento(Long carteiraID, Long orcamentoID, OAuthUser user) {
-        Usuario usuario = buscarUsuario(user.getUsuarioId());
-        Carteira carteira = buscarCarteira(carteiraID, usuario);
+        Usuario usuario = usuarioService.buscarUsuario(user.getUsuarioId());
+        Carteira carteira = carteiraService.buscarCarteira(carteiraID, usuario);
         return repository.findByCarteiraAndId(carteira, orcamentoID)
                 .map(converter::toDto)
                 .orElseThrow(() -> new ResourceNotFoundException("Orçamento não encontrado para o ID fornecido"));
     }
 
-    private Usuario buscarUsuario(Long id) {
-        return usuarioRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Nenhum usuário encontrado para o ID fornecido"));
-    }
-
-    private Carteira buscarCarteira(Long carteiraID, Usuario usuario) {
-       return carteiraRepository.findByIdAndUsuario(carteiraID, usuario)
-                .orElseThrow(() -> new ResourceNotFoundException("Carteira não encontrada para o ID fornecido"));
-    }
 }

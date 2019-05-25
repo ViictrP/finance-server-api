@@ -1,5 +1,6 @@
-package com.viictrp.api.finance.server.api.converter;
+package com.viictrp.api.finance.server.api.converter.carteira;
 
+import com.viictrp.api.finance.server.api.converter.Converter;
 import com.viictrp.api.finance.server.api.domain.Carteira;
 import com.viictrp.api.finance.server.api.dto.CarteiraDTO;
 import org.springframework.stereotype.Component;

@@ -1,5 +1,6 @@
-package com.viictrp.api.finance.server.api.converter;
+package com.viictrp.api.finance.server.api.converter.user;
 
+import com.viictrp.api.finance.server.api.converter.Converter;
 import com.viictrp.api.finance.server.api.domain.Usuario;
 import com.viictrp.api.finance.server.api.dto.UsuarioDTO;
 import org.springframework.stereotype.Component;

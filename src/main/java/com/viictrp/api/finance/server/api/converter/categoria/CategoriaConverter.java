@@ -1,15 +1,17 @@
-package com.viictrp.api.finance.server.api.converter;
+package com.viictrp.api.finance.server.api.converter.categoria;
 
+import com.viictrp.api.finance.server.api.converter.Converter;
+import com.viictrp.api.finance.server.api.converter.user.UserConverter;
 import com.viictrp.api.finance.server.api.domain.Categoria;
 import com.viictrp.api.finance.server.api.dto.CategoriaDTO;
 import org.springframework.stereotype.Component;
 
 @Component
-public class CategoryConverter implements Converter<Categoria, CategoriaDTO> {
+public class CategoriaConverter implements Converter<Categoria, CategoriaDTO> {
 
     private final UserConverter userConverter;
 
-    public CategoryConverter(UserConverter userConverter) {
+    public CategoriaConverter(UserConverter userConverter) {
         this.userConverter = userConverter;
     }
 
