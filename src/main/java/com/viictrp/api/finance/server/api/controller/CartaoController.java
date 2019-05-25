@@ -11,6 +11,8 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
+@RequestMapping("/v1/cartoes")
+@CrossOrigin("*")
 public class CartaoController {
 
     private final ICartaoService service;
