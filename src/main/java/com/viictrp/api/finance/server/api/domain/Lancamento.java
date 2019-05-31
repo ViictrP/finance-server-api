@@ -32,6 +32,12 @@ public class Lancamento extends Model<Long> {
     @PrimaryKeyJoinColumn
     private Categoria categoria;
 
+    @Getter
+    @Setter
+    @ManyToOne
+    @PrimaryKeyJoinColumn
+    private Cartao cartao;
+
     @Override
     public String toString() {
         return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);

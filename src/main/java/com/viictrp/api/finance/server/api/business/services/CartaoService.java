@@ -39,10 +39,9 @@ public class CartaoService implements ICartaoService {
     }
 
     @Override
-    public CartaoDTO buscarCartao(Long id, OAuthUser user) {
+    public Cartao buscarCartao(Long id, OAuthUser user) {
         Usuario usuario = usuarioService.buscarUsuario(user.getUsuarioId());
         return repository.findByIdAndUsuario(id, usuario)
-                .map(converter::toDto)
                 .orElseThrow(() -> new ResourceNotFoundException("Cartão não encontrado para ID fornecido"));
     }
 

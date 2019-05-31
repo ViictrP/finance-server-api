@@ -5,6 +5,8 @@ import lombok.Setter;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 public class LancamentoDTO {
@@ -32,6 +34,11 @@ public class LancamentoDTO {
     @Getter
     @Setter
     private List<ParcelaDTO> parcelas;
+
+    @Getter
+    @Setter
+    @NotNull
+    private CartaoDTO cartao;
 
     public String toString() {
         return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);
