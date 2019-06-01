@@ -37,7 +37,11 @@ public class FaturaDTO {
 
     @Getter
     @Setter
-    private LocalDate dataVencimento;
+    private String mes;
+
+    @Getter
+    @Setter
+    private Integer diaFechamento;
 
     @Override
     public String toString() {

@@ -136,8 +136,13 @@ databaseChangeLog:
                                         onDelete: RESTRICT
                                         onUpdate: RESTRICT
                             -   column:
-                                    name: data_vencimento
-                                    type: timestamp
+                                    name: mes
+                                    type: varchar(255)
+                                    constraints:
+                                        nullable: false
+                            -   column:
+                                    name: dia_fechamento
+                                    type: number(2,0)
                                     constraints:
                                         nullable: false
                             -   column:
@@ -230,7 +235,7 @@ databaseChangeLog:
                                     name: fatura_id
                                     type: bigint
                                     constraints:
-                                        nullable: false
+                                        nullable: true
                                         foreignKeyName: fk_fatura_id_lancamento
                                         referencedColumnNames: id
                                         referencedTableNames: fatura
@@ -244,6 +249,16 @@ databaseChangeLog:
                                         foreignKeyName: fk_categoria_id_lancamento
                                         referencedColumnNames: id
                                         referencedTableNames: categoria
+                                        onDelete: RESTRICT
+                                        onUpdate: RESTRICT
+                            -   column:
+                                    name: carteira_id
+                                    type: bigint
+                                    constraints:
+                                        nullable: true
+                                        foreignKeyName: fk_carteira_id_lancamento
+                                        referencedColumnNames: id
+                                        referencedTableNames: carteira
                                         onDelete: RESTRICT
                                         onUpdate: RESTRICT
                             -   column:

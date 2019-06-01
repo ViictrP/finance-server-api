@@ -36,7 +36,7 @@ public class Lancamento extends Model<Long> {
     @Setter
     @ManyToOne
     @PrimaryKeyJoinColumn
-    private Cartao cartao;
+    private Carteira carteira;
 
     @Override
     public String toString() {

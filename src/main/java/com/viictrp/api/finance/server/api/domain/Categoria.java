@@ -6,6 +6,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -36,9 +37,8 @@ public class Categoria extends Model<Long> {
         return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);
     }
 
-    public void addInvoice(Lancamento lancamento) {
+    public void addLancamento(Lancamento lancamento) {
         if (lancamento != null) {
-            this.lancamentos.add(lancamento);
             lancamento.setCategoria(this);
         }
     }

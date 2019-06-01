@@ -33,12 +33,11 @@ public class LancamentoDTO {
 
     @Getter
     @Setter
-    private List<ParcelaDTO> parcelas;
+    private CarteiraDTO carteira;
 
     @Getter
     @Setter
-    @NotNull
-    private CartaoDTO cartao;
+    private List<ParcelaDTO> parcelas;
 
     public String toString() {
         return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);

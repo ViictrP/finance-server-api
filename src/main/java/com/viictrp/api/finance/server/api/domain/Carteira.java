@@ -7,6 +7,8 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Carteira extends Model<Long> {
@@ -20,6 +22,11 @@ public class Carteira extends Model<Long> {
     @Setter
     @Enumerated(EnumType.STRING)
     private MesType mes;
+
+    @Getter
+    @Setter
+    @OneToMany(mappedBy="fatura", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Lancamento> lancamentos;
 
     @Getter
     @Setter
@@ -45,5 +52,11 @@ public class Carteira extends Model<Long> {
     @Override
     public String toString() {
         return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);
+    }
+
+    public void addLancamento(Lancamento lancamento) {
+        if (lancamento != null) {
+            lancamento.setCarteira(this);
+        }
     }
 }

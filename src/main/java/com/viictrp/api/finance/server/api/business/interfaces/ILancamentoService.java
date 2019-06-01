@@ -8,6 +8,7 @@ import java.util.List;
 public interface ILancamentoService {
 
     LancamentoDTO salvar(LancamentoDTO lancamento, OAuthUser user);
-    LancamentoDTO buscarLancamento(Long id, OAuthUser user);
-    List<LancamentoDTO> buscarLancamentos(Long idCartao, OAuthUser user);
+    LancamentoDTO buscarLancamento(Long id);
+    List<LancamentoDTO> buscarLancamentosByFatura(Long idFatura);
+    List<LancamentoDTO> buscarLancamentosByCarteira(Long idCarteira, OAuthUser user);
 }

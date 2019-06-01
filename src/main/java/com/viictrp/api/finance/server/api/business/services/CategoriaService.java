@@ -16,6 +16,8 @@ import java.util.stream.Collectors;
 @Service
 public class CategoriaService implements ICategoriaService {
 
+    private static final String CATEGORIA_NOT_FOUND = "Categoria não encontrada";
+
     private final CategoriaConverter converter;
     private final CategoriaRepository repository;
     private final UserService userService;
@@ -30,7 +32,13 @@ public class CategoriaService implements ICategoriaService {
     public CategoriaDTO buscarPorId(Long id, OAuthUser user) {
         return repository.findByIdAndUsuarioId(id, user.getUsuarioId())
                 .map(converter::toDto)
-                .orElseThrow(() -> new ResourceNotFoundException("Categoria não encontrada"));
+                .orElseThrow(() -> new ResourceNotFoundException(CATEGORIA_NOT_FOUND));
+    }
+
+    @Override
+    public Categoria buscarCategoriaEntity(Long id, OAuthUser user) {
+        return repository.findByIdAndUsuarioId(id, user.getUsuarioId())
+                .orElseThrow(() -> new ResourceNotFoundException(CATEGORIA_NOT_FOUND));
     }
 
     @Override

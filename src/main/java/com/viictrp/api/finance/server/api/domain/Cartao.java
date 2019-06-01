@@ -7,6 +7,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -38,5 +39,15 @@ public class Cartao extends Model<Long> {
     @Override
     public String toString() {
         return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);
+    }
+
+    public void addFatura(Fatura fatura) {
+        if (fatura != null) {
+            if (this.faturas == null) {
+                this.faturas = new ArrayList<>();
+            }
+            this.faturas.add(fatura);
+            fatura.setCartao(this);
+        }
     }
 }

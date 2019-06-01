@@ -1,5 +1,6 @@
 package com.viictrp.api.finance.server.api.domain;
 
+import com.viictrp.api.finance.server.api.domain.enums.MesType;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -8,6 +9,7 @@ import org.joda.time.LocalDate;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -40,7 +42,12 @@ public class Fatura extends Model<Long> {
 
     @Getter
     @Setter
-    private LocalDate dataVencimento;
+    @Enumerated(EnumType.STRING)
+    private MesType mes;
+
+    @Getter
+    @Setter
+    private Integer diaFechamento;
 
     public void mergeDados(@NotNull Fatura newFatura) {
         this.titulo = newFatura.getTitulo();
@@ -51,5 +58,15 @@ public class Fatura extends Model<Long> {
     @Override
     public String toString() {
         return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);
+    }
+
+    public void addLancamento(Lancamento lancamento) {
+        if (lancamento != null) {
+            if (this.lancamentos == null) {
+                this.lancamentos = new ArrayList<>();
+            }
+            lancamento.setFatura(this);
+            this.lancamentos.add(lancamento);
+        }
     }
 }

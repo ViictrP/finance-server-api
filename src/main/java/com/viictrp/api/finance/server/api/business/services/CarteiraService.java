@@ -1,17 +1,21 @@
 package com.viictrp.api.finance.server.api.business.services;
 
 import com.viictrp.api.finance.server.api.business.interfaces.ICarteiraService;
+import com.viictrp.api.finance.server.api.business.interfaces.ILancamentoService;
 import com.viictrp.api.finance.server.api.business.interfaces.IUsuarioService;
 import com.viictrp.api.finance.server.api.common.Audity;
 import com.viictrp.api.finance.server.api.converter.carteira.CarteiraConverter;
 import com.viictrp.api.finance.server.api.domain.Carteira;
+import com.viictrp.api.finance.server.api.domain.Lancamento;
 import com.viictrp.api.finance.server.api.domain.Orcamento;
 import com.viictrp.api.finance.server.api.domain.Usuario;
 import com.viictrp.api.finance.server.api.domain.enums.MesType;
 import com.viictrp.api.finance.server.api.dto.CarteiraDTO;
+import com.viictrp.api.finance.server.api.dto.LancamentoDTO;
 import com.viictrp.api.finance.server.api.exception.ResourceNotFoundException;
 import com.viictrp.api.finance.server.api.oauth.model.OAuthUser;
 import com.viictrp.api.finance.server.api.persistence.carteira.CarteiraRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -67,6 +71,17 @@ public class CarteiraService implements ICarteiraService {
                 .orElse(Carteira.criar(orcamento, usuario));
         orcamento.setCarteira(carteira);
         Audity.audityEntity(user, orcamento, carteira);
+        repository.save(carteira);
+    }
+
+    //TODO seguir mesma regra da fatura para adicionar lançamentos
+    @Override
+    public void salvarLancamentoNaCarteira(Lancamento lancamento, OAuthUser user) {
+        Usuario usuario = usuarioService.buscarUsuario(user.getUsuarioId());
+        Carteira carteira = repository.findByIdAndUsuario(lancamento.getCarteira().getId(), usuario)
+                .orElseThrow(() -> new ResourceNotFoundException(CARTEIRA_NOT_FOUND));
+        carteira.addLancamento(lancamento);
+        Audity.audityEntity(user, lancamento, carteira);
         repository.save(carteira);
     }
 }

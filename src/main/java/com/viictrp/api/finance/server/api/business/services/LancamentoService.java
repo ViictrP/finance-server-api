@@ -1,16 +1,15 @@
 package com.viictrp.api.finance.server.api.business.services;
 
-import com.viictrp.api.finance.server.api.business.interfaces.ICartaoService;
-import com.viictrp.api.finance.server.api.business.interfaces.ILancamentoService;
+import com.viictrp.api.finance.server.api.business.interfaces.*;
 import com.viictrp.api.finance.server.api.common.Audity;
 import com.viictrp.api.finance.server.api.common.PreconditionsRest;
 import com.viictrp.api.finance.server.api.converter.lancamento.LancamentoConverter;
-import com.viictrp.api.finance.server.api.domain.Cartao;
-import com.viictrp.api.finance.server.api.domain.Lancamento;
+import com.viictrp.api.finance.server.api.domain.*;
 import com.viictrp.api.finance.server.api.dto.LancamentoDTO;
 import com.viictrp.api.finance.server.api.exception.ResourceNotFoundException;
 import com.viictrp.api.finance.server.api.oauth.model.OAuthUser;
 import com.viictrp.api.finance.server.api.persistence.lancamento.LancamentoRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,40 +20,78 @@ public class LancamentoService implements ILancamentoService {
 
     private final LancamentoRepository repository;
     private final LancamentoConverter converter;
-    private final ICartaoService cartaoService;
+    private final IFaturaService faturaService;
+    private final ICarteiraService carteiraService;
+    private final IUsuarioService usuarioService;
+    private final ICategoriaService categoriaService;
 
     public LancamentoService(LancamentoRepository repository,
                              LancamentoConverter converter,
-                             ICartaoService cartaoService) {
+                             IFaturaService faturaService,
+                             ICarteiraService carteiraService,
+                             IUsuarioService usuarioService, ICategoriaService categoriaService) {
         this.repository = repository;
         this.converter = converter;
-        this.cartaoService = cartaoService;
+        this.faturaService = faturaService;
+        this.carteiraService = carteiraService;
+        this.usuarioService = usuarioService;
+        this.categoriaService = categoriaService;
     }
 
     @Override
     public LancamentoDTO salvar(LancamentoDTO lancamento, OAuthUser user) {
-        PreconditionsRest.checkCondition(lancamento.getCartao().getId() != null, "Por favor informe o código do Cartão");
-        Cartao cartao = cartaoService.buscarCartao(lancamento.getCartao().getId(), user);
+        validar(lancamento);
+        Categoria categoria = categoriaService.buscarCategoriaEntity(lancamento.getCategoria().getId(), user);
         Lancamento entity = converter.toEntity(lancamento);
-        entity.setCartao(cartao);
-        Audity.audityEntity(user, entity);
-        repository.save(entity);
+        categoria.addLancamento(entity);
+        Audity.audityEntity(user, categoria, entity);
+        if (lancamento.getFatura() != null) {
+            entity = salvarNaFatura(entity);
+            return converter.toDto(entity);
+        }
+        salvarNaCarteira(entity, user);
         return converter.toDto(entity);
     }
 
-    @Override
-    public LancamentoDTO buscarLancamento(Long id, OAuthUser user) {
-        return repository.findById(id)
-                .map(converter::toDto)
-                .orElseThrow(() -> new ResourceNotFoundException(""));
+    private Lancamento salvarNaFatura(Lancamento lancamento) {
+        return faturaService.salvarLancamentoNaFatura(lancamento);
+    }
+
+    private void salvarNaCarteira(Lancamento lancamento, OAuthUser user) {
+        carteiraService.salvarLancamentoNaCarteira(lancamento, user);
     }
 
     @Override
-    public List<LancamentoDTO> buscarLancamentos(Long idCartao, OAuthUser user) {
-        Cartao cartao = cartaoService.buscarCartao(idCartao, user);
-        return repository.findByCartao(cartao)
-                .stream()
+    public LancamentoDTO buscarLancamento(Long id) {
+        return repository.findById(id)
                 .map(converter::toDto)
-                .collect(Collectors.toList());
+                .orElseThrow(() -> new ResourceNotFoundException("O lançamento não foi encontrado para o ID fornecido"));
     }
+
+    @Override
+    public List<LancamentoDTO> buscarLancamentosByFatura(Long idFatura) {
+        Fatura fatura = faturaService.buscarFaturaEntity(idFatura);
+        return toLancamentoDTOList(repository.findByFatura(fatura));
+    }
+
+    @Override
+    public List<LancamentoDTO> buscarLancamentosByCarteira(Long idCarteira, OAuthUser user) {
+        Usuario usuario = usuarioService.buscarUsuario(user.getUsuarioId());
+        Carteira carteira = carteiraService.buscarCarteira(idCarteira, usuario);
+        return toLancamentoDTOList(repository.findByCarteira(carteira));
+    }
+
+    private List<LancamentoDTO> toLancamentoDTOList(List<Lancamento> lancamentos) {
+        return lancamentos.stream().map(converter::toDto).collect(Collectors.toList());
+    }
+
+    private void validar(LancamentoDTO lancamento) {
+        PreconditionsRest.checkCondition(
+                lancamento.getCategoria().getId() != null,
+                "Por favor informe o código da fatura");
+        PreconditionsRest.checkCondition(
+                lancamento.getFatura() != null || lancamento.getCarteira() != null,
+                "Por favor informe se o lançamento é de fatura ou carteira");
+    }
+
 }

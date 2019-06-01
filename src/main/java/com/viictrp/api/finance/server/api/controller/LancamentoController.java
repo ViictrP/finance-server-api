@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/v1/lancamentos")
 @CrossOrigin("*")
@@ -19,12 +21,12 @@ public class LancamentoController {
     }
 
     @PostMapping
-    public ResponseEntity<LancamentoDTO> salvar(LancamentoDTO dto) {
+    public ResponseEntity<LancamentoDTO> salvar(@Valid @RequestBody LancamentoDTO dto) {
         return new ResponseEntity<>(this.service.salvar(dto, SecurityContext.getUser()), HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<LancamentoDTO> buscarLancamento(@PathVariable Long id) {
-        return ResponseEntity.ok(service.buscarLancamento(id, SecurityContext.getUser()));
+        return ResponseEntity.ok(service.buscarLancamento(id));
     }
 }

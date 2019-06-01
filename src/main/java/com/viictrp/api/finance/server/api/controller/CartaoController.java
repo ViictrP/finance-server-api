@@ -1,10 +1,10 @@
 package com.viictrp.api.finance.server.api.controller;
 
 import com.viictrp.api.finance.server.api.business.interfaces.ICartaoService;
-import com.viictrp.api.finance.server.api.business.interfaces.ILancamentoService;
+import com.viictrp.api.finance.server.api.business.interfaces.IFaturaService;
 import com.viictrp.api.finance.server.api.converter.cartao.CartaoConverter;
 import com.viictrp.api.finance.server.api.dto.CartaoDTO;
-import com.viictrp.api.finance.server.api.dto.LancamentoDTO;
+import com.viictrp.api.finance.server.api.dto.FaturaDTO;
 import com.viictrp.api.finance.server.api.oauth.security.SecurityContext;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,14 +20,14 @@ public class CartaoController {
 
     private final ICartaoService service;
     private final CartaoConverter converter;
-    private final ILancamentoService lancamentoService;
+    private final IFaturaService faturaService;
 
     public CartaoController(ICartaoService service,
                             CartaoConverter converter,
-                            ILancamentoService lancamentoService) {
+                            IFaturaService faturaService) {
         this.service = service;
         this.converter = converter;
-        this.lancamentoService = lancamentoService;
+        this.faturaService = faturaService;
     }
 
     @PostMapping
@@ -46,8 +46,8 @@ public class CartaoController {
         return ResponseEntity.ok(cartaoDTO);
     }
 
-    @GetMapping("/{id}/lancamentos")
-    public ResponseEntity<List<LancamentoDTO>> buscarLancamentos(@PathVariable Long id) {
-        return ResponseEntity.ok(lancamentoService.buscarLancamentos(id, SecurityContext.getUser()));
+    @GetMapping("{id}/faturas")
+    public ResponseEntity<List<FaturaDTO>> buscarFaturas(@PathVariable Long id) {
+        return ResponseEntity.ok(faturaService.buscarFaturas(id, SecurityContext.getUser()));
     }
 }
