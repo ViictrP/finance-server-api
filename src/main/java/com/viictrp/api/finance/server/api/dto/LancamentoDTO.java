@@ -4,10 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
-
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
-import java.util.List;
+import org.joda.time.DateTime;
 
 public class LancamentoDTO {
 
@@ -25,6 +22,10 @@ public class LancamentoDTO {
 
     @Getter
     @Setter
+    private DateTime data;
+
+    @Getter
+    @Setter
     private FaturaDTO fatura;
 
     @Getter
@@ -37,7 +38,11 @@ public class LancamentoDTO {
 
     @Getter
     @Setter
-    private List<ParcelaDTO> parcelas;
+    private boolean isParcela;
+
+    @Getter
+    @Setter
+    private Integer quantidadeParcelas;
 
     public String toString() {
         return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);

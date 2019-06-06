@@ -13,5 +13,6 @@ import java.util.Optional;
 public interface FaturaRepository extends JpaRepository<Fatura, Long> {
 
     Optional<Fatura> findByMes(MesType mesType);
+    Optional<Fatura> findByMesAndCartao(MesType mes, Cartao cartao);
     List<Fatura> findByCartao(Cartao cartao);
 }

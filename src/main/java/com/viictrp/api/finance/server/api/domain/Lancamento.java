@@ -4,10 +4,12 @@ import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
+import org.joda.time.DateTime;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.Transient;
 
 @Entity
 public class Lancamento extends Model<Long> {
@@ -19,6 +21,19 @@ public class Lancamento extends Model<Long> {
     @Getter
     @Setter
     private Double valor;
+
+    @Getter
+    @Setter
+    private DateTime data;
+
+    @Getter
+    @Setter
+    private String codigoParcela;
+
+    @Getter
+    @Setter
+    @Transient
+    private int quantidadeParcelas;
 
     @Getter
     @Setter

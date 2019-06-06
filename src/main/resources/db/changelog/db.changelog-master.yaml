@@ -232,6 +232,14 @@ databaseChangeLog:
                                     constraints:
                                         nullable: false
                             -   column:
+                                    name: data
+                                    type: timestamp
+                                    constraints:
+                                        nullable: false
+                            -   column:
+                                    name: codigo_parcela
+                                    type: varchar(255)
+                            -   column:
                                     name: fatura_id
                                     type: bigint
                                     constraints:

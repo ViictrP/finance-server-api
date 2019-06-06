@@ -14,7 +14,8 @@ public class FaturaConverter implements Converter<Fatura, FaturaDTO> {
         Fatura fatura = null;
         if (faturaDTO != null) {
             fatura = new Fatura();
-            fatura.setMes(MesType.customValueOf(faturaDTO.getMes()));
+            fatura.setId(faturaDTO.getId());
+            fatura.setMes(faturaDTO.getMes() != null ? MesType.customValueOf(faturaDTO.getMes()) : MesType.JANEIRO);
             fatura.setDiaFechamento(faturaDTO.getDiaFechamento());
             fatura.setDescricao(faturaDTO.getDescricao());
             fatura.setPago(faturaDTO.getPago());

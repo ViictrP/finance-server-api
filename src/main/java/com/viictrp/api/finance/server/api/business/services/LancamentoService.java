@@ -9,7 +9,7 @@ import com.viictrp.api.finance.server.api.dto.LancamentoDTO;
 import com.viictrp.api.finance.server.api.exception.ResourceNotFoundException;
 import com.viictrp.api.finance.server.api.oauth.model.OAuthUser;
 import com.viictrp.api.finance.server.api.persistence.lancamento.LancamentoRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.viictrp.api.finance.server.api.strategy.LancamentoStrategy;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -24,41 +24,36 @@ public class LancamentoService implements ILancamentoService {
     private final ICarteiraService carteiraService;
     private final IUsuarioService usuarioService;
     private final ICategoriaService categoriaService;
+    private final LancamentoStrategy strategy;
 
     public LancamentoService(LancamentoRepository repository,
                              LancamentoConverter converter,
                              IFaturaService faturaService,
                              ICarteiraService carteiraService,
-                             IUsuarioService usuarioService, ICategoriaService categoriaService) {
+                             IUsuarioService usuarioService, ICategoriaService categoriaService, LancamentoStrategy strategy) {
         this.repository = repository;
         this.converter = converter;
         this.faturaService = faturaService;
         this.carteiraService = carteiraService;
         this.usuarioService = usuarioService;
         this.categoriaService = categoriaService;
+        this.strategy = strategy;
     }
 
     @Override
     public LancamentoDTO salvar(LancamentoDTO lancamento, OAuthUser user) {
         validar(lancamento);
-        Categoria categoria = categoriaService.buscarCategoriaEntity(lancamento.getCategoria().getId(), user);
         Lancamento entity = converter.toEntity(lancamento);
+        Categoria categoria = categoriaService.buscarCategoriaEntity(lancamento.getCategoria().getId(), user);
         categoria.addLancamento(entity);
         Audity.audityEntity(user, categoria, entity);
-        if (lancamento.getFatura() != null) {
-            entity = salvarNaFatura(entity);
-            return converter.toDto(entity);
+        ILancamentoStrategyService service = strategy.map(lancamento);
+        if (lancamento.isParcela()) {
+            service.salvarLancamentoComparcelas(entity);
+        } else {
+            service.salvarLancamento(entity);
         }
-        salvarNaCarteira(entity, user);
         return converter.toDto(entity);
-    }
-
-    private Lancamento salvarNaFatura(Lancamento lancamento) {
-        return faturaService.salvarLancamentoNaFatura(lancamento);
-    }
-
-    private void salvarNaCarteira(Lancamento lancamento, OAuthUser user) {
-        carteiraService.salvarLancamentoNaCarteira(lancamento, user);
     }
 
     @Override

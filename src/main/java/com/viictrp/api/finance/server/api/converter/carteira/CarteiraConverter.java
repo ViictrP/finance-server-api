@@ -13,6 +13,7 @@ public class CarteiraConverter implements Converter<Carteira, CarteiraDTO> {
         Carteira carteira = null;
         if (carteiraDTO != null) {
             carteira = new Carteira();
+            carteira.setId(carteiraDTO.getId());
             carteira.setMes(carteiraDTO.getMes());
         }
         return carteira;
