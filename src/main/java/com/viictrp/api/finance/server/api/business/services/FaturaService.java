@@ -82,7 +82,10 @@ public class FaturaService implements IFaturaService {
         MesType mes = DateUtils.getMonthName(lancamento.getData());
         if (DateUtils.isTodayAfterThan(fatura.getDiaFechamento())) {
             fatura = this.repository.findByMesAndCartao(MesType.nextMonth(mes), fatura.getCartao())
-                    .orElseThrow(() -> new ResourceNotFoundException(FATURA_NOT_FOUND));
+                    .orElseGet(Fatura::new);
+        }
+        if (fatura.isNew()) {
+            //TODO continuar, gerar nova fatura caso não tenha a próxima fatura
         }
         fatura.addLancamento(lancamento);
         repository.save(fatura);
