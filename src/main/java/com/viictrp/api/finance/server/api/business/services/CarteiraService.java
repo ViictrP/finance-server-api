@@ -81,24 +81,22 @@ public class CarteiraService implements ICarteiraService {
     @Override
     public LancamentoDTO salvarLancamento(Lancamento lancamento) {
         OAuthUser user = SecurityContext.getUser();
-        Carteira carteira;
         MesType mes = DateUtils.getMonthName(lancamento.getData());
         Usuario usuario = usuarioService.buscarUsuario(user.getUsuarioId());
+        Carteira carteira = repository.findByMesAndUsuario(mes, usuario)
+                .orElseThrow(() -> new ResourceNotFoundException(CARTEIRA_NOT_FOUND));
         if (DateUtils.isLastDayOfMonth()) {
             carteira = repository.findByMesAndUsuario(MesType.nextMonth(mes), usuario)
-                    .orElseThrow(() -> new ResourceNotFoundException(CARTEIRA_NOT_FOUND));
-        } else {
-            carteira = repository.findByMesAndUsuario(mes, usuario)
                     .orElseThrow(() -> new ResourceNotFoundException(CARTEIRA_NOT_FOUND));
         }
         carteira.addLancamento(lancamento);
         Audity.audityEntity(user, lancamento, carteira);
-        repository.save(carteira);
+        repository.saveAndFlush(carteira);
         return lancamentoConverter.toDto(lancamento);
     }
 
     @Override
-    public List<LancamentoDTO> salvarLancamentoComparcelas(Lancamento lancamento) {
+    public List<LancamentoDTO> salvarLancamentoComParcelas(Lancamento lancamento) {
         return Collections.singletonList(salvarLancamento(lancamento));
     }
 }

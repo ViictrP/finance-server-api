@@ -8,5 +8,5 @@ import java.util.List;
 public interface ILancamentoStrategyService {
 
     LancamentoDTO salvarLancamento(Lancamento lancamento);
-    List<LancamentoDTO> salvarLancamentoComparcelas(Lancamento lancamento);
+    List<LancamentoDTO> salvarLancamentoComParcelas(Lancamento lancamento);
 }

@@ -15,11 +15,12 @@ import com.viictrp.api.finance.server.api.dto.FaturaDTO;
 import com.viictrp.api.finance.server.api.dto.LancamentoDTO;
 import com.viictrp.api.finance.server.api.exception.ResourceNotFoundException;
 import com.viictrp.api.finance.server.api.oauth.model.OAuthUser;
+import com.viictrp.api.finance.server.api.oauth.security.SecurityContext;
 import com.viictrp.api.finance.server.api.persistence.fatura.FaturaRepository;
 import org.joda.time.DateTime;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -77,34 +78,54 @@ public class FaturaService implements IFaturaService {
 
     @Override
     public LancamentoDTO salvarLancamento(Lancamento lancamento) {
-        Fatura fatura = this.repository.findById(lancamento.getId())
-                .orElseThrow(() -> new ResourceNotFoundException(FATURA_NOT_FOUND));
-        MesType mes = DateUtils.getMonthName(lancamento.getData());
-        if (DateUtils.isTodayAfterThan(fatura.getDiaFechamento())) {
-            fatura = this.repository.findByMesAndCartao(MesType.nextMonth(mes), fatura.getCartao())
-                    .orElseGet(Fatura::new);
-        }
-        if (fatura.isNew()) {
-            //TODO continuar, gerar nova fatura caso não tenha a próxima fatura
-        }
+        Fatura fatura = getFatura(lancamento);
         fatura.addLancamento(lancamento);
         repository.save(fatura);
         return lancamentoConverter.toDto(lancamento);
     }
 
-    //TODO continuar a lógica de lançamentos parcelados
     @Override
-    public List<LancamentoDTO> salvarLancamentoComparcelas(Lancamento lancamento) {
-        MesType primeiroMes = DateUtils.getMonthName(lancamento.getData());
+    public List<LancamentoDTO> salvarLancamentoComParcelas(Lancamento lancamento) {
+        Fatura fatura = getFatura(lancamento);
+        List<LancamentoDTO> lancamentos = new ArrayList<>();
         for (int i = 0; i < lancamento.getQuantidadeParcelas(); i++) {
+            int index = i + 1;
             Lancamento lanc = new Lancamento();
-            lanc.setData(lanc.getData());
-            lanc.setCategoria(lanc.getCategoria());
-            lanc.setValor(lanc.getValor() / lanc.getQuantidadeParcelas());
-            lanc.setDescricao(lanc.getDescricao() + " " + i + "/" + lancamento.getQuantidadeParcelas());
-            lanc.setCodigoParcela(DateTime.now().toString() + i + "-" + lancamento.getQuantidadeParcelas());
-            lanc.setFatura(lancamento.getFatura());
+            lanc.setData(lancamento.getData());
+            lanc.setCategoria(lancamento.getCategoria());
+            lanc.setValor(lancamento.getValor() / lancamento.getQuantidadeParcelas());
+            lanc.setDescricao(lancamento.getDescricao() + " " + index + "/" + lancamento.getQuantidadeParcelas());
+            lanc.setCodigoParcela(DateTime.now().toString() + index + "-" + lancamento.getQuantidadeParcelas());
+            fatura.addLancamento(lanc);
+            Audity.audityEntity(SecurityContext.getUser(), fatura, lanc);
+            repository.save(fatura);
+            lancamentos.add(lancamentoConverter.toDto(lanc));
+            fatura = next(fatura);
         }
-        return Collections.singletonList(salvarLancamento(lancamento));
+        return lancamentos;
+    }
+
+    private Fatura getFatura(Lancamento lancamento) {
+        final Fatura fatura = this.repository.findById(lancamento.getFatura().getId())
+                .orElseThrow(() -> new ResourceNotFoundException(FATURA_NOT_FOUND));
+        if (DateUtils.isTodayAfterThan(fatura.getDiaFechamento())) {
+            return next(fatura);
+        }
+        return fatura;
+    }
+
+    private Fatura next(Fatura fatura) {
+        return this.repository.findByMesAndCartao(MesType.nextMonth(fatura.getMes()), fatura.getCartao())
+                .orElseGet(() -> proximaFatura(fatura));
+    }
+
+    private Fatura proximaFatura(Fatura faturaAtual) {
+        Fatura fatura = new Fatura();
+        fatura.setDiaFechamento(faturaAtual.getDiaFechamento());
+        fatura.setMes(MesType.nextMonth(faturaAtual.getMes()));
+        fatura.setCartao(faturaAtual.getCartao());
+        fatura.setTitulo("Fatura de " + fatura.getMes().name());
+        fatura.setDescricao("Fatura do mês de " + fatura.getMes().name());
+        return fatura;
     }
 }

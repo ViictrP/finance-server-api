@@ -38,7 +38,7 @@ public class LancamentoDTO {
 
     @Getter
     @Setter
-    private boolean isParcela;
+    private Boolean isParcela;
 
     @Getter
     @Setter

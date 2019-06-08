@@ -48,8 +48,8 @@ public class LancamentoService implements ILancamentoService {
         categoria.addLancamento(entity);
         Audity.audityEntity(user, categoria, entity);
         ILancamentoStrategyService service = strategy.map(lancamento);
-        if (lancamento.isParcela()) {
-            service.salvarLancamentoComparcelas(entity);
+        if (lancamento.getIsParcela() && lancamento.getFatura() != null) {
+            service.salvarLancamentoComParcelas(entity);
         } else {
             service.salvarLancamento(entity);
         }

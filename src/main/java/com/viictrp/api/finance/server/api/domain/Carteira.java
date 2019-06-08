@@ -25,7 +25,7 @@ public class Carteira extends Model<Long> {
 
     @Getter
     @Setter
-    @OneToMany(mappedBy="fatura", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy="carteira", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Lancamento> lancamentos;
 
     @Getter
@@ -56,7 +56,11 @@ public class Carteira extends Model<Long> {
 
     public void addLancamento(Lancamento lancamento) {
         if (lancamento != null) {
+            if (this.lancamentos == null) {
+                this.lancamentos = new ArrayList<>();
+            }
             lancamento.setCarteira(this);
+            lancamentos.add(lancamento);
         }
     }
 }
