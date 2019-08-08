@@ -14,8 +14,12 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     public void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/admin/**").authenticated()
-                .antMatchers("/invoices/**").authenticated()
+                .antMatchers("/v1/admin/**").authenticated()
+                .antMatchers("/v1/categorias/**").authenticated()
+                .antMatchers("/v1/carteiras/**").authenticated()
+                .antMatchers("/v1/cartoes/**").authenticated()
+                .antMatchers("/v1/lancamentos/**").authenticated()
+                .antMatchers("/v1/faturas/**").authenticated()
                 .and().authorizeRequests().antMatchers("/console/**").permitAll()
                 .and().exceptionHandling().accessDeniedHandler(new OAuth2AccessDeniedHandler())
                 .and().authorizeRequests().anyRequest().denyAll();

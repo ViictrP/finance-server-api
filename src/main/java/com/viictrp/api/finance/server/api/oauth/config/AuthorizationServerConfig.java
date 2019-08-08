@@ -24,8 +24,6 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 
     private final PasswordEncoder passwordEncoder;
 
-    private final DataSource dataSource;
-
     @Value("${finance.oauth2.client_id}")
     private String clientId;
 
@@ -37,11 +35,9 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     private final AuthenticationManager authenticationManager;
 
     public AuthorizationServerConfig(PasswordEncoder passwordEncoder,
-                                     DataSource dataSource,
                                      @Qualifier("userDetailsService") UserDetailsService userDetailsService,
                                      @Qualifier("authenticationManagerBean") AuthenticationManager authenticationManager) {
         this.passwordEncoder = passwordEncoder;
-        this.dataSource = dataSource;
         this.userDetailsService = userDetailsService;
         this.authenticationManager = authenticationManager;
     }

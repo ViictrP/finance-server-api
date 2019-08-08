@@ -1,162 +1,382 @@
 databaseChangeLog:
-  - changeSet:
-      id: 1
-      comments: Database creation
-      author: Victor Prado
-      context: local
-      changes:
-        - createTable:
-            tableName: user
-            columns:
-              - column:
-                  name: id
-                  type: bigint
-                  autoIncrement: true
-                  constraints:
-                    primaryKey: true
-                    nullable: false
-              - column:
-                  name: name
-                  type: varchar(255)
-                  constraints:
-                    nullable: false
-              - column:
-                  name: lastname
-                  type: varchar(255)
-                  constraints:
-                    nullable: false
-              - column:
-                  name: age
-                  type: bigint
-                  constraints:
-                    nullable: false
-              - column:
-                  name: email
-                  type: varchar(255)
-                  constraints:
-                    nullable: false
-              - column:
-                  name: create_date
-                  type: timestamp
-                  constraints:
-                    nullable: false
-              - column:
-                  name: last_update_date
-                  type: timestamp
-              - column:
-                  name: created_by
-                  type: varchar(255)
-                  constraints:
-                    nullable: false
-              - column:
-                  name: last_modified_by
-                  type: varchar(255)
-                  constraints:
-                    nullable: false
+    -   changeSet:
+            id: 1
+            comments: Database creation
+            author: Victor Prado
+            context: local
+            changes:
+                -   createTable:
+                        tableName: usuario
+                        columns:
+                            -   column:
+                                    name: id
+                                    type: bigint
+                                    autoIncrement: true
+                                    constraints:
+                                        primaryKey: true
+                                        nullable: false
+                            -   column:
+                                    name: name
+                                    type: varchar(255)
+                                    constraints:
+                                        nullable: false
+                            -   column:
+                                    name: lastname
+                                    type: varchar(255)
+                                    constraints:
+                                        nullable: false
+                            -   column:
+                                    name: age
+                                    type: bigint
+                                    constraints:
+                                        nullable: false
+                            -   column:
+                                    name: email
+                                    type: varchar(255)
+                                    constraints:
+                                        nullable: false
+                            -   column:
+                                    name: create_date
+                                    type: timestamp
+                                    constraints:
+                                        nullable: false
+                            -   column:
+                                    name: last_update_date
+                                    type: timestamp
+                            -   column:
+                                    name: created_by
+                                    type: varchar(255)
+                                    constraints:
+                                        nullable: false
+                            -   column:
+                                    name: last_modified_by
+                                    type: varchar(255)
+                                    constraints:
+                                        nullable: false
 
-        - createTable:
-            tableName: invoice
-            columns:
-              - column:
-                  name: id
-                  type: bigint
-                  autoIncrement: true
-                  constraints:
-                    primaryKey: true
-                    nullable: false
-              - column:
-                  name: title
-                  type: varchar(255)
-                  constraints:
-                    nullable: false
-              - column:
-                  name: description
-                  type: varchar(255)
-              - column:
-                  name: paid
-                  type: boolean
-              - column:
-                  name: user_id
-                  type: bigint
-                  constraints:
-                    nullable: false
-                    foreignKeyName: fk_user_id_invoice
-                    referencedColumnNames: id
-                    referencedTableNames: user
-                    onDelete: RESTRICT
-                    onUpdate: RESTRICT
-              - column:
-                  name: category_id
-                  type: bigint
-                  constraints:
-                    nullable: false
-                    foreignKeyName: fk_category_id_invoice
-                    referencedColumnNames: id
-                    referencedTableNames: category
-                    onDelete: RESTRICT
-                    onUpdate: RESTRICT
-              - column:
-                  name: create_date
-                  type: timestamp
-                  constraints:
-                    nullable: false
-              - column:
-                  name: last_update_date
-                  type: timestamp
-              - column:
-                  name: created_by
-                  type: varchar(255)
-                  constraints:
-                    nullable: false
-              - column:
-                  name: last_modified_by
-                  type: varchar(255)
-                  constraints:
-                    nullable: false
+                -   createTable:
+                        tableName: cartao
+                        columns:
+                            -   column:
+                                    name: id
+                                    type: bigint
+                                    autoIncrement: true
+                                    constraints:
+                                        primaryKey: true
+                                        nullable: false
+                            -   column:
+                                    name: descricao
+                                    type: varchar(255)
+                            -   column:
+                                    name: limite
+                                    type: double
+                            -   column:
+                                    name: usuario_id
+                                    type: bigint
+                                    constraints:
+                                        nullable: false
+                                        foreignKeyName: fk_usuario_id_cartao
+                                        referencedColumnNames: id
+                                        referencedTableNames: usuario
+                                        onDelete: RESTRICT
+                                        onUpdate: RESTRICT
+                            -   column:
+                                    name: data_fechamento
+                                    type: timestamp
+                                    constraints:
+                                        nullable: false
+                            -   column:
+                                    name: create_date
+                                    type: timestamp
+                                    constraints:
+                                        nullable: false
+                            -   column:
+                                    name: last_update_date
+                                    type: timestamp
+                            -   column:
+                                    name: created_by
+                                    type: varchar(255)
+                                    constraints:
+                                        nullable: false
+                            -   column:
+                                    name: last_modified_by
+                                    type: varchar(255)
+                                    constraints:
+                                        nullable: false
 
-        - createTable:
-            tableName: category
-            columns:
-              - column:
-                  name: id
-                  type: bigint
-                  autoIncrement: true
-                  constraints:
-                    primaryKey: true
-                    nullable: false
-              - column:
-                  name: title
-                  type: varchar(255)
-                  constraints:
-                    nullable: false
-              - column:
-                  name: description
-                  type: varchar(255)
-              - column:
-                  name: user_id
-                  type: bigint
-                  constraints:
-                    nullable: false
-                    foreignKeyName: fk_user_id_category
-                    referencedColumnNames: id
-                    referencedTableNames: user
-                    onDelete: RESTRICT
-                    onUpdate: RESTRICT
-              - column:
-                  name: create_date
-                  type: timestamp
-                  constraints:
-                    nullable: false
-              - column:
-                  name: last_update_date
-                  type: timestamp
-              - column:
-                  name: created_by
-                  type: varchar(255)
-                  constraints:
-                    nullable: false
-              - column:
-                  name: last_modified_by
-                  type: varchar(255)
-                  constraints:
-                    nullable: false
+                -   createTable:
+                        tableName: fatura
+                        columns:
+                            -   column:
+                                    name: id
+                                    type: bigint
+                                    autoIncrement: true
+                                    constraints:
+                                        primaryKey: true
+                                        nullable: false
+                            -   column:
+                                    name: titulo
+                                    type: varchar(255)
+                                    constraints:
+                                        nullable: false
+                            -   column:
+                                    name: descricao
+                                    type: varchar(255)
+                            -   column:
+                                    name: pago
+                                    type: boolean
+                            -   column:
+                                    name: cartao_id
+                                    type: bigint
+                                    constraints:
+                                        nullable: false
+                                        foreignKeyName: fk_cartao_id_fatura
+                                        referencedColumnNames: id
+                                        referencedTableNames: cartao
+                                        onDelete: RESTRICT
+                                        onUpdate: RESTRICT
+                            -   column:
+                                    name: mes
+                                    type: varchar(255)
+                                    constraints:
+                                        nullable: false
+                            -   column:
+                                    name: dia_fechamento
+                                    type: number(2,0)
+                                    constraints:
+                                        nullable: false
+                            -   column:
+                                    name: create_date
+                                    type: timestamp
+                                    constraints:
+                                        nullable: false
+                            -   column:
+                                    name: last_update_date
+                                    type: timestamp
+                            -   column:
+                                    name: created_by
+                                    type: varchar(255)
+                                    constraints:
+                                        nullable: false
+                            -   column:
+                                    name: last_modified_by
+                                    type: varchar(255)
+                                    constraints:
+                                        nullable: false
+
+                -   createTable:
+                        tableName: categoria
+                        columns:
+                            -   column:
+                                    name: id
+                                    type: bigint
+                                    autoIncrement: true
+                                    constraints:
+                                        primaryKey: true
+                                        nullable: false
+                            -   column:
+                                    name: titulo
+                                    type: varchar(255)
+                                    constraints:
+                                        nullable: false
+                            -   column:
+                                    name: descricao
+                                    type: varchar(255)
+                            -   column:
+                                    name: usuario_id
+                                    type: bigint
+                                    constraints:
+                                        nullable: false
+                                        foreignKeyName: fk_usuario_id_categoria
+                                        referencedColumnNames: id
+                                        referencedTableNames: usuario
+                                        onDelete: RESTRICT
+                                        onUpdate: RESTRICT
+                            -   column:
+                                    name: create_date
+                                    type: timestamp
+                                    constraints:
+                                        nullable: false
+                            -   column:
+                                    name: last_update_date
+                                    type: timestamp
+                            -   column:
+                                    name: created_by
+                                    type: varchar(255)
+                                    constraints:
+                                        nullable: false
+                            -   column:
+                                    name: last_modified_by
+                                    type: varchar(255)
+                                    constraints:
+                                        nullable: false
+
+                -   createTable:
+                        tableName: lancamento
+                        columns:
+                            -   column:
+                                    name: id
+                                    type: bigint
+                                    autoIncrement: true
+                                    constraints:
+                                        primaryKey: true
+                                        nullable: false
+                            -   column:
+                                    name: descricao
+                                    type: varchar(255)
+                                    constraints:
+                                        nullable: false
+                            -   column:
+                                    name: valor
+                                    type: double
+                                    constraints:
+                                        nullable: false
+                            -   column:
+                                    name: data
+                                    type: timestamp
+                                    constraints:
+                                        nullable: false
+                            -   column:
+                                    name: codigo_parcela
+                                    type: varchar(255)
+                            -   column:
+                                    name: fatura_id
+                                    type: bigint
+                                    constraints:
+                                        nullable: true
+                                        foreignKeyName: fk_fatura_id_lancamento
+                                        referencedColumnNames: id
+                                        referencedTableNames: fatura
+                                        onDelete: RESTRICT
+                                        onUpdate: RESTRICT
+                            -   column:
+                                    name: categoria_id
+                                    type: bigint
+                                    constraints:
+                                        nullable: false
+                                        foreignKeyName: fk_categoria_id_lancamento
+                                        referencedColumnNames: id
+                                        referencedTableNames: categoria
+                                        onDelete: RESTRICT
+                                        onUpdate: RESTRICT
+                            -   column:
+                                    name: carteira_id
+                                    type: bigint
+                                    constraints:
+                                        nullable: true
+                                        foreignKeyName: fk_carteira_id_lancamento
+                                        referencedColumnNames: id
+                                        referencedTableNames: carteira
+                                        onDelete: RESTRICT
+                                        onUpdate: RESTRICT
+                            -   column:
+                                    name: create_date
+                                    type: timestamp
+                                    constraints:
+                                        nullable: false
+                            -   column:
+                                    name: last_update_date
+                                    type: timestamp
+                            -   column:
+                                    name: created_by
+                                    type: varchar(255)
+                                    constraints:
+                                        nullable: false
+                            -   column:
+                                    name: last_modified_by
+                                    type: varchar(255)
+                                    constraints:
+                                        nullable: false
+
+                -   createTable:
+                        tableName: carteira
+                        columns:
+                            -   column:
+                                    name: id
+                                    type: bigint
+                                    autoIncrement: true
+                                    constraints:
+                                        primaryKey: true
+                                        nullable: false
+                            -   column:
+                                    name: mes
+                                    type: varchar(255)
+                                    constraints:
+                                        nullable: false
+                            -   column:
+                                    name: usuario_id
+                                    type: bigint
+                                    constraints:
+                                        nullable: false
+                                        foreignKeyName: fk_usuario_id_carteira
+                                        referencedColumnNames: id
+                                        referencedTableNames: usuario
+                                        onDelete: RESTRICT
+                                        onUpdate: RESTRICT
+                            -   column:
+                                    name: create_date
+                                    type: timestamp
+                                    constraints:
+                                        nullable: false
+                            -   column:
+                                    name: last_update_date
+                                    type: timestamp
+                            -   column:
+                                    name: created_by
+                                    type: varchar(255)
+                                    constraints:
+                                        nullable: false
+                            -   column:
+                                    name: last_modified_by
+                                    type: varchar(255)
+                                    constraints:
+                                        nullable: false
+
+                -   createTable:
+                        tableName: orcamento
+                        columns:
+                            -   column:
+                                    name: id
+                                    type: bigint
+                                    autoIncrement: true
+                                    constraints:
+                                        primaryKey: true
+                                        nullable: false
+                            -   column:
+                                    name: valor
+                                    type: double
+                                    constraints:
+                                        nullable: false
+                            -   column:
+                                    name: mes
+                                    type: varchar(255)
+                                    constraints:
+                                        nullable: false
+                            -   column:
+                                    name: carteira_id
+                                    type: bigint
+                                    constraints:
+                                        nullable: false
+                                        foreignKeyName: fk_carteira_id_orcamento
+                                        referencedColumnNames: id
+                                        referencedTableNames: carteira
+                                        onDelete: RESTRICT
+                                        onUpdate: RESTRICT
+                            -   column:
+                                    name: create_date
+                                    type: timestamp
+                                    constraints:
+                                        nullable: false
+                            -   column:
+                                    name: last_update_date
+                                    type: timestamp
+                            -   column:
+                                    name: created_by
+                                    type: varchar(255)
+                                    constraints:
+                                        nullable: false
+                            -   column:
+                                    name: last_modified_by
+                                    type: varchar(255)
+                                    constraints:
+                                        nullable: false

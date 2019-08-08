@@ -11,5 +11,5 @@ import java.util.Optional;
 public interface IUserDetailsRepository extends MongoRepository<OAuthUser, ObjectId> {
 
     Optional<OAuthUser> findByUsername(String username);
-    Optional<OAuthUser> findByUserId(Long id);
+    Optional<OAuthUser> findByUsuarioId(Long id);
 }

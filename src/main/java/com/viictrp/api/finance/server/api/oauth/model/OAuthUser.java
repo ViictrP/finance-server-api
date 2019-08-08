@@ -1,6 +1,6 @@
 package com.viictrp.api.finance.server.api.oauth.model;
 
-import com.viictrp.api.finance.server.api.domain.User;
+import com.viictrp.api.finance.server.api.domain.Usuario;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -9,8 +9,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.persistence.Entity;
-import javax.persistence.Transient;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -19,7 +17,7 @@ public class OAuthUser implements UserDetails {
 
     @Getter
     @Setter
-    private Long userId;
+    private Long usuarioId;
 
     @Getter
     @Setter
@@ -47,10 +45,10 @@ public class OAuthUser implements UserDetails {
         this.authorities = new ArrayList<>();
     }
 
-    public void setUser(User user) {
-        this.userId = user.getId();
-        this.fullname = user.getName() + " " + user.getLastname();
-        this.username = user.getEmail();
+    public void setUser(Usuario usuario) {
+        this.usuarioId = usuario.getId();
+        this.fullname = usuario.getName() + " " + usuario.getLastname();
+        this.username = usuario.getEmail();
     }
 
     @Override

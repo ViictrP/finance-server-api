@@ -1,18 +1,17 @@
-package com.viictrp.api.finance.server.api.domain;
+package com.viictrp.api.finance.server.api.dto;
 
-import com.viictrp.api.finance.server.api.oauth.model.OAuthUser;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
-import javax.persistence.*;
 import java.util.List;
 
-@Entity
-public class User extends Model<Long> {
+public class UsuarioDTO {
 
-    private static final long serialVersionUID = 1L;
+    @Getter
+    @Setter
+    private Long id;
 
     @Getter
     @Setter
@@ -32,18 +31,11 @@ public class User extends Model<Long> {
 
     @Getter
     @Setter
-    @Transient
-    private OAuthUser oAuthUser;
+    private List<FaturaDTO> invoices;
 
     @Getter
     @Setter
-    @OneToMany(mappedBy="user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Invoice> invoices;
-
-    @Getter
-    @Setter
-    @OneToMany(mappedBy="user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Category> categories;
+    private List<CategoriaDTO> categories;
 
     @Override
     public String toString() {
