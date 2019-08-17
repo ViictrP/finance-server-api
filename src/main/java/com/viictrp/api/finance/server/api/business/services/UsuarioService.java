@@ -4,6 +4,7 @@ import com.viictrp.api.finance.server.api.business.interfaces.IUsuarioService;
 import com.viictrp.api.finance.server.api.domain.Usuario;
 import com.viictrp.api.finance.server.api.exception.ResourceNotFoundException;
 import com.viictrp.api.finance.server.api.persistence.usuario.UsuarioRepository;
+import org.bson.types.ObjectId;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -16,8 +17,8 @@ public class UsuarioService implements IUsuarioService {
     }
 
     @Override
-    public Usuario buscarUsuario(Long id) {
+    public Usuario buscarUsuario(ObjectId id) {
         return repository.findById(id)
-                .orElseThrow(() ->new ResourceNotFoundException("Nenhum usuário encontrado para o ID fornecido"));
+                .orElseThrow(() -> new ResourceNotFoundException("Nenhum usuário encontrado para o ID fornecido"));
     }
 }

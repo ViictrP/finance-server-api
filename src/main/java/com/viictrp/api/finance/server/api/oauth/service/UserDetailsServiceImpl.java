@@ -2,6 +2,7 @@ package com.viictrp.api.finance.server.api.oauth.service;
 
 import com.viictrp.api.finance.server.api.oauth.model.OAuthUser;
 import com.viictrp.api.finance.server.api.oauth.repository.IUserDetailsRepository;
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -35,7 +36,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
                 .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado"));
     }
 
-    public OAuthUser loadByUserId(Long id) {
+    public OAuthUser loadByUserId(ObjectId id) {
         return repository.findByUsuarioId(id)
                 .orElseThrow(() -> new IllegalArgumentException("Usuário de autenticação não encontrado"));
     }

@@ -1,6 +1,5 @@
 package com.viictrp.api.finance.server.api.dto;
 
-import com.viictrp.api.finance.server.api.domain.Usuario;
 import com.viictrp.api.finance.server.api.domain.enums.MesType;
 import lombok.Getter;
 import lombok.Setter;
@@ -11,11 +10,7 @@ public class CarteiraDTO {
 
     @Getter
     @Setter
-    private Long id;
-
-    @Getter
-    @Setter
-    private OrcamentoDTO orcamento;
+    private String id;
 
     @Getter
     @Setter
@@ -23,7 +18,7 @@ public class CarteiraDTO {
 
     @Getter
     @Setter
-    private Usuario usuario;
+    private String usuarioId;
 
     public String toString() {
         return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);

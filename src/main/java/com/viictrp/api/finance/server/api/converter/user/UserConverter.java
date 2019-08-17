@@ -26,7 +26,7 @@ public class UserConverter implements Converter<Usuario, UsuarioDTO> {
         UsuarioDTO dto = new UsuarioDTO();
         if (usuario != null) {
             dto = new UsuarioDTO();
-            dto.setId(usuario.getId());
+            dto.setId(usuario.getId().toString());
             dto.setAge(usuario.getAge());
             dto.setEmail(usuario.getEmail());
             dto.setName(usuario.getName());

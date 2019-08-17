@@ -11,7 +11,7 @@ public class OrcamentoDTO {
 
     @Getter
     @Setter
-    private Long id;
+    private String id;
 
     @Getter
     @Setter
@@ -22,6 +22,10 @@ public class OrcamentoDTO {
     @Setter
     @NotNull(message = "O mês do orçamento é obrigatório.")
     private String mes;
+
+    @Getter
+    @Setter
+    private String carteiraId;
 
     public String toString() {
         return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);

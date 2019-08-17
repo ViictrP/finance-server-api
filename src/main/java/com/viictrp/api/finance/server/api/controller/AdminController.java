@@ -2,6 +2,7 @@ package com.viictrp.api.finance.server.api.controller;
 
 import com.viictrp.api.finance.server.api.business.interfaces.IUserService;
 import com.viictrp.api.finance.server.api.domain.Usuario;
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -29,7 +30,7 @@ public class AdminController {
     }
 
     @GetMapping(value = "/users/{id}")
-    public ResponseEntity<Usuario> findUser(@PathVariable("id") Long id) {
+    public ResponseEntity<Usuario> findUser(@PathVariable ObjectId id) {
         Usuario usuario = userService.buscarUsuarioPorId(id);
         return ResponseEntity.ok(usuario);
     }

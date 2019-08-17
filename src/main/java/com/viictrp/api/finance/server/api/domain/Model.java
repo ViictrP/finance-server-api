@@ -10,19 +10,15 @@ import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.*;
+import javax.persistence.MappedSuperclass;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import java.io.Serializable;
 
 @MappedSuperclass
-public class Model<T extends Serializable> implements Serializable {
+public class Model implements Serializable {
 
     private static final long serialVersionUID = 5442167362566615887L;
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Getter
-    @Setter
-    private T id;
 
     @CreatedDate
     @DateTimeFormat(iso= DateTimeFormat.ISO.DATE_TIME)
@@ -47,10 +43,6 @@ public class Model<T extends Serializable> implements Serializable {
     @Getter
     @Setter
     private String lastModifiedBy;
-
-    public Boolean isNew() {
-        return this.id == null;
-    }
 
     @PrePersist
     public void prePersist() {

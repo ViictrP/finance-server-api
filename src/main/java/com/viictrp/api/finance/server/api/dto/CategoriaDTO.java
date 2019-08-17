@@ -9,7 +9,7 @@ public class CategoriaDTO {
 
     @Getter
     @Setter
-    private Long id;
+    private String id;
 
     @Getter
     @Setter
@@ -21,11 +21,11 @@ public class CategoriaDTO {
 
     @Getter
     @Setter
-    private UsuarioDTO user;
+    private Boolean excluido = Boolean.FALSE;
 
     @Getter
     @Setter
-    private Boolean excluido = Boolean.FALSE;
+    private String usuarioId;
 
     public String toString() {
         return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);

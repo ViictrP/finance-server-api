@@ -25,9 +25,10 @@ public class OrcamentoConverter implements Converter<Orcamento, OrcamentoDTO> {
         OrcamentoDTO orcamentoDTO = null;
         if (orcamento != null) {
             orcamentoDTO = new OrcamentoDTO();
-            orcamentoDTO.setId(orcamento.getId());
+            orcamentoDTO.setId(orcamento.getId().toString());
             orcamentoDTO.setMes(orcamento.getMes().name());
             orcamentoDTO.setValor(orcamento.getValor());
+            orcamentoDTO.setCarteiraId(orcamento.getCarteiraId().toString());
         }
         return orcamentoDTO;
     }

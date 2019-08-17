@@ -5,13 +5,11 @@ import lombok.Setter;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
-import java.util.List;
-
 public class UsuarioDTO {
 
     @Getter
     @Setter
-    private Long id;
+    private String id;
 
     @Getter
     @Setter
@@ -28,14 +26,6 @@ public class UsuarioDTO {
     @Getter
     @Setter
     private String email;
-
-    @Getter
-    @Setter
-    private List<FaturaDTO> invoices;
-
-    @Getter
-    @Setter
-    private List<CategoriaDTO> categories;
 
     @Override
     public String toString() {

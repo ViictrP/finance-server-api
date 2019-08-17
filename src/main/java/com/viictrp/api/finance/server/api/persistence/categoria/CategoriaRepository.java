@@ -1,15 +1,16 @@
 package com.viictrp.api.finance.server.api.persistence.categoria;
 
 import com.viictrp.api.finance.server.api.domain.Categoria;
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.bson.types.ObjectId;
+import org.springframework.data.repository.reactive.ReactiveCrudRepository;
 import org.springframework.stereotype.Repository;
-
-import java.util.List;
-import java.util.Optional;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 @Repository
-public interface CategoriaRepository extends JpaRepository<Categoria, Long> {
+public interface CategoriaRepository extends ReactiveCrudRepository<Categoria, ObjectId> {
 
-    Optional<Categoria> findByIdAndUsuarioId(Long id, Long userId);
-    List<Categoria> findByUsuarioId(Long userId);
+    Mono<Categoria> findByIdAndUsuarioId(ObjectId id, ObjectId userId);
+
+    Flux<Categoria> findByUsuarioId(ObjectId userId);
 }

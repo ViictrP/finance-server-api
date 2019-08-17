@@ -4,15 +4,15 @@ import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
+import org.bson.types.ObjectId;
 
 import java.time.LocalDate;
-import java.util.List;
 
 public class CartaoDTO {
 
     @Getter
     @Setter
-    private Long id;
+    private String id;
 
     @Getter
     @Setter
@@ -28,11 +28,7 @@ public class CartaoDTO {
 
     @Getter
     @Setter
-    private List<FaturaDTO> faturas;
-
-    @Getter
-    @Setter
-    private UsuarioDTO usuario;
+    private String usuarioId;
 
     public String toString() {
         return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);

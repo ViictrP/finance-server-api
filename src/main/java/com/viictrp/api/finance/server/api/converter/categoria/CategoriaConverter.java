@@ -6,13 +6,13 @@ import com.viictrp.api.finance.server.api.domain.Categoria;
 import com.viictrp.api.finance.server.api.dto.CategoriaDTO;
 import org.springframework.stereotype.Component;
 
+import java.util.Optional;
+
 @Component
 public class CategoriaConverter implements Converter<Categoria, CategoriaDTO> {
 
-    private final UserConverter userConverter;
+    public CategoriaConverter() {
 
-    public CategoriaConverter(UserConverter userConverter) {
-        this.userConverter = userConverter;
     }
 
     @Override
@@ -31,11 +31,12 @@ public class CategoriaConverter implements Converter<Categoria, CategoriaDTO> {
         CategoriaDTO dto = null;
         if (categoria != null) {
             dto = new CategoriaDTO();
-            dto.setId(categoria.getId());
+            dto.setId(categoria.getId().toString());
             dto.setTitle(categoria.getTitulo());
             dto.setDescription(categoria.getDescricao());
-            dto.setUser(userConverter.toDto(categoria.getUsuario()));
+            dto.setUsuarioId(categoria.getUsuarioId().toString());
         }
         return dto;
     }
+
 }
