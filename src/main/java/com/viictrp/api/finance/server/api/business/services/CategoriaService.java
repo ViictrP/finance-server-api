@@ -6,7 +6,6 @@ import com.viictrp.api.finance.server.api.converter.categoria.CategoriaConverter
 import com.viictrp.api.finance.server.api.domain.Categoria;
 import com.viictrp.api.finance.server.api.domain.Usuario;
 import com.viictrp.api.finance.server.api.dto.CategoriaDTO;
-import com.viictrp.api.finance.server.api.exception.ResourceBusinessException;
 import com.viictrp.api.finance.server.api.exception.ResourceNotFoundException;
 import com.viictrp.api.finance.server.api.oauth.model.OAuthUser;
 import com.viictrp.api.finance.server.api.persistence.categoria.CategoriaRepository;
