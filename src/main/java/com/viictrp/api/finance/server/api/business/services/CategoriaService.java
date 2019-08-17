@@ -4,14 +4,16 @@ import com.viictrp.api.finance.server.api.business.interfaces.ICategoriaService;
 import com.viictrp.api.finance.server.api.common.Audity;
 import com.viictrp.api.finance.server.api.converter.categoria.CategoriaConverter;
 import com.viictrp.api.finance.server.api.domain.Categoria;
+import com.viictrp.api.finance.server.api.domain.Usuario;
 import com.viictrp.api.finance.server.api.dto.CategoriaDTO;
+import com.viictrp.api.finance.server.api.exception.ResourceBusinessException;
 import com.viictrp.api.finance.server.api.exception.ResourceNotFoundException;
 import com.viictrp.api.finance.server.api.oauth.model.OAuthUser;
 import com.viictrp.api.finance.server.api.persistence.categoria.CategoriaRepository;
+import org.bson.types.ObjectId;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.stream.Collectors;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 @Service
 public class CategoriaService implements ICategoriaService {
@@ -29,32 +31,24 @@ public class CategoriaService implements ICategoriaService {
     }
 
     @Override
-    public CategoriaDTO buscarPorId(Long id, OAuthUser user) {
+    public Mono<CategoriaDTO> buscarPorId(ObjectId id, OAuthUser user) {
         return repository.findByIdAndUsuarioId(id, user.getUsuarioId())
                 .map(converter::toDto)
-                .orElseThrow(() -> new ResourceNotFoundException(CATEGORIA_NOT_FOUND));
+                .switchIfEmpty(Mono.error(new ResourceNotFoundException(CATEGORIA_NOT_FOUND)));
     }
 
     @Override
-    public Categoria buscarCategoriaEntity(Long id, OAuthUser user) {
-        return repository.findByIdAndUsuarioId(id, user.getUsuarioId())
-                .orElseThrow(() -> new ResourceNotFoundException(CATEGORIA_NOT_FOUND));
-    }
-
-    @Override
-    public CategoriaDTO save(CategoriaDTO dto, OAuthUser user) {
+    public Mono<CategoriaDTO> save(CategoriaDTO dto, OAuthUser user) {
+        Usuario usuario = userService.buscarUsuarioPorId(user.getUsuarioId());
         Categoria categoria = converter.toEntity(dto);
-        categoria.setUsuario(userService.buscarUsuarioPorId(user.getUsuarioId()));
+        categoria.setUsuarioId(usuario.getId());
         Audity.audityEntity(user, categoria);
-        repository.save(categoria);
-        return converter.toDto(categoria);
+        return repository.save(categoria).map(converter::toDto);
     }
 
     @Override
-    public List<CategoriaDTO> buscarCategorias(OAuthUser user) {
+    public Flux<CategoriaDTO> buscarCategorias(OAuthUser user) {
         return repository.findByUsuarioId(user.getUsuarioId())
-                .stream()
-                .map(converter::toDto)
-                .collect(Collectors.toList());
+                .map(converter::toDto);
     }
 }

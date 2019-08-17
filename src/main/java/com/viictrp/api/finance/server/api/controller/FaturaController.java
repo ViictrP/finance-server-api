@@ -4,12 +4,10 @@ import com.viictrp.api.finance.server.api.business.interfaces.IFaturaService;
 import com.viictrp.api.finance.server.api.business.interfaces.ILancamentoService;
 import com.viictrp.api.finance.server.api.dto.FaturaDTO;
 import com.viictrp.api.finance.server.api.dto.LancamentoDTO;
-import com.viictrp.api.finance.server.api.oauth.security.SecurityContext;
-import org.springframework.http.HttpStatus;
+import org.bson.types.ObjectId;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -25,18 +23,13 @@ public class FaturaController {
         this.lancamentoService = lancamentoService;
     }
 
-    @PostMapping
-    public ResponseEntity<FaturaDTO> salvar(@Valid @RequestBody FaturaDTO dto) {
-        return new ResponseEntity<>(service.salvar(dto, SecurityContext.getUser()), HttpStatus.CREATED);
-    }
-
     @GetMapping("/{id}")
-    public ResponseEntity<FaturaDTO> buscarFatura(@PathVariable Long id) {
+    public ResponseEntity<FaturaDTO> buscarFatura(@PathVariable ObjectId id) {
         return ResponseEntity.ok(service.buscarFatura(id));
     }
 
     @GetMapping("/{id}/lancamentos")
-    public ResponseEntity<List<LancamentoDTO>> buscarLancamentos(@PathVariable Long id) {
+    public ResponseEntity<List<LancamentoDTO>> buscarLancamentos(@PathVariable ObjectId id) {
         return ResponseEntity.ok(lancamentoService.buscarLancamentosByFatura(id));
     }
 }

@@ -4,15 +4,20 @@ import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
+import org.bson.types.ObjectId;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+import javax.persistence.Id;
 
-@Entity
-public class Categoria extends Model<Long> {
+@Document
+public class Categoria extends Model {
 
     private static final long serialVersionUID = 1L;
+
+    @Getter
+    @Setter
+    @Id
+    private ObjectId id;
 
     @Getter
     @Setter
@@ -24,22 +29,12 @@ public class Categoria extends Model<Long> {
 
     @Getter
     @Setter
-    @OneToMany(mappedBy="categoria", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Lancamento> lancamentos;
-
-    @Getter
-    @Setter
-    @ManyToOne
-    @PrimaryKeyJoinColumn
-    private Usuario usuario;
+    private ObjectId usuarioId;
 
     public String toString() {
         return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);
     }
 
-    public void addLancamento(Lancamento lancamento) {
-        if (lancamento != null) {
-            lancamento.setCategoria(this);
-        }
-    }
 }
+
+

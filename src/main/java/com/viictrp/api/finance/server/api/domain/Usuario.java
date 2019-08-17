@@ -5,14 +5,21 @@ import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
+import org.bson.types.ObjectId;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.persistence.*;
-import java.util.List;
+import javax.persistence.Id;
+import javax.persistence.Transient;
 
-@Entity
-public class Usuario extends Model<Long> {
+@Document
+public class Usuario extends Model {
 
     private static final long serialVersionUID = 1L;
+
+    @Getter
+    @Setter
+    @Id
+    private ObjectId id;
 
     @Getter
     @Setter
@@ -34,21 +41,6 @@ public class Usuario extends Model<Long> {
     @Setter
     @Transient
     private OAuthUser oAuthUser;
-
-    @Getter
-    @Setter
-    @OneToMany(mappedBy="usuario", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Categoria> categories;
-
-    @Getter
-    @Setter
-    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Carteira> carteiras;
-
-    @Getter
-    @Setter
-    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Cartao> cartoes;
 
     @Override
     public String toString() {

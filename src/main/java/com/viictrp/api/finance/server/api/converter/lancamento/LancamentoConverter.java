@@ -6,6 +6,7 @@ import com.viictrp.api.finance.server.api.converter.categoria.CategoriaConverter
 import com.viictrp.api.finance.server.api.converter.fatura.FaturaConverter;
 import com.viictrp.api.finance.server.api.domain.Lancamento;
 import com.viictrp.api.finance.server.api.dto.LancamentoDTO;
+import org.bson.types.ObjectId;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -31,9 +32,9 @@ public class LancamentoConverter implements Converter<Lancamento, LancamentoDTO>
             lancamento.setDescricao(lancamentoDTO.getDescricao());
             lancamento.setValor(lancamentoDTO.getValor());
             lancamento.setData(lancamentoDTO.getData());
-            lancamento.setCategoria(categoriaConverter.toEntity(lancamentoDTO.getCategoria()));
-            lancamento.setCarteira(carteiraConverter.toEntity(lancamentoDTO.getCarteira()));
-            lancamento.setFatura(faturaConverter.toEntity(lancamentoDTO.getFatura()));
+            lancamento.setCategoriaId(new ObjectId(lancamentoDTO.getCategoriaId()));
+            lancamento.setCarteiraId(new ObjectId(lancamentoDTO.getCarteiraId()));
+            lancamento.setFaturaId(new ObjectId(lancamentoDTO.getFaturaId()));
             lancamento.setQuantidadeParcelas(lancamentoDTO.getQuantidadeParcelas());
         }
         return lancamento;
@@ -47,10 +48,10 @@ public class LancamentoConverter implements Converter<Lancamento, LancamentoDTO>
             lancamentoDTO.setId(lancamento.getId());
             lancamentoDTO.setDescricao(lancamento.getDescricao());
             lancamentoDTO.setValor(lancamento.getValor());
-            lancamentoDTO.setData(lancamentoDTO.getData());
-            lancamentoDTO.setCategoria(categoriaConverter.toDto(lancamento.getCategoria()));
-            lancamentoDTO.setCarteira(carteiraConverter.toDto(lancamento.getCarteira()));
-            lancamentoDTO.setFatura(faturaConverter.toDto(lancamento.getFatura()));
+            lancamentoDTO.setData(lancamento.getData());
+            lancamentoDTO.setCategoriaId(lancamento.getCategoriaId().toString());
+            lancamentoDTO.setCarteiraId(lancamento.getCarteiraId().toString());
+            lancamentoDTO.setFaturaId(lancamento.getFaturaId().toString());
         }
         return lancamentoDTO;
     }

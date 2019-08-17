@@ -5,11 +5,18 @@ import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
+import org.bson.types.ObjectId;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.persistence.*;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 
-@Entity
-public class Orcamento extends Model<Long> {
+@Document
+public class Orcamento extends Model {
+
+    @Getter
+    @Setter
+    private ObjectId id;
 
     @Getter
     @Setter
@@ -22,9 +29,7 @@ public class Orcamento extends Model<Long> {
 
     @Getter
     @Setter
-    @OneToOne
-    @MapsId
-    private Carteira carteira;
+    private ObjectId carteiraId;
 
     public void mergeDados(Orcamento orcamento) {
         this.valor = orcamento.getValor();

@@ -9,7 +9,11 @@ public class ParcelaDTO {
 
     @Getter
     @Setter
-    private Long numeroParcela;
+    private String id;
+
+    @Getter
+    @Setter
+    private String numeroParcela;
 
     public String toString() {
         return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);

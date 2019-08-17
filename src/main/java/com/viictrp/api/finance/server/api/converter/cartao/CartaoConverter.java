@@ -26,9 +26,10 @@ public class CartaoConverter implements Converter<Cartao, CartaoDTO> {
         if (cartao != null) {
             cartaoDTO = new CartaoDTO();
             cartaoDTO.setDescricao(cartao.getDescricao());
-            cartaoDTO.setId(cartao.getId());
+            cartaoDTO.setId(cartao.getId().toString());
             cartaoDTO.setLimite(cartaoDTO.getLimite());
             cartaoDTO.setDataFechamento(cartao.getDataFechamento());
+            cartaoDTO.setUsuarioId(cartao.getUsuarioId().toString());
         }
         return cartaoDTO;
     }

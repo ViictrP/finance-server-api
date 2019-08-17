@@ -14,7 +14,6 @@ public class FaturaConverter implements Converter<Fatura, FaturaDTO> {
         Fatura fatura = null;
         if (faturaDTO != null) {
             fatura = new Fatura();
-            fatura.setId(faturaDTO.getId());
             fatura.setMes(faturaDTO.getMes() != null ? MesType.customValueOf(faturaDTO.getMes()) : MesType.JANEIRO);
             fatura.setDiaFechamento(faturaDTO.getDiaFechamento());
             fatura.setDescricao(faturaDTO.getDescricao());
@@ -29,12 +28,13 @@ public class FaturaConverter implements Converter<Fatura, FaturaDTO> {
         FaturaDTO faturaDTO = null;
         if (fatura != null) {
             faturaDTO = new FaturaDTO();
-            faturaDTO.setId(fatura.getId());
+            faturaDTO.setId(fatura.getId().toString());
             faturaDTO.setDescricao(fatura.getDescricao());
             faturaDTO.setMes(fatura.getMes().name());
             faturaDTO.setDiaFechamento(fatura.getDiaFechamento());
             faturaDTO.setPago(fatura.getPago());
             faturaDTO.setTitulo(fatura.getTitulo());
+            faturaDTO.setCartaoId(fatura.getCartaoId().toString());
         }
         return faturaDTO;
     }

@@ -4,13 +4,14 @@ import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
+import org.bson.types.ObjectId;
 import org.joda.time.DateTime;
 
 public class LancamentoDTO {
 
     @Getter
     @Setter
-    private Long id;
+    private ObjectId id;
 
     @Getter
     @Setter
@@ -26,15 +27,15 @@ public class LancamentoDTO {
 
     @Getter
     @Setter
-    private FaturaDTO fatura;
+    private String faturaId;
 
     @Getter
     @Setter
-    private CategoriaDTO categoria;
+    private String categoriaId;
 
     @Getter
     @Setter
-    private CarteiraDTO carteira;
+    private String carteiraId;
 
     @Getter
     @Setter

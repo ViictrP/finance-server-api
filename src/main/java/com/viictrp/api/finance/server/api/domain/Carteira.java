@@ -5,18 +5,18 @@ import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
+import org.bson.types.ObjectId;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 
-@Entity
-public class Carteira extends Model<Long> {
+@Document
+public class Carteira extends Model {
 
     @Getter
     @Setter
-    @OneToOne(mappedBy = "carteira", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Orcamento orcamento;
+    private ObjectId id;
 
     @Getter
     @Setter
@@ -25,14 +25,7 @@ public class Carteira extends Model<Long> {
 
     @Getter
     @Setter
-    @OneToMany(mappedBy="carteira", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Lancamento> lancamentos;
-
-    @Getter
-    @Setter
-    @ManyToOne
-    @PrimaryKeyJoinColumn
-    private Usuario usuario;
+    private ObjectId usuarioId;
 
     public Carteira() {
 
@@ -42,25 +35,8 @@ public class Carteira extends Model<Long> {
         this.mes = mes;
     }
 
-    public static Carteira criar(Orcamento orcamento, Usuario usuario) {
-        Carteira carteira = new Carteira(orcamento.getMes());
-        carteira.setUsuario(usuario);
-        orcamento.setCarteira(carteira);
-        return carteira;
-    }
-
     @Override
     public String toString() {
         return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);
-    }
-
-    public void addLancamento(Lancamento lancamento) {
-        if (lancamento != null) {
-            if (this.lancamentos == null) {
-                this.lancamentos = new ArrayList<>();
-            }
-            lancamento.setCarteira(this);
-            lancamentos.add(lancamento);
-        }
     }
 }

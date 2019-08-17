@@ -8,6 +8,7 @@ import com.viictrp.api.finance.server.api.dto.CarteiraDTO;
 import com.viictrp.api.finance.server.api.dto.LancamentoDTO;
 import com.viictrp.api.finance.server.api.dto.OrcamentoDTO;
 import com.viictrp.api.finance.server.api.oauth.security.SecurityContext;
+import org.bson.types.ObjectId;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -32,14 +33,9 @@ public class CarteiraController {
         this.lancamentoService = lancamentoService;
     }
 
-    @PostMapping("/orcamentos")
-    public ResponseEntity<OrcamentoDTO> salvarOrcamento(@Valid @RequestBody OrcamentoDTO orcamentoDTO) {
-        return new ResponseEntity<>(orcamentoService.salvar(orcamentoDTO, SecurityContext.getUser()), HttpStatus.CREATED);
-    }
-
     @PostMapping
     public ResponseEntity<CarteiraDTO> salvar(@Valid @RequestBody CarteiraDTO carteiraDTO) {
-        return new ResponseEntity<>(service.salvar(carteiraDTO), HttpStatus.CREATED);
+        return new ResponseEntity<>(service.salvar(carteiraDTO, SecurityContext.getUser()), HttpStatus.CREATED);
     }
 
     @GetMapping
@@ -48,17 +44,24 @@ public class CarteiraController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CarteiraDTO> buscarCarteira(@PathVariable Long id) {
+    public ResponseEntity<CarteiraDTO> buscarCarteira(@PathVariable ObjectId id) {
         return ResponseEntity.ok(service.buscarCarteira(id, SecurityContext.getUser()));
     }
 
+    @PostMapping("/{carteiraId}/orcamentos")
+    public ResponseEntity<OrcamentoDTO> salvarOrcamento(@Valid @RequestBody OrcamentoDTO orcamentoDTO,
+                                                        @PathVariable ObjectId carteiraId) {
+        return new ResponseEntity<>(orcamentoService.salvar(carteiraId, orcamentoDTO, SecurityContext.getUser()), HttpStatus.CREATED);
+    }
+
     @GetMapping("/{carteiraID}/orcamentos/{orcamentoID}")
-    public ResponseEntity<OrcamentoDTO> buscarOrcamento(@PathVariable Long carteiraID, @PathVariable Long orcamentoID) {
+    public ResponseEntity<OrcamentoDTO> buscarOrcamento(@PathVariable ObjectId carteiraID,
+                                                        @PathVariable ObjectId orcamentoID) {
         return ResponseEntity.ok(orcamentoService.buscarOrcamento(carteiraID, orcamentoID, SecurityContext.getUser()));
     }
 
     @GetMapping("/{carteiraID}/lancamentos")
-    public ResponseEntity<List<LancamentoDTO>> buscarLancamentos(@PathVariable Long carteiraID) {
+    public ResponseEntity<List<LancamentoDTO>> buscarLancamentos(@PathVariable ObjectId carteiraID) {
         return ResponseEntity.ok(lancamentoService.buscarLancamentosByCarteira(carteiraID, SecurityContext.getUser()));
     }
 }

@@ -1,15 +1,16 @@
 package com.viictrp.api.finance.server.api.business.interfaces;
 
-import com.viictrp.api.finance.server.api.domain.Categoria;
 import com.viictrp.api.finance.server.api.dto.CategoriaDTO;
 import com.viictrp.api.finance.server.api.oauth.model.OAuthUser;
-
-import java.util.List;
+import org.bson.types.ObjectId;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 public interface ICategoriaService {
 
-    CategoriaDTO buscarPorId(Long id, OAuthUser user);
-    Categoria buscarCategoriaEntity(Long id, OAuthUser user);
-    CategoriaDTO save(CategoriaDTO dto, OAuthUser user);
-    List<CategoriaDTO> buscarCategorias(OAuthUser user);
+    Mono<CategoriaDTO> buscarPorId(ObjectId id, OAuthUser user);
+
+    Mono<CategoriaDTO> save(CategoriaDTO dto, OAuthUser user);
+
+    Flux<CategoriaDTO> buscarCategorias(OAuthUser user);
 }

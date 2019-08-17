@@ -18,14 +18,6 @@ spring:
         ansi:
             enabled: DETECT
 
-    datasource:
-        type: com.zaxxer.hikari.HikariDataSource
-        url: jdbc:postgresql://localhost:5432/financeserverdb
-        username: postgres
-        password: 515253
-        driver-class-name: org.postgresql.Driver
-        platform: h2
-
     data:
         mongodb:
             host: 127.0.0.1
@@ -33,12 +25,7 @@ spring:
             database: finance_api_db
 
     jpa:
-        database-platform: org.hibernate.dialect.PostgreSQL94Dialect
         properties:
-            hibernate:
-                dialect: org.hibernate.dialect.PostgreSQL94Dialect
-                temp:
-                    use_jdbc_metadata_defaults: false
             jadira:
                 usertype:
                     autoRegisterUserTypes: true

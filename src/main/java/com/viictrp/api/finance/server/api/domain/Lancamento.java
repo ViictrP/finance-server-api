@@ -4,15 +4,20 @@ import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
+import org.bson.types.ObjectId;
 import org.joda.time.DateTime;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.Id;
 import javax.persistence.Transient;
 
-@Entity
-public class Lancamento extends Model<Long> {
+@Document
+public class Lancamento extends Model {
+
+    @Getter
+    @Setter
+    @Id
+    private ObjectId id;
 
     @Getter
     @Setter
@@ -37,21 +42,15 @@ public class Lancamento extends Model<Long> {
 
     @Getter
     @Setter
-    @ManyToOne
-    @PrimaryKeyJoinColumn
-    private Fatura fatura;
+    private ObjectId faturaId;
 
     @Getter
     @Setter
-    @ManyToOne
-    @PrimaryKeyJoinColumn
-    private Categoria categoria;
+    private ObjectId categoriaId;
 
     @Getter
     @Setter
-    @ManyToOne
-    @PrimaryKeyJoinColumn
-    private Carteira carteira;
+    private ObjectId carteiraId;
 
     @Override
     public String toString() {
