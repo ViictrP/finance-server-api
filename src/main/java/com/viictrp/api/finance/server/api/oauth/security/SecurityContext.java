@@ -8,11 +8,14 @@ public final class SecurityContext {
 
     private static final String USER_NOT_FOUND = "Erro ao buscar usuário logado";
 
+    private SecurityContext() {
+
+    }
+
     public static OAuthUser getUser() {
-        if (SecurityContextHolder.getContext().getAuthentication() != null) {
-            if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() instanceof OAuthUser) {
-                return (OAuthUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            }
+        if (SecurityContextHolder.getContext().getAuthentication() != null &&
+                SecurityContextHolder.getContext().getAuthentication().getPrincipal() instanceof OAuthUser) {
+            return (OAuthUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         }
         throw new ResourceNotFoundException(USER_NOT_FOUND);
     }

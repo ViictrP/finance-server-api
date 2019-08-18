@@ -1,6 +1,5 @@
 package com.viictrp.api.finance.server.api.converter;
 
-import com.viictrp.api.finance.server.api.converter.Converter;
 import com.viictrp.api.finance.server.api.domain.Cartao;
 import com.viictrp.api.finance.server.api.dto.CartaoDTO;
 import org.springframework.stereotype.Component;

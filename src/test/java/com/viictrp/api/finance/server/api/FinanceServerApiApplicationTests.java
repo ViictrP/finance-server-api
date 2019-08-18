@@ -11,6 +11,7 @@ public class FinanceServerApiApplicationTests {
 
     @Test
     public void contextLoads() {
+
     }
 
 }

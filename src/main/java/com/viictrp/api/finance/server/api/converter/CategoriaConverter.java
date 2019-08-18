@@ -1,16 +1,11 @@
 package com.viictrp.api.finance.server.api.converter;
 
-import com.viictrp.api.finance.server.api.converter.Converter;
 import com.viictrp.api.finance.server.api.domain.Categoria;
 import com.viictrp.api.finance.server.api.dto.CategoriaDTO;
 import org.springframework.stereotype.Component;
 
 @Component
 public class CategoriaConverter implements Converter<Categoria, CategoriaDTO> {
-
-    public CategoriaConverter() {
-
-    }
 
     @Override
     public Categoria toEntity(CategoriaDTO categoriaDTO) {

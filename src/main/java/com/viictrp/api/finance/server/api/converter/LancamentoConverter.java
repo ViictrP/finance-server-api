@@ -8,18 +8,6 @@ import org.springframework.stereotype.Component;
 @Component
 public class LancamentoConverter implements Converter<Lancamento, LancamentoDTO> {
 
-    private final CategoriaConverter categoriaConverter;
-    private final CarteiraConverter carteiraConverter;
-    private final FaturaConverter faturaConverter;
-
-    public LancamentoConverter(CategoriaConverter categoriaConverter,
-                               CarteiraConverter carteiraConverter,
-                               FaturaConverter faturaConverter) {
-        this.categoriaConverter = categoriaConverter;
-        this.carteiraConverter = carteiraConverter;
-        this.faturaConverter = faturaConverter;
-    }
-
     @Override
     public Lancamento toEntity(LancamentoDTO lancamentoDTO) {
         Lancamento lancamento = null;
