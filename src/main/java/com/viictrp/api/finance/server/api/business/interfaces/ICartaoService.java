@@ -3,12 +3,14 @@ package com.viictrp.api.finance.server.api.business.interfaces;
 import com.viictrp.api.finance.server.api.dto.CartaoDTO;
 import com.viictrp.api.finance.server.api.oauth.model.OAuthUser;
 import org.bson.types.ObjectId;
-
-import java.util.List;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 public interface ICartaoService {
 
-    CartaoDTO salvar(CartaoDTO cartaoDTO, OAuthUser user);
-    CartaoDTO buscarCartao(ObjectId id, OAuthUser user);
-    List<CartaoDTO> buscarCartoes(OAuthUser user);
+    Mono<CartaoDTO> salvar(CartaoDTO cartaoDTO, OAuthUser user);
+
+    Mono<CartaoDTO> buscarCartao(ObjectId id, OAuthUser user);
+
+    Flux<CartaoDTO> buscarCartoes(OAuthUser user);
 }

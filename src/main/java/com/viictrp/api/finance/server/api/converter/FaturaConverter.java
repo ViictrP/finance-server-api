@@ -1,4 +1,4 @@
-package com.viictrp.api.finance.server.api.converter.fatura;
+package com.viictrp.api.finance.server.api.converter;
 
 import com.viictrp.api.finance.server.api.converter.Converter;
 import com.viictrp.api.finance.server.api.domain.Fatura;

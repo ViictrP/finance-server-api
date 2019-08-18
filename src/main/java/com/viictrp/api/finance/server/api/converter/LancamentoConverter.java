@@ -1,9 +1,5 @@
-package com.viictrp.api.finance.server.api.converter.lancamento;
+package com.viictrp.api.finance.server.api.converter;
 
-import com.viictrp.api.finance.server.api.converter.Converter;
-import com.viictrp.api.finance.server.api.converter.carteira.CarteiraConverter;
-import com.viictrp.api.finance.server.api.converter.categoria.CategoriaConverter;
-import com.viictrp.api.finance.server.api.converter.fatura.FaturaConverter;
 import com.viictrp.api.finance.server.api.domain.Lancamento;
 import com.viictrp.api.finance.server.api.dto.LancamentoDTO;
 import org.bson.types.ObjectId;
@@ -33,8 +29,6 @@ public class LancamentoConverter implements Converter<Lancamento, LancamentoDTO>
             lancamento.setValor(lancamentoDTO.getValor());
             lancamento.setData(lancamentoDTO.getData());
             lancamento.setCategoriaId(new ObjectId(lancamentoDTO.getCategoriaId()));
-            lancamento.setCarteiraId(new ObjectId(lancamentoDTO.getCarteiraId()));
-            lancamento.setFaturaId(new ObjectId(lancamentoDTO.getFaturaId()));
             lancamento.setQuantidadeParcelas(lancamentoDTO.getQuantidadeParcelas());
         }
         return lancamento;
@@ -45,13 +39,20 @@ public class LancamentoConverter implements Converter<Lancamento, LancamentoDTO>
         LancamentoDTO lancamentoDTO = null;
         if (lancamento != null) {
             lancamentoDTO = new LancamentoDTO();
-            lancamentoDTO.setId(lancamento.getId());
+            lancamentoDTO.setId(lancamento.getId().toString());
             lancamentoDTO.setDescricao(lancamento.getDescricao());
             lancamentoDTO.setValor(lancamento.getValor());
             lancamentoDTO.setData(lancamento.getData());
             lancamentoDTO.setCategoriaId(lancamento.getCategoriaId().toString());
-            lancamentoDTO.setCarteiraId(lancamento.getCarteiraId().toString());
-            lancamentoDTO.setFaturaId(lancamento.getFaturaId().toString());
+
+            if (lancamento.getCarteiraId() != null) {
+                lancamentoDTO.setCarteiraId(lancamento.getCarteiraId().toString());
+            }
+
+            if (lancamento.getFaturaId() != null) {
+                lancamentoDTO.setFaturaId(lancamento.getFaturaId().toString());
+            }
+
             lancamentoDTO.setCreatedDate(lancamento.getCreateDate());
             lancamentoDTO.setCreatedBy(lancamento.getCreatedBy());
             lancamentoDTO.setLastModifiedBy(lancamento.getLastModifiedBy());

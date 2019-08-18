@@ -1,17 +1,16 @@
 package com.viictrp.api.finance.server.api.business.interfaces;
 
-import com.viictrp.api.finance.server.api.domain.Carteira;
-import com.viictrp.api.finance.server.api.domain.Usuario;
 import com.viictrp.api.finance.server.api.dto.CarteiraDTO;
 import com.viictrp.api.finance.server.api.oauth.model.OAuthUser;
 import org.bson.types.ObjectId;
-
-import java.util.List;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 public interface ICarteiraService {
 
-    CarteiraDTO salvar(CarteiraDTO carteiraDTO, OAuthUser user);
-    CarteiraDTO buscarCarteira(ObjectId id, OAuthUser user);
-    Carteira buscarCarteira(ObjectId id, Usuario usuario);
-    List<Carteira> buscarPorUsuario(OAuthUser user);
+    Mono<CarteiraDTO> salvar(CarteiraDTO carteiraDTO, OAuthUser user);
+
+    Mono<CarteiraDTO> buscarCarteira(ObjectId id, OAuthUser user);
+
+    Flux<CarteiraDTO> buscarPorUsuario(OAuthUser user);
 }

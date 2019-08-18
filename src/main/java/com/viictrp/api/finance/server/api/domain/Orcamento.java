@@ -1,6 +1,8 @@
 package com.viictrp.api.finance.server.api.domain;
 
+import com.viictrp.api.finance.server.api.common.Audity;
 import com.viictrp.api.finance.server.api.domain.enums.MesType;
+import com.viictrp.api.finance.server.api.oauth.model.OAuthUser;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -31,8 +33,9 @@ public class Orcamento extends Model {
     @Setter
     private ObjectId carteiraId;
 
-    public void mergeDados(Orcamento orcamento) {
+    public void mergeDados(Orcamento orcamento, OAuthUser user) {
         this.valor = orcamento.getValor();
+        Audity.audityEntity(user, this);
     }
 
     @Override

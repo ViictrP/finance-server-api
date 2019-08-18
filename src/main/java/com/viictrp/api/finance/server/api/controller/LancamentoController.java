@@ -5,6 +5,7 @@ import com.viictrp.api.finance.server.api.dto.LancamentoDTO;
 import org.bson.types.ObjectId;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import reactor.core.publisher.Mono;
 
 @RestController
 @RequestMapping("/v1/lancamentos")
@@ -18,7 +19,7 @@ public class LancamentoController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<LancamentoDTO> buscarLancamento(@PathVariable ObjectId id) {
+    public ResponseEntity<Mono<LancamentoDTO>> buscarLancamento(@PathVariable ObjectId id) {
         return ResponseEntity.ok(service.buscarLancamento(id));
     }
 }

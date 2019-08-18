@@ -3,7 +3,7 @@ package com.viictrp.api.finance.server.api.oauth.config;
 import com.viictrp.api.finance.server.api.domain.Usuario;
 import com.viictrp.api.finance.server.api.oauth.model.OAuthUser;
 import com.viictrp.api.finance.server.api.oauth.service.UserDetailsServiceImpl;
-import com.viictrp.api.finance.server.api.persistence.usuario.UsuarioRepository;
+import com.viictrp.api.finance.server.api.persistence.UsuarioRepository;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -32,7 +32,7 @@ public class InitPostConstruct {
         this.usuarioRepository = usuarioRepository;
     }
 
-    @PostConstruct
+//    @PostConstruct
     public void init() {
         this.createUser();
     }

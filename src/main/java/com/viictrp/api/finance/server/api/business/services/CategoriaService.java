@@ -2,13 +2,13 @@ package com.viictrp.api.finance.server.api.business.services;
 
 import com.viictrp.api.finance.server.api.business.interfaces.ICategoriaService;
 import com.viictrp.api.finance.server.api.common.Audity;
-import com.viictrp.api.finance.server.api.converter.categoria.CategoriaConverter;
+import com.viictrp.api.finance.server.api.converter.CategoriaConverter;
 import com.viictrp.api.finance.server.api.domain.Categoria;
 import com.viictrp.api.finance.server.api.domain.Usuario;
 import com.viictrp.api.finance.server.api.dto.CategoriaDTO;
 import com.viictrp.api.finance.server.api.exception.ResourceNotFoundException;
 import com.viictrp.api.finance.server.api.oauth.model.OAuthUser;
-import com.viictrp.api.finance.server.api.persistence.categoria.CategoriaRepository;
+import com.viictrp.api.finance.server.api.persistence.CategoriaRepository;
 import org.bson.types.ObjectId;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;

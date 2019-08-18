@@ -1,4 +1,4 @@
-package com.viictrp.api.finance.server.api.persistence.usuario;
+package com.viictrp.api.finance.server.api.persistence;
 
 import com.viictrp.api.finance.server.api.domain.Usuario;
 import org.bson.types.ObjectId;

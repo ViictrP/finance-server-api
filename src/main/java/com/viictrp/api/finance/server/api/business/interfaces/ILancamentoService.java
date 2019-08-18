@@ -1,19 +1,23 @@
 package com.viictrp.api.finance.server.api.business.interfaces;
 
-import com.viictrp.api.finance.server.api.domain.Model;
+import com.viictrp.api.finance.server.api.dto.FaturaDTO;
 import com.viictrp.api.finance.server.api.dto.LancamentoDTO;
 import com.viictrp.api.finance.server.api.oauth.model.OAuthUser;
 import org.bson.types.ObjectId;
-
-import java.util.List;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 public interface ILancamentoService {
 
-    LancamentoDTO salvar(ObjectId id, LancamentoDTO lancamento, OAuthUser user, Class<? extends Model> clazz);
+    Mono<LancamentoDTO> salvarNaCarteira(ObjectId carteiraId, LancamentoDTO lancamento, OAuthUser user);
 
-    LancamentoDTO buscarLancamento(ObjectId id);
+    Mono<LancamentoDTO> salvarNaFatura(ObjectId faturaId, LancamentoDTO lancamento, OAuthUser user);
 
-    List<LancamentoDTO> buscarLancamentosByFatura(ObjectId idFatura);
+    void criarParcelas(FaturaDTO faturaDTO, LancamentoDTO lancamentoDTO, OAuthUser user);
 
-    List<LancamentoDTO> buscarLancamentosByCarteira(ObjectId idCarteira, OAuthUser user);
+    Mono<LancamentoDTO> buscarLancamento(ObjectId id);
+
+    Flux<LancamentoDTO> buscarLancamentosDaFatura(ObjectId idFatura);
+
+    Flux<LancamentoDTO> buscarLancamentosDaCarteira(ObjectId idCarteira);
 }

@@ -9,9 +9,10 @@ import org.bson.types.ObjectId;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 import javax.validation.Valid;
-import java.util.List;
 
 @RestController
 @RequestMapping("/v1/cartoes")
@@ -28,28 +29,28 @@ public class CartaoController {
     }
 
     @PostMapping
-    public ResponseEntity<CartaoDTO> salvar(@Valid @RequestBody CartaoDTO cartaoDTO) {
+    public ResponseEntity<Mono<CartaoDTO>> salvar(@Valid @RequestBody CartaoDTO cartaoDTO) {
         return new ResponseEntity<>(service.salvar(cartaoDTO, SecurityContext.getUser()), HttpStatus.CREATED);
     }
 
     @GetMapping
-    public ResponseEntity<List<CartaoDTO>> buscarCartoes() {
+    public ResponseEntity<Flux<CartaoDTO>> buscarCartoes() {
         return ResponseEntity.ok(service.buscarCartoes(SecurityContext.getUser()));
     }
 
     @PostMapping("{id}/faturas")
-    public ResponseEntity<FaturaDTO> salvarFatura(@PathVariable ObjectId id,
-                                                  @Valid @RequestBody FaturaDTO faturaDTO) {
+    public ResponseEntity<Mono<FaturaDTO>> salvarFatura(@PathVariable ObjectId id,
+                                                        @Valid @RequestBody FaturaDTO faturaDTO) {
         return ResponseEntity.ok(faturaService.salvar(id, faturaDTO, SecurityContext.getUser()));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CartaoDTO> buscarCartao(@PathVariable ObjectId id) {
+    public ResponseEntity<Mono<CartaoDTO>> buscarCartao(@PathVariable ObjectId id) {
         return ResponseEntity.ok(service.buscarCartao(id, SecurityContext.getUser()));
     }
 
     @GetMapping("{id}/faturas")
-    public ResponseEntity<List<FaturaDTO>> buscarFaturas(@PathVariable ObjectId id) {
+    public ResponseEntity<Flux<FaturaDTO>> buscarFaturas(@PathVariable ObjectId id) {
         return ResponseEntity.ok(faturaService.buscarFaturas(id, SecurityContext.getUser()));
     }
 }

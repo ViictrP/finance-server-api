@@ -1,5 +1,6 @@
 package com.viictrp.api.finance.server.api.domain;
 
+import com.viictrp.api.finance.server.api.dto.LancamentoDTO;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -51,6 +52,18 @@ public class Lancamento extends Model {
     @Getter
     @Setter
     private ObjectId carteiraId;
+
+    public Lancamento() {
+        super();
+    }
+
+    public Lancamento(LancamentoDTO lancamentoDTO) {
+        super();
+        this.descricao = lancamentoDTO.getDescricao();
+        this.valor = lancamentoDTO.getValor();
+        this.data = lancamentoDTO.getData();
+        this.quantidadeParcelas = lancamentoDTO.getQuantidadeParcelas();
+    }
 
     @Override
     public String toString() {

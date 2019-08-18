@@ -1,4 +1,4 @@
-package com.viictrp.api.finance.server.api.persistence.categoria;
+package com.viictrp.api.finance.server.api.persistence;
 
 import com.viictrp.api.finance.server.api.domain.Categoria;
 import org.bson.types.ObjectId;
