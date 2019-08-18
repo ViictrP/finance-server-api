@@ -26,6 +26,10 @@ public class CarteiraConverter implements Converter<Carteira, CarteiraDTO> {
             carteiraDTO.setId(carteira.getId().toString());
             carteiraDTO.setMes(carteira.getMes());
             carteiraDTO.setUsuarioId(carteira.getUsuarioId().toString());
+            carteiraDTO.setCreatedDate(carteira.getCreateDate());
+            carteiraDTO.setCreatedBy(carteira.getCreatedBy());
+            carteiraDTO.setLastModifiedBy(carteira.getLastModifiedBy());
+            carteiraDTO.setLastModifiedDate(carteira.getLastModifiedDate());
         }
         return carteiraDTO;
     }

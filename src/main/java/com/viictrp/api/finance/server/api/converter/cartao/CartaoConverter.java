@@ -27,9 +27,13 @@ public class CartaoConverter implements Converter<Cartao, CartaoDTO> {
             cartaoDTO = new CartaoDTO();
             cartaoDTO.setDescricao(cartao.getDescricao());
             cartaoDTO.setId(cartao.getId().toString());
-            cartaoDTO.setLimite(cartaoDTO.getLimite());
+            cartaoDTO.setLimite(cartao.getLimite());
             cartaoDTO.setDataFechamento(cartao.getDataFechamento());
             cartaoDTO.setUsuarioId(cartao.getUsuarioId().toString());
+            cartaoDTO.setCreatedDate(cartao.getCreateDate());
+            cartaoDTO.setCreatedBy(cartao.getCreatedBy());
+            cartaoDTO.setLastModifiedBy(cartao.getLastModifiedBy());
+            cartaoDTO.setLastModifiedDate(cartao.getLastModifiedDate());
         }
         return cartaoDTO;
     }

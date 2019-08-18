@@ -6,7 +6,7 @@ import lombok.Setter;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
-public class CarteiraDTO {
+public class CarteiraDTO extends Dto {
 
     @Getter
     @Setter

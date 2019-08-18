@@ -7,7 +7,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 
 import javax.validation.constraints.NotNull;
 
-public class OrcamentoDTO {
+public class OrcamentoDTO extends Dto {
 
     @Getter
     @Setter

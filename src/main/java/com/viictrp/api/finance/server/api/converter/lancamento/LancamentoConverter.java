@@ -52,6 +52,10 @@ public class LancamentoConverter implements Converter<Lancamento, LancamentoDTO>
             lancamentoDTO.setCategoriaId(lancamento.getCategoriaId().toString());
             lancamentoDTO.setCarteiraId(lancamento.getCarteiraId().toString());
             lancamentoDTO.setFaturaId(lancamento.getFaturaId().toString());
+            lancamentoDTO.setCreatedDate(lancamento.getCreateDate());
+            lancamentoDTO.setCreatedBy(lancamento.getCreatedBy());
+            lancamentoDTO.setLastModifiedBy(lancamento.getLastModifiedBy());
+            lancamentoDTO.setLastModifiedDate(lancamento.getLastModifiedDate());
         }
         return lancamentoDTO;
     }

@@ -1,12 +1,9 @@
 package com.viictrp.api.finance.server.api.converter.categoria;
 
 import com.viictrp.api.finance.server.api.converter.Converter;
-import com.viictrp.api.finance.server.api.converter.user.UserConverter;
 import com.viictrp.api.finance.server.api.domain.Categoria;
 import com.viictrp.api.finance.server.api.dto.CategoriaDTO;
 import org.springframework.stereotype.Component;
-
-import java.util.Optional;
 
 @Component
 public class CategoriaConverter implements Converter<Categoria, CategoriaDTO> {
@@ -35,6 +32,10 @@ public class CategoriaConverter implements Converter<Categoria, CategoriaDTO> {
             dto.setTitle(categoria.getTitulo());
             dto.setDescription(categoria.getDescricao());
             dto.setUsuarioId(categoria.getUsuarioId().toString());
+            dto.setCreatedDate(categoria.getCreateDate());
+            dto.setCreatedBy(categoria.getCreatedBy());
+            dto.setLastModifiedBy(categoria.getLastModifiedBy());
+            dto.setLastModifiedDate(categoria.getLastModifiedDate());
         }
         return dto;
     }

@@ -5,7 +5,7 @@ import lombok.Setter;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
-public class UsuarioDTO {
+public class UsuarioDTO extends Dto {
 
     @Getter
     @Setter

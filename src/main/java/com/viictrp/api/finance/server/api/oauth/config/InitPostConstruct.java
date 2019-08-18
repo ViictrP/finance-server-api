@@ -54,7 +54,7 @@ public class InitPostConstruct {
         usuario.setCreatedBy("system");
         usuario.setLastModifiedBy("system");
         usuario.setCreateDate(DateTime.now());
-        usuario.setLastUpdateDate(DateTime.now());
+        usuario.setLastModifiedDate(DateTime.now());
 
         Usuario jpaEntity = usuarioRepository.save(usuario);
 

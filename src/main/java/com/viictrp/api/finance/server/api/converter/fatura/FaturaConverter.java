@@ -35,6 +35,10 @@ public class FaturaConverter implements Converter<Fatura, FaturaDTO> {
             faturaDTO.setPago(fatura.getPago());
             faturaDTO.setTitulo(fatura.getTitulo());
             faturaDTO.setCartaoId(fatura.getCartaoId().toString());
+            faturaDTO.setCreatedDate(fatura.getCreateDate());
+            faturaDTO.setCreatedBy(fatura.getCreatedBy());
+            faturaDTO.setLastModifiedBy(fatura.getLastModifiedBy());
+            faturaDTO.setLastModifiedDate(fatura.getLastModifiedDate());
         }
         return faturaDTO;
     }

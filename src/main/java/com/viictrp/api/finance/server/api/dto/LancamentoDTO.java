@@ -7,7 +7,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import org.bson.types.ObjectId;
 import org.joda.time.DateTime;
 
-public class LancamentoDTO {
+public class LancamentoDTO extends Dto {
 
     @Getter
     @Setter

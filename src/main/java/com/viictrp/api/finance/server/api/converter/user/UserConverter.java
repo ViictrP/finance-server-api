@@ -31,6 +31,10 @@ public class UserConverter implements Converter<Usuario, UsuarioDTO> {
             dto.setEmail(usuario.getEmail());
             dto.setName(usuario.getName());
             dto.setLastname(usuario.getLastname());
+            dto.setCreatedDate(usuario.getCreateDate());
+            dto.setCreatedBy(usuario.getCreatedBy());
+            dto.setLastModifiedBy(usuario.getLastModifiedBy());
+            dto.setLastModifiedDate(usuario.getLastModifiedDate());
         }
         return dto;
     }
